@@ -24,5 +24,8 @@ namespace ChildCare.Models
         public int TeacherId { get; set; }
 
         public Teacher Teacher { get; set; }
+
+        public string Medications { get; set; }
+        public string Notes { get; set; }
     }
 }

@@ -205,6 +205,10 @@
     <Compile Include="Migrations\201610112205561_initial table creation.Designer.cs">
       <DependentUpon>201610112205561_initial table creation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610112217344_medication,notes added to child table.cs" />
+    <Compile Include="Migrations\201610112217344_medication,notes added to child table.Designer.cs">
+      <DependentUpon>201610112217344_medication,notes added to child table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -293,6 +297,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201610112205561_initial table creation.resx">
       <DependentUpon>201610112205561_initial table creation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610112217344_medication,notes added to child table.resx">
+      <DependentUpon>201610112217344_medication,notes added to child table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
