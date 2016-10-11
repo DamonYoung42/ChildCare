@@ -14,7 +14,7 @@ namespace ChildCare.Models
         public DateTime Date { get; set; }
         public DateTime PickupTime { get; set; }
 
-        [ForeignKey("ChildId")]
+        [ForeignKey("Child")]
         public int ChildId { get; set; }
         public virtual Child Child { get; set; }
 

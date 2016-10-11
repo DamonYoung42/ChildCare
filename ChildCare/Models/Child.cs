@@ -20,7 +20,7 @@ namespace ChildCare.Models
         public string UserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
-        [ForeignKey("TeacherId")]
+        [ForeignKey("Teacher")]
         public int TeacherId { get; set; }
 
         public Teacher Teacher { get; set; }

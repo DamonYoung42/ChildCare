@@ -15,7 +15,7 @@ namespace ChildCare.Models
         public string LastName { get; set; }
         public byte[] Photo { get; set; }
 
-        [ForeignKey("ChildId")]
+        [ForeignKey("Child")]
         public int ChildId { get; set; }
         public virtual Child Child { get; set; }
 
