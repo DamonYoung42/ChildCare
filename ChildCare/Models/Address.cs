@@ -10,11 +10,29 @@ namespace ChildCare.Models
     {
         [Key]
         public int AddressId { get; set; }
+
+        [Required]
+        [Display(Name = "House Number")]
         public string HouseNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Apt. Number")]
         public string AptNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Street")]
         public string Street { get; set; }
+
+        [Required]
+        [Display(Name = "City")]
         public string City { get; set; }
+
+        [Required]
+        [Display(Name = "State")]
         public string State { get; set; }
+
+        [Required]
+        [Display(Name = "Zip Code")]
         public int ZipCode { get; set; }
     }
 

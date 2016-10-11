@@ -66,9 +66,9 @@ namespace ChildCare.Models
     {
 
         [Required]
-        [Display(Name = "Zip")]
+        [Display(Name = "Zip Code")]
         [DataType(DataType.Text)]
-        public int Zip { get; set; }
+        public int ZipCode { get; set; }
 
         [Required]
         [Display(Name = "State")]

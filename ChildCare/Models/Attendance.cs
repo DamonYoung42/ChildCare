@@ -11,7 +11,13 @@ namespace ChildCare.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Date")]
         public DateTime Date { get; set; }
+
+        [Required]
+        [Display(Name = "Pickup Time")]
         public DateTime PickupTime { get; set; }
 
         [ForeignKey("Child")]

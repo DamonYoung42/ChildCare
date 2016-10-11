@@ -12,11 +12,24 @@ namespace ChildCare.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
+        [Display(Name = "Month")]
         public string Month { get; set; }
+
+        [Required]
+        [Display(Name = "Year")]
         public int Year { get; set; }
+
+        [Display(Name = "Balance Due")]
         public double AmountDue { get; set; }
+
+        [Display(Name = "Due Date")]
         public DateTime DateDue { get; set; }
+
+        [Display(Name = "Amount Paid")]
         public double AmountPaid { get; set; }
+
+        [Display(Name = "Date Paid")]
         public DateTime DatePaid { get; set; }
 
         [ForeignKey("ApplicationUser")]
