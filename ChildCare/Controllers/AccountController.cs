@@ -17,6 +17,7 @@ namespace ChildCare.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -139,6 +140,7 @@ namespace ChildCare.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.Name = new SelectList(db.Roles.Where(u => !u.Name.Contains("Admin")).ToList(), "Name", "Name");
             return View();
         }
 
@@ -151,12 +153,34 @@ namespace ChildCare.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                ViewBag.Name = new SelectList(db.Roles.Where(u => !u.Name.Contains("Admin"))
+                                .ToList(), "Name", "Name");
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, PhoneNumber = model.PhoneNumber };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var address = new Address { HouseNumber = model.HouseNumber, AptNumber = model.AptNumber, City = model.City, State = model.State, Street = model.Street, ZipCode = model.ZipCode };
+                    db.Addresses.Add(address);
+                    //db.SaveChanges();
+
+                    //ApplicationUser myUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+
+                    using (var con = new ApplicationDbContext())
+                    {
+
+                        user = con.Users.Find(user.Id);
+                        user.Address = address;
+                        user.AddressId = user.Address.Id;
+
+                        con.Users.Attach(user);
+                        
+                        var entry = con.Entry(user);
+                        entry.Property(e => e.AddressId).IsModified = true;
+                        con.SaveChanges();
+                    }
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

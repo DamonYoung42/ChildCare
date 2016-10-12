@@ -9,13 +9,12 @@ namespace ChildCare.Models
     public class Address
     {
         [Key]
-        public int AddressId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "House Number")]
         public string HouseNumber { get; set; }
-
-        [Required]
+     
         [Display(Name = "Apt. Number")]
         public string AptNumber { get; set; }
 

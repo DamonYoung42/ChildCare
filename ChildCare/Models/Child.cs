@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
+
 namespace ChildCare.Models
 {
     public class Child
@@ -24,7 +25,6 @@ namespace ChildCare.Models
         [Display(Name = "Grade Level")]
         public string GradeLevel { get; set; }
 
-        [Required]
         [Display(Name = "Photo")]
         public byte[] Photo { get; set; }
 
@@ -33,16 +33,13 @@ namespace ChildCare.Models
         public ApplicationUser ApplicationUser { get; set; }
 
         [ForeignKey("Teacher")]
-        public int TeacherId { get; set; }
-
         [Display(Name = "Teacher")]
+        public int TeacherId { get; set; }
         public Teacher Teacher { get; set; }
 
-        [Required]
         [Display(Name = "Medications")]
         public string Medications { get; set; }
 
-        [Required]
         [Display(Name = "Notes")]
         public string Notes { get; set; }
     }

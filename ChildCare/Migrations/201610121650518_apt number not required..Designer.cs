@@ -7,13 +7,13 @@ namespace ChildCare.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class displaynamesrequiredattributesset : IMigrationMetadata
+    public sealed partial class aptnumbernotrequired : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(displaynamesrequiredattributesset));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(aptnumbernotrequired));
         
         string IMigrationMetadata.Id
         {
-            get { return "201610112251560_display names, required attributes set"; }
+            get { return "201610121650518_apt number not required."; }
         }
         
         string IMigrationMetadata.Source

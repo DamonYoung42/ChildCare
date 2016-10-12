@@ -3,7 +3,7 @@ namespace ChildCare.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initialtablecreation : DbMigration
+    public partial class recreatetables : DbMigration
     {
         public override void Up()
         {
@@ -11,15 +11,15 @@ namespace ChildCare.Migrations
                 "dbo.Addresses",
                 c => new
                     {
-                        AddressId = c.Int(nullable: false, identity: true),
-                        HouseNumber = c.String(),
-                        AptNumber = c.String(),
-                        Street = c.String(),
-                        City = c.String(),
-                        State = c.String(),
+                        Id = c.Int(nullable: false, identity: true),
+                        HouseNumber = c.String(nullable: false),
+                        AptNumber = c.String(nullable: false),
+                        Street = c.String(nullable: false),
+                        City = c.String(nullable: false),
+                        State = c.String(nullable: false),
                         ZipCode = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.AddressId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Attendances",
@@ -39,12 +39,14 @@ namespace ChildCare.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                        GradeLevel = c.String(),
+                        FirstName = c.String(nullable: false),
+                        LastName = c.String(nullable: false),
+                        GradeLevel = c.String(nullable: false),
                         Photo = c.Binary(),
                         UserId = c.String(maxLength: 128),
                         TeacherId = c.Int(nullable: false),
+                        Medications = c.String(),
+                        Notes = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
@@ -121,8 +123,8 @@ namespace ChildCare.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(),
-                        LastName = c.String(),
+                        FirstName = c.String(nullable: false),
+                        LastName = c.String(nullable: false),
                         RoomNumber = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -132,7 +134,7 @@ namespace ChildCare.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Month = c.String(),
+                        Month = c.String(nullable: false),
                         Year = c.Int(nullable: false),
                         AmountDue = c.Double(nullable: false),
                         DateDue = c.DateTime(nullable: false),
@@ -149,12 +151,12 @@ namespace ChildCare.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(),
-                        LastName = c.String(),
+                        FirstName = c.String(nullable: false),
+                        LastName = c.String(nullable: false),
                         Photo = c.Binary(),
                         ChildId = c.Int(nullable: false),
-                        PhoneNumber = c.String(),
-                        EmailAddress = c.String(),
+                        PhoneNumber = c.String(nullable: false),
+                        EmailAddress = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Children", t => t.ChildId, cascadeDelete: true)

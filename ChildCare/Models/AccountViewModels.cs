@@ -64,6 +64,14 @@ namespace ChildCare.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "UserRoles")]
+        public string UserRoles { get; set; }
+
+        [Required]
+        [Display(Name ="Phone Number")]
+        [DataType(DataType.Text)]
+        public string PhoneNumber { get; set; }
 
         [Required]
         [Display(Name = "Zip Code")]
