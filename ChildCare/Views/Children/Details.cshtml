@@ -1,9 +1,14 @@
 ﻿@model ChildCare.Models.Child
-
+<script src="~/Scripts/jquery.min.js" type="text/javascript"></script>
+<script src="~/Scripts/moment.min.js" type="text/javascript"></script>
+<script src="~/Scripts/fullcalendar.js" type="text/javascript"></script>
+<link rel='stylesheet' href='~/Content/fullcalendar.min.css' />
 @{
     ViewBag.Title = "Details";
 }
 
+@Html.AntiForgeryToken()
+@Html.HiddenFor(model => model.Id)
 <div>
     <h2>Child Profile</h2>
     <hr />
@@ -59,12 +64,180 @@
         </dt>
 
         <dd>
-            <img src="~/Images/Child/@Html.DisplayFor(model =>model.Photo)" style="height:100px;width:100px;" />
+            <img src="~/Images/Child/@Html.DisplayFor(model => model.Photo)" style="height:100px;width:100px;" />
             @*Html.DisplayFor(model => model.Photo)*@
         </dd>
     </dl>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+<p></p>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        // page is now ready, initialize the calendar...
+
+         $('#calendar').fullCalendar({
+            // put your options and callbacks here
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            timezone: 'local',
+            weekends: true,
+            height: 500,
+            editable: true,
+            cache: true,
+            allDay: false,
+            displayEventTime: true,
+            defaultTimedEventDuration: '01:00:00',
+            forceEventDuration: true,
+            slotDuration: '00:30:00',
+            events: {
+                url: '@Url.Action("GetCalendarEvents", "Children")',
+                type: 'GET',
+                data: {Id: @Model.Id},
+                error: function () {
+                    alert('There was an error retrieving calendar events!');
+                },
+            },
+
+            eventDrop: function (event) {
+                if (confirm("Do you want to save this event?")) {
+                    //save changes to attendance database****
+                    EditEvent(event);
+                }
+            },
+
+            dayClick: function (date, allDay, jsEvent, view) {
+                var description = prompt('Enter a description:');
+                if (description) {
+                    var data = { title: description, start: date, end: date, editable: true, allDay: false, }
+                    $('#calendar').fullCalendar('renderEvent', { title: description, start: date, end: date }, true);
+
+                    CreateEvent(data);
+                    $('#calendar').fullCalendar('refetchEventSources', 'GetCalendarEvents');
+
+                }
+            },
+
+            eventClick: function (calEvent, jsEvent, view) {
+                var action = prompt('Would you like to delete this event?', calEvent.title, { buttons: { OK: true, Cancel: false } });
+
+                if (action) {
+                    $('#calendar').fullCalendar('removeEvents', calEvent._id);
+                    //remove event in database******
+                    DeleteEvent(calEvent.Id);
+                }
+
+                // if (name) {
+                //   calEvent.title = name;
+                //   $('#calendar').fullCalendar('updateEvent',calEvent);
+                //   //save event in database*****
+                // }
+            },
+            eventConstraint: {
+                start: moment().subtract(1, 'week').format('MM-DD-YYYY hh:mm:ss A'),
+                end: '2050-05-05'
+            },
+
+            eventResize: function (event) {
+                if (confirm("Do you want to save this event?")) {
+                    //save changes to event in database****
+                    EditEvent(event);
+                }
+            }
+        });
+
+    });
+
+    function EditEvent(data) {
+
+        $.ajax({
+            url: '../../Attendances/Edit',
+            type: "POST",
+            dataType: "json",
+            data: ({
+                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                Date: data.start.format('MM-DD-YYYY hh:mm:ss A'),
+                ChildId: @Model.Id,
+                PickupTime: data.end.format('MM-DD-YYYY hh:mm:ss A'),
+                Id: data.Id,
+                title: data.title,
+                start: data.start.format('MM-DD-YYYY hh:mm:ss A'),
+                end: data.end.format('MM-DD-YYYY hh:mm:ss A'),
+                allday: data.allDay,
+                editable: data.editable
+            }),
+            success: function (data, textStatus) {
+                if (!data) {
+                    alert("Changes could not be saved.");
+                    return;
+                }
+                calendar.fullCalendar('updateEvent', event);
+            },
+        });
+    };
+
+    function DeleteEvent(Id) {
+        $.ajax({
+            url: '../../Attendances/Delete/' + Id,
+            type: "POST",
+            dataType: "json",
+            data: ({
+                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val()
+            }),
+
+            success: function (data, textStatus) {
+                if (!data) {
+                    //alert("Event could not be deleted.");
+                    return;
+                }
+            },
+        });
+    };
+
+    function CreateEvent(event) {
+
+        $.ajax({
+            url: '../../Attendances/Create',
+            type: "POST",
+            dataType: "json",
+            data: ({
+                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                Date: event.start.format('MM-DD-YYYY hh:mm:ss A'),
+                ChildId: @Model.Id,
+                PickupTime: event.end.format('MM-DD-YYYY hh:mm:ss A'),
+                Id: event.Id,
+                title: event.title,
+                start: event.start.format('MM-DD-YYYY hh:mm:ss A'),
+                end: event.end.format('MM-DD-YYYY hh:mm:ss A'),
+                allday: event.allDay,
+                editable: event.editable
+            }),
+
+            success: function (data, textStatus) {
+                if (!data) {
+                    //alert("Event could not be created.");
+                    return;
+                }
+                calendar.fullCalendar('updateEvent', event);
+            },
+        });
+    };
+</script>

@@ -24,5 +24,14 @@ namespace ChildCare.Models
         public int ChildId { get; set; }
         public virtual Child Child { get; set; }
 
+        public DateTime start { get; set; }
+        public DateTime end { get; set; }
+
+        public Boolean allDay { get; set; }
+
+        public string title { get; set; }
+
+        public Boolean editable { get; set; }
+
     }
 }

@@ -222,6 +222,10 @@
     <Compile Include="Migrations\201610122151323_identity model photo string.Designer.cs">
       <DependentUpon>201610122151323_identity model photo string.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610131839051_attendance table.cs" />
+    <Compile Include="Migrations\201610131839051_attendance table.Designer.cs">
+      <DependentUpon>201610131839051_attendance table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -362,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610122151323_identity model photo string.resx">
       <DependentUpon>201610122151323_identity model photo string.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610131839051_attendance table.resx">
+      <DependentUpon>201610131839051_attendance table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

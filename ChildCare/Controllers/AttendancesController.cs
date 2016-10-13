@@ -15,17 +15,13 @@ namespace ChildCare.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Attendances
-        public ActionResult Index()
+        public ActionResult Index(int Id)
         {
-            var attendances = db.Attendances.Include(a => a.Child);
+            var attendances = db.Attendances.Include(a => a.Child).Where(x => x.ChildId == Id);
             return View(attendances.ToList());
         }
 
-        public JsonResult GetCalendarEvents(int Id)
-        {
-            var events = db.Attendances.Where(x => x.ChildId == Id).ToArray();
-            return Json(events, JsonRequestBehavior.AllowGet);
-        }
+
         // GET: Attendances/Details/5
         public ActionResult Details(int? id)
         {
@@ -53,7 +49,7 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Date,PickupTime,ChildId")] Attendance attendance)
+        public ActionResult Create([Bind(Include = "Id,Date,PickupTime,ChildId, start, end, editable, allDay, title")] Attendance attendance)
         {
             if (ModelState.IsValid)
             {
@@ -87,13 +83,13 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Date,PickupTime,ChildId")] Attendance attendance)
+        public ActionResult Edit([Bind(Include = "Id,Date,PickupTime,ChildId, start, end, editable, allDay, title")] Attendance attendance)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(attendance).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Children");
             }
             ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", attendance.ChildId);
             return View(attendance);

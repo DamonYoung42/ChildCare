@@ -43,6 +43,12 @@ namespace ChildCare.Controllers
             return View(child);
         }
 
+        public JsonResult GetCalendarEvents(int Id)
+        {
+            var events = db.Attendances.Where(x => x.ChildId == Id).ToArray();
+            return Json(events, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Children/Create
         public ActionResult Create()
         {
