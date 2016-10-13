@@ -26,7 +26,8 @@ namespace ChildCare.Models
         public string GradeLevel { get; set; }
 
         [Display(Name = "Photo")]
-        public byte[] Photo { get; set; }
+        //public byte[] Photo { get; set; }
+        public string Photo { get; set; }
 
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }

@@ -214,6 +214,14 @@
     <Compile Include="Migrations\201610121650518_apt number not required..Designer.cs">
       <DependentUpon>201610121650518_apt number not required..cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610122149091_photo path a string.cs" />
+    <Compile Include="Migrations\201610122149091_photo path a string.Designer.cs">
+      <DependentUpon>201610122149091_photo path a string.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610122151323_identity model photo string.cs" />
+    <Compile Include="Migrations\201610122151323_identity model photo string.Designer.cs">
+      <DependentUpon>201610122151323_identity model photo string.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -315,6 +323,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Child\" />
+    <Folder Include="Images\Parent\" />
+    <Folder Include="Images\PickupPerson\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -330,6 +341,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610121650518_apt number not required..resx">
       <DependentUpon>201610121650518_apt number not required..cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610122149091_photo path a string.resx">
+      <DependentUpon>201610122149091_photo path a string.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610122151323_identity model photo string.resx">
+      <DependentUpon>201610122151323_identity model photo string.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

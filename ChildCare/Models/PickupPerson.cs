@@ -19,7 +19,7 @@ namespace ChildCare.Models
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
 
         [ForeignKey("Child")]
         public int ChildId { get; set; }

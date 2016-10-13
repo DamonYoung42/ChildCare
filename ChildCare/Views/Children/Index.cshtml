@@ -4,15 +4,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
+<h2>Your children</h2>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Photo)
+            
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
@@ -38,7 +37,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Photo)
+            <img src="~/Images/Child/@Html.DisplayFor(modelItem =>item.Photo)" style="height:100px;width:100px;" />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)

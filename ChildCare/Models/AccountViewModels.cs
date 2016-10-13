@@ -114,7 +114,7 @@ namespace ChildCare.Models
         public string LastName { get; set; }
 
         [Display(Name = "Photo")]
-        [DataType(DataType.Upload)]
+        [DataType(DataType.Text)]
         public string Photo { get; set; }
 
         [Required]

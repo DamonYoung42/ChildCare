@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ChildCare.Models;
+using Microsoft.AspNet.Identity;
+using System.IO;
+using static System.Net.WebRequestMethods;
 
 namespace ChildCare.Controllers
 {
@@ -17,7 +20,10 @@ namespace ChildCare.Controllers
         // GET: Children
         public ActionResult Index()
         {
-            var children = db.Children.Include(c => c.ApplicationUser);
+            var userId = User.Identity.GetUserId();
+            //var address = db.Address.Include(a => a.City).Include(a => a.Customer).Include(a => a.Zipcode).Where(x => x.CustomerID == model.CustomerID);
+
+            var children = db.Children.Include(a => a.Teacher).Where(c => c.UserId == userId);
             return View(children.ToList());
         }
 
@@ -28,7 +34,8 @@ namespace ChildCare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Child child = db.Children.Find(id);
+            Child child = db.Children.Include(a => a.Teacher).Where(c => c.Id == id).First();
+            //Child child = db.Children.Find(id).;
             if (child == null)
             {
                 return HttpNotFound();
@@ -39,7 +46,8 @@ namespace ChildCare.Controllers
         // GET: Children/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
+            ViewBag.UserId = User.Identity.GetUserId();
+            //ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
             ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "LastName");
             return View();
         }
@@ -49,17 +57,31 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,GradeLevel,Photo,UserId,Medications,Notes, TeacherId")] Child child)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,GradeLevel,Photo,UserId,Medications,Notes, TeacherId")] Child child, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
             {
+
+                if (photo != null && photo.ContentLength > 0)
+                {
+                    child.Photo = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(photo.FileName);
+                    string path = System.IO.Path.Combine(
+                                           Server.MapPath("~/Images/Child"), child.Photo);
+                    photo.SaveAs(path);
+                }
+                else
+                {
+                    child.Photo = "no_photo.jpg";
+                }
+
+                child.UserId = User.Identity.GetUserId();
                 db.Children.Add(child);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", child.UserId);
-
+            ViewBag.TeacherID = new SelectList(db.Teachers, "Id", "LastName", child.TeacherId);
             return View(child);
         }
 
@@ -76,6 +98,7 @@ namespace ChildCare.Controllers
                 return HttpNotFound();
             }
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", child.UserId);
+            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "LastName", child.TeacherId);
             return View(child);
         }
 
@@ -84,14 +107,24 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,GradeLevel,Photo,UserId,Medications,Notes")] Child child)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,GradeLevel,Photo,UserId,Medications,Notes,TeacherId")] Child child, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
             {
+                if (photo != null && photo.ContentLength > 0)
+                {
+                    child.Photo = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(photo.FileName);
+                    string path = System.IO.Path.Combine(
+                                           Server.MapPath("~/Images/Child"), child.Photo);
+                    photo.SaveAs(path);
+                }
+
+
                 db.Entry(child).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "LastName", child.TeacherId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", child.UserId);
             return View(child);
         }
@@ -103,7 +136,8 @@ namespace ChildCare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Child child = db.Children.Find(id);
+            Child child = db.Children.Include(a => a.Teacher).Where(c => c.Id == id).First();
+            //Child child = db.Children.Find(id);
             if (child == null)
             {
                 return HttpNotFound();

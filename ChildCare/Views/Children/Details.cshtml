@@ -4,20 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Child</h4>
+    <h2>Child Profile</h2>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Email)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.FirstName)
         </dt>
@@ -65,11 +55,12 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Photo)
+            @*@Html.DisplayNameFor(model => model.Photo)*@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Photo)
+            <img src="~/Images/Child/@Html.DisplayFor(model =>model.Photo)" style="height:100px;width:100px;" />
+            @*Html.DisplayFor(model => model.Photo)*@
         </dd>
     </dl>
 </div>

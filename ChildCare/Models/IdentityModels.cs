@@ -17,7 +17,7 @@ namespace ChildCare.Models
         public int? AddressId { get; set; }
         public virtual Address Address { get; set; }
 
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
