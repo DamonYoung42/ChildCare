@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ChildCare.Models;
+using Microsoft.AspNet.Identity;
 
 namespace ChildCare.Controllers
 {
@@ -17,7 +18,13 @@ namespace ChildCare.Controllers
         // GET: PickupPersons
         public ActionResult Index()
         {
-            var pickupPersons = db.PickupPersons.Include(p => p.Child);
+            //var pickupPersons = db.PickupPersons.Include(p => p.Child);
+
+            var userId = User.Identity.GetUserId();
+            //var pickupPersons = db.PickupPersons.Include(a => a.Child)
+            //    .Join(db.Users, a => a.Child.UserId, b => b.Id, (a,b) => new { a, b })
+            //    .Where(b => b.b.Id == userId);
+            var pickupPersons = db.PickupPersons.Include(a => a.Child).Where(c => c.Child.UserId == userId);
             return View(pickupPersons.ToList());
         }
 

@@ -21,8 +21,6 @@ namespace ChildCare.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            //var address = db.Address.Include(a => a.City).Include(a => a.Customer).Include(a => a.Zipcode).Where(x => x.CustomerID == model.CustomerID);
-
             var children = db.Children.Include(a => a.Teacher).Where(c => c.UserId == userId);
             return View(children.ToList());
         }
