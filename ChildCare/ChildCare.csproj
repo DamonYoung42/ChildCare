@@ -339,6 +339,7 @@
     <Content Include="Views\Children\Details.cshtml" />
     <Content Include="Views\Children\Edit.cshtml" />
     <Content Include="Views\Children\Index.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

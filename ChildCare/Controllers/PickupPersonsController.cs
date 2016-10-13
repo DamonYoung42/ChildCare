@@ -48,10 +48,23 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Photo,ChildId,PhoneNumber,EmailAddress")] PickupPerson pickupPerson)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Photo,ChildId,PhoneNumber,EmailAddress")] PickupPerson pickupPerson, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
             {
+
+                if (photo != null && photo.ContentLength > 0)
+                {
+                    pickupPerson.Photo = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(photo.FileName);
+                    string path = System.IO.Path.Combine(
+                                           Server.MapPath("~/Images/PickupPerson"), pickupPerson.Photo);
+                    photo.SaveAs(path);
+                }
+                else
+                {
+                    pickupPerson.Photo = "no_photo.jpg";
+                }
+
                 db.PickupPersons.Add(pickupPerson);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -82,10 +95,17 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Photo,ChildId,PhoneNumber,EmailAddress")] PickupPerson pickupPerson)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Photo,ChildId,PhoneNumber,EmailAddress")] PickupPerson pickupPerson, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
             {
+                if (photo != null && photo.ContentLength > 0)
+                {
+                    pickupPerson.Photo = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(photo.FileName);
+                    string path = System.IO.Path.Combine(
+                                           Server.MapPath("~/Images/PickupPerson"), pickupPerson.Photo);
+                    photo.SaveAs(path);
+                }
                 db.Entry(pickupPerson).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

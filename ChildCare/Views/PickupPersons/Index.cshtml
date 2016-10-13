@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Your drivers</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Child.FirstName)
+
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
@@ -20,9 +20,7 @@
         <th>
             @Html.DisplayNameFor(model => model.LastName)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Photo)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.PhoneNumber)
         </th>
@@ -35,16 +33,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Child.FirstName)
+            <img src="~/Images/PickupPerson/@Html.DisplayFor(modelItem =>item.Photo)" style="height:100px;width:100px;" />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Photo)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PhoneNumber)
@@ -54,7 +49,6 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
