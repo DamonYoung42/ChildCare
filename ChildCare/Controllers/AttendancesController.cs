@@ -21,6 +21,11 @@ namespace ChildCare.Controllers
             return View(attendances.ToList());
         }
 
+        public JsonResult GetCalendarEvents(int Id)
+        {
+            var events = db.Attendances.Where(x => x.ChildId == Id).ToArray();
+            return Json(events, JsonRequestBehavior.AllowGet);
+        }
         // GET: Attendances/Details/5
         public ActionResult Details(int? id)
         {
