@@ -2,6 +2,7 @@
 <script src="~/Scripts/jquery.min.js" type="text/javascript"></script>
 <script src="~/Scripts/moment.min.js" type="text/javascript"></script>
 <script src="~/Scripts/fullcalendar.js" type="text/javascript"></script>
+<script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
 <link rel='stylesheet' href='~/Content/fullcalendar.min.css' />
 @{
     ViewBag.Title = "Details";
@@ -77,6 +78,51 @@
         </div>
     </div>
 </div>
+
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="modalTitle" class="modal-title">Pickup</h4>
+            </div>
+            <div id="deleteModalBody" class="modal-body"></div>
+                <input type="hidden" id="deleteModalEventId" />
+                <input type="hidden" id="deleteModalCalEventId" />
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" onclick="DeleteEvent($('#deleteModalEventId').val(), $('#deleteModalCalEventId').val())">Delete</></button>
+                <button type="button" class="btn btn-primary" id="deleteModalClose" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="createModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="createModalTitle" class="modal-title">Pickup</h4>
+            </div>
+            <div id="createModalBody" class="modal-body"></div>
+                <input type="hidden" id="createModalDate" />
+                <input type="hidden"  id="createModalChildId" />
+                <input type="hidden"  id="createModalPickupTime" />
+                <input type="hidden"  id="createModaltitle" />
+                <input type="hidden"  id="createModalstart" />
+                <input type="hidden"  id="createModalend" />
+                <input type="hidden"  id="createModalallDay" />
+                <input type="hidden" id="createModaleditable" />
+            
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="CreateEvent()">Save</></button>
+                <button type="button" class="btn" id="createModalClose" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <p></p>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
@@ -86,12 +132,11 @@
 
 <script type="text/javascript">
 
-
     $(document).ready(function () {
 
         // page is now ready, initialize the calendar...
 
-         $('#calendar').fullCalendar({
+        $('#calendar').fullCalendar({
             // put your options and callbacks here
             header: {
                 left: 'prev,next today',
@@ -105,7 +150,7 @@
             cache: true,
             allDay: false,
             displayEventTime: true,
-            defaultTimedEventDuration: '01:00:00',
+            defaultTimedEventDuration: '00:30:00',
             forceEventDuration: true,
             slotDuration: '00:30:00',
             events: {
@@ -117,42 +162,35 @@
                 },
             },
 
+            eventClick:  function(event, jsEvent, view) {
+                $('#deleteModalTitle').html(event.title);
+                $('#deleteModalBody').html(moment(event.start).format('MM-DD-YYYY h:mm A'));
+                $('#deleteModalEventId').val(event.Id);
+                $('#deleteModalCalEventId').val(event._id);
+                $('#deleteModal').modal();
+            },
+
             eventDrop: function (event) {
-                if (confirm("Do you want to save this event?")) {
-                    //save changes to attendance database****
-                    EditEvent(event);
-                }
+                EditEvent(event);
             },
 
             dayClick: function (date, allDay, jsEvent, view) {
-                var description = prompt('Enter a description:');
-                if (description) {
-                    var data = { title: description, start: date, end: date, editable: true, allDay: false, }
-                    $('#calendar').fullCalendar('renderEvent', { title: description, start: date, end: date }, true);
 
-                    CreateEvent(data);
-                    $('#calendar').fullCalendar('refetchEventSources', 'GetCalendarEvents');
+                $('#createModalTitle').html("Pickup");
+                $('#createModalDate').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                $('#createModalChildId').val(@Model.Id);
+                $('#createModalPickupTime').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                $('#createModaltitle').val("Pickup");
+                $('#createModalstart').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                $('#createModalend').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                $('#createModaleditable').val("true");
+                $('#createModalallDay').val("false");
 
-                }
+                $('#createModal').modal();
             },
 
-            eventClick: function (calEvent, jsEvent, view) {
-                var action = prompt('Would you like to delete this event?', calEvent.title, { buttons: { OK: true, Cancel: false } });
-
-                if (action) {
-                    $('#calendar').fullCalendar('removeEvents', calEvent._id);
-                    //remove event in database******
-                    DeleteEvent(calEvent.Id);
-                }
-
-                // if (name) {
-                //   calEvent.title = name;
-                //   $('#calendar').fullCalendar('updateEvent',calEvent);
-                //   //save event in database*****
-                // }
-            },
             eventConstraint: {
-                start: moment().subtract(1, 'week').format('MM-DD-YYYY hh:mm:ss A'),
+                start: moment().subtract(1, 'week').format('MM-DD-YYYY hh:mm A'),
                 end: '2050-05-05'
             },
 
@@ -163,24 +201,24 @@
                 }
             }
         });
-
     });
 
     function EditEvent(data) {
 
         $.ajax({
+            //url: '@Url.Action("Edit", "Attendances")'
             url: '../../Attendances/Edit',
             type: "POST",
             dataType: "json",
             data: ({
                 __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-                Date: data.start.format('MM-DD-YYYY hh:mm:ss A'),
+                Date: data.start.format('MM-DD-YYYY hh:mm A'),
                 ChildId: @Model.Id,
-                PickupTime: data.end.format('MM-DD-YYYY hh:mm:ss A'),
+                PickupTime: data.end.format('MM-DD-YYYY hh:mm A'),
                 Id: data.Id,
                 title: data.title,
-                start: data.start.format('MM-DD-YYYY hh:mm:ss A'),
-                end: data.end.format('MM-DD-YYYY hh:mm:ss A'),
+                start: data.start.format('MM-DD-YYYY hh:mm A'),
+                end: data.end.format('MM-DD-YYYY hh:mm A'),
                 allday: data.allDay,
                 editable: data.editable
             }),
@@ -194,7 +232,7 @@
         });
     };
 
-    function DeleteEvent(Id) {
+    function DeleteEvent(Id, CalEventId) {
         $.ajax({
             url: '../../Attendances/Delete/' + Id,
             type: "POST",
@@ -205,14 +243,17 @@
 
             success: function (data, textStatus) {
                 if (!data) {
-                    //alert("Event could not be deleted.");
+                    alert("Event could not be deleted.");
                     return;
                 }
+                
             },
         });
+        $('#calendar').fullCalendar('removeEvents', CalEventId);
+        $('#deleteModalClose').click();
     };
 
-    function CreateEvent(event) {
+    function CreateEvent() {
 
         $.ajax({
             url: '../../Attendances/Create',
@@ -220,24 +261,27 @@
             dataType: "json",
             data: ({
                 __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-                Date: event.start.format('MM-DD-YYYY hh:mm:ss A'),
-                ChildId: @Model.Id,
-                PickupTime: event.end.format('MM-DD-YYYY hh:mm:ss A'),
-                Id: event.Id,
-                title: event.title,
-                start: event.start.format('MM-DD-YYYY hh:mm:ss A'),
-                end: event.end.format('MM-DD-YYYY hh:mm:ss A'),
-                allday: event.allDay,
-                editable: event.editable
+                Date: $('#createModalDate').val(),
+                ChildId: $('#createModalChildId').val(),
+                PickupTime: $('#createModalPickupTime').val(),
+                Id: $('#createModalId').val(),
+                title: $('#createModaltitle').val(),
+                start: $('#createModalstart').val(),
+                end: $('#createModalend').val(),
+                allday:$('#createModalallDay').val(),
+                editable: $('#createModaleditable').val(),
             }),
 
             success: function (data, textStatus) {
                 if (!data) {
-                    //alert("Event could not be created.");
+                    alert("Event could not be created.");
                     return;
                 }
+                $('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: date, end: date }, true);
                 calendar.fullCalendar('updateEvent', event);
             },
         });
+        //$('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: date, end: date }, true);
+        $('#createModalClose').click();
     };
 </script>
