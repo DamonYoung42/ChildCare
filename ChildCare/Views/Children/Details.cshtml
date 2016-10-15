@@ -68,6 +68,8 @@
             <img src="~/Images/Child/@Html.DisplayFor(model => model.Photo)" style="height:100px;width:100px;" />
             @*Html.DisplayFor(model => model.Photo)*@
         </dd>
+        <dt></dt>
+        <dd><button type="button" class="btn btn-primary" id="signOut" onclick="SignOut()">Sign out</button></dd>
     </dl>
 </div>
 
@@ -134,25 +136,31 @@
 
     $(document).ready(function () {
 
-        // page is now ready, initialize the calendar...
-
         $('#calendar').fullCalendar({
-            // put your options and callbacks here
             header: {
                 left: 'prev,next today',
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay'
             },
+
+            views: {
+                month: {
+                    editable: false,
+                },
+                agenda: {
+                    editable: true,
+                }
+            },
             timezone: 'local',
             weekends: true,
             height: 500,
-            editable: true,
             cache: true,
             allDay: false,
             displayEventTime: true,
             defaultTimedEventDuration: '00:30:00',
             forceEventDuration: true,
             slotDuration: '00:30:00',
+            eventOverlap: false,
             events: {
                 url: '@Url.Action("GetCalendarEvents", "Children")',
                 type: 'GET',
@@ -173,13 +181,39 @@
             eventDrop: function (event) {
                 EditEvent(event);
             },
-
             dayClick: function (date, allDay, jsEvent, view) {
+                var check = moment(date._d).format('MM-DD-YYYY');
+                var today = moment(new Date()).format('MM-DD-YYYY');
+
+                if (check >= today){
+                    if ($('#calendar').fullCalendar('getView').type != 'month')
+                    {
+                        $('#createModalTitle').html("Pickup");
+                        $('#createModalBody').html(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                        $('#createModalDate').val(moment(date._d).format('MM-DD-YYYY'));
+                        $('#createModalChildId').val(@Model.Id);
+                        $('#createModalPickupTime').val(moment(date._d).format('MM-DD-YYYY'));
+                        $('#createModaltitle').val("Pickup");
+                        $('#createModalstart').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                        $('#createModalend').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                        $('#createModaleditable').val("true");
+                        $('#createModalallDay').val("false");
+
+                        $('#createModal').modal();
+                    }
+                    else {
+                        $('#calendar').fullCalendar( 'changeView', 'agendaWeek' )
+                        $('#calendar').fullCalendar('gotoDate', date);
+                    }
+                }
+            },
+            @*dayClick: function (date, allDay, jsEvent, view) {
 
                 $('#createModalTitle').html("Pickup");
-                $('#createModalDate').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                $('#createModalBody').html(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                $('#createModalDate').val(moment(date._d).format('MM-DD-YYYY'));
                 $('#createModalChildId').val(@Model.Id);
-                $('#createModalPickupTime').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                $('#createModalPickupTime').val(moment(date._d).format('MM-DD-YYYY'));
                 $('#createModaltitle').val("Pickup");
                 $('#createModalstart').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
                 $('#createModalend').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
@@ -187,44 +221,154 @@
                 $('#createModalallDay').val("false");
 
                 $('#createModal').modal();
-            },
+            },*@
 
             eventConstraint: {
-                start: moment().subtract(1, 'week').format('MM-DD-YYYY hh:mm A'),
-                end: '2050-05-05'
-            },
+                start: "16:00",
+                end: "18:00"
 
-            eventResize: function (event) {
-                if (confirm("Do you want to save this event?")) {
-                    //save changes to event in database****
-                    EditEvent(event);
+            }
+
+        });
+
+        //Disable/enable signout button
+        //if (PickupToday())
+        //{
+        //    $('#signOut').prop('disabled', false);
+        //}
+        //else
+        //{
+        //    $('#signOut').prop('disabled', true);
+        //}
+        });
+
+        function EditEvent(data) {
+
+            $.ajax({
+                url: '../../Attendances/Edit',
+                type: "POST",
+                dataType: "json",
+                data: ({
+                    __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                    Date: data.start.format('MM-DD-YYYY'),
+                    ChildId: @Model.Id,
+                    PickupTime: data.end.format('MM-DD-YYYY'),
+                    Id: data.Id,
+                    title: data.title,
+                    start: data.start.format('MM-DD-YYYY hh:mm A'),
+                    end: data.end.format('MM-DD-YYYY hh:mm A'),
+                    allday: data.allDay,
+                    editable: data.editable
+                }),
+                success: function (data, textStatus) {
+                    if (!data) {
+                        alert("Changes could not be saved.");
+                        return;
+                    }
+                    calendar.fullCalendar('updateEvent', event);
+                },
+            });
+        };
+
+        function DeleteEvent(Id, CalEventId) {
+            $.ajax({
+                url: '../../Attendances/Delete/' + Id,
+                type: "POST",
+                dataType: "json",
+                data: ({
+                    __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val()
+                }),
+
+                success: function (data, textStatus) {
+                    if (!data) {
+                        alert("Event could not be deleted.");
+                        return;
+                    }
+
+                },
+            });
+            $('#calendar').fullCalendar('removeEvents', CalEventId);
+            $('#deleteModalClose').click();
+        };
+
+        function CreateEvent() {
+
+            $.ajax({
+                url: '../../Attendances/Create',
+                type: "POST",
+                dataType: "json",
+                data: ({
+                    __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                    Date: $('#createModalDate').val(),
+                    ChildId: $('#createModalChildId').val(),
+                    PickupTime: $('#createModalPickupTime').val(),
+                    Id: $('#createModalId').val(),
+                    title: $('#createModaltitle').val(),
+                    start: $('#createModalstart').val(),
+                    end: $('#createModalend').val(),
+                    allday:$('#createModalallDay').val(),
+                    editable: $('#createModaleditable').val(),
+                }),
+
+                success: function (data, textStatus) {
+                    if (!data) {
+                        alert("Event could not be created.");
+                        return;
+                    }
+                }
+            });
+
+            $('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: $('#createModalstart').val(), end: $('#createModalend').val() }, true);
+            $('#createModalClose').click();
+        };
+
+    //function PickupToday()
+    //    {
+
+    //    };
+
+    function SignOut()
+        {
+
+        var todayAttendance;
+        $.ajax({
+            async: false,
+            url: '../../Attendances/PickupToday',
+            type: "GET",
+            dataType: "json",
+            data: {
+                Id: @Model.Id,
+            },
+            success: function (data, textStatus) {
+                if (!data) {
+                    alert("This child is not enrolled today.");
+                    return;
+                }
+                else{
+                    todayAttendance = data;
                 }
             }
         });
-    });
-
-    function EditEvent(data) {
 
         $.ajax({
-            //url: '@Url.Action("Edit", "Attendances")'
             url: '../../Attendances/Edit',
             type: "POST",
             dataType: "json",
             data: ({
                 __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-                Date: data.start.format('MM-DD-YYYY hh:mm A'),
+                Date: moment(todayAttendance[0].Date).format('MM-DD-YYYY'),
                 ChildId: @Model.Id,
-                PickupTime: data.end.format('MM-DD-YYYY hh:mm A'),
-                Id: data.Id,
-                title: data.title,
-                start: data.start.format('MM-DD-YYYY hh:mm A'),
-                end: data.end.format('MM-DD-YYYY hh:mm A'),
-                allday: data.allDay,
-                editable: data.editable
+                PickupTime: moment(new Date()).format('MM-DD-YYYY hh:mm A'),
+                Id: todayAttendance[0].Id,
+                title: todayAttendance[0].title,
+                start: moment(todayAttendance[0].start).format('MM-DD-YYYY hh:mm A'),
+                end: moment(todayAttendance[0].end).format('MM-DD-YYYY hh:mm A'),
+                allday: false,
+                editable: false
             }),
             success: function (data, textStatus) {
                 if (!data) {
-                    alert("Changes could not be saved.");
+                    alert("Child could not be signed out.");
                     return;
                 }
                 calendar.fullCalendar('updateEvent', event);
@@ -232,56 +376,5 @@
         });
     };
 
-    function DeleteEvent(Id, CalEventId) {
-        $.ajax({
-            url: '../../Attendances/Delete/' + Id,
-            type: "POST",
-            dataType: "json",
-            data: ({
-                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val()
-            }),
-
-            success: function (data, textStatus) {
-                if (!data) {
-                    alert("Event could not be deleted.");
-                    return;
-                }
-                
-            },
-        });
-        $('#calendar').fullCalendar('removeEvents', CalEventId);
-        $('#deleteModalClose').click();
-    };
-
-    function CreateEvent() {
-
-        $.ajax({
-            url: '../../Attendances/Create',
-            type: "POST",
-            dataType: "json",
-            data: ({
-                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-                Date: $('#createModalDate').val(),
-                ChildId: $('#createModalChildId').val(),
-                PickupTime: $('#createModalPickupTime').val(),
-                Id: $('#createModalId').val(),
-                title: $('#createModaltitle').val(),
-                start: $('#createModalstart').val(),
-                end: $('#createModalend').val(),
-                allday:$('#createModalallDay').val(),
-                editable: $('#createModaleditable').val(),
-            }),
-
-            success: function (data, textStatus) {
-                if (!data) {
-                    alert("Event could not be created.");
-                    return;
-                }
-                $('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: date, end: date }, true);
-                calendar.fullCalendar('updateEvent', event);
-            },
-        });
-        //$('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: date, end: date }, true);
-        $('#createModalClose').click();
-    };
 </script>
+

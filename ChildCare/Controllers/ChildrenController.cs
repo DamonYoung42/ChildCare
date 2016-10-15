@@ -20,9 +20,19 @@ namespace ChildCare.Controllers
         // GET: Children
         public ActionResult Index()
         {
-            var userId = User.Identity.GetUserId();
-            var children = db.Children.Include(a => a.Teacher).Where(c => c.UserId == userId);
-            return View(children.ToList());
+            if (User.IsInRole("Parent"))
+            {
+                var userId = User.Identity.GetUserId();
+                var children = db.Children.Include(a => a.Teacher).Where(c => c.UserId == userId);
+                return View(children.ToList());
+            }
+            else
+            {
+                var children = db.Children.Include(a => a.Teacher).OrderBy(y => y.LastName).OrderBy(z =>z.FirstName);
+                return View(children.ToList());
+            }
+
+
         }
 
         // GET: Children/Details/5

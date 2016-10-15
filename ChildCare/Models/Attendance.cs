@@ -16,7 +16,6 @@ namespace ChildCare.Models
         [Display(Name = "Date")]
         public DateTime Date { get; set; }
 
-        [Required]
         [Display(Name = "Pickup Time")]
         public DateTime PickupTime { get; set; }
 

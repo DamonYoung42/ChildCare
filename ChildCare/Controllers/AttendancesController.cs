@@ -21,6 +21,13 @@ namespace ChildCare.Controllers
             return View(attendances.ToList());
         }
 
+        public JsonResult PickupToday(int Id)
+        {
+            DateTime today = DateTime.Today;
+            DateTime today2 = DateTime.Today.Date;
+            var attendanceRecord = db.Attendances.Include(a => a.Child).Where(x => x.ChildId == Id && x.Date == today).ToArray();
+            return Json(attendanceRecord, JsonRequestBehavior.AllowGet);
+        }
 
         // GET: Attendances/Details/5
         public ActionResult Details(int? id)
@@ -50,16 +57,19 @@ namespace ChildCare.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Date,PickupTime,ChildId, start, end, editable, allDay, title")] Attendance attendance)
-        {
+
+         {
             if (ModelState.IsValid)
             {
                 db.Attendances.Add(attendance);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return View(attendance);
+                return RedirectToAction("Details", "Children", new { Id = attendance.ChildId });
             }
 
             ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", attendance.ChildId);
-            return View(attendance);
+            //return View(attendance);
+            return RedirectToAction("Details", "Children", new { Id = attendance.ChildId });
         }
 
         // GET: Attendances/Edit/5
@@ -78,6 +88,8 @@ namespace ChildCare.Controllers
             return View(attendance);
         }
 
+        
+
         // POST: Attendances/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -92,7 +104,8 @@ namespace ChildCare.Controllers
                 return RedirectToAction("Details", "Children");
             }
             ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", attendance.ChildId);
-            return View(attendance);
+            //return View(attendance);
+            return RedirectToAction("Details", "Children");
         }
 
         // GET: Attendances/Delete/5
