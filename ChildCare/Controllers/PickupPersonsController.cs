@@ -16,19 +16,27 @@ namespace ChildCare.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: PickupPersons
+        [Authorize]
         public ActionResult Index()
         {
-            //var pickupPersons = db.PickupPersons.Include(p => p.Child);
 
-            var userId = User.Identity.GetUserId();
-            //var pickupPersons = db.PickupPersons.Include(a => a.Child)
-            //    .Join(db.Users, a => a.Child.UserId, b => b.Id, (a,b) => new { a, b })
-            //    .Where(b => b.b.Id == userId);
-            var pickupPersons = db.PickupPersons.Include(a => a.Child).Where(c => c.Child.UserId == userId);
-            return View(pickupPersons.ToList());
+            //var pickupPersons = db.PickupPersons.Include(p => p.Child);
+            if (User.IsInRole("Parent"))
+            {
+                var userId = User.Identity.GetUserId();
+                var drivers = db.PickupPersons.Include(a => a.Child).Where(c => c.Child.UserId == userId).OrderBy(c => c.LastName).OrderBy(z => z.FirstName);
+                return View(drivers.ToList());
+            }
+            else
+            {
+                var drivers = db.PickupPersons.Include(a => a.Child).OrderBy(y => y.LastName).OrderBy(z => z.FirstName);
+                return View(drivers.ToList());
+            }
+
         }
 
         // GET: PickupPersons/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -44,6 +52,7 @@ namespace ChildCare.Controllers
         }
 
         // GET: PickupPersons/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName");
@@ -55,6 +64,7 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Photo,ChildId,PhoneNumber,EmailAddress")] PickupPerson pickupPerson, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
@@ -82,6 +92,7 @@ namespace ChildCare.Controllers
         }
 
         // GET: PickupPersons/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -102,6 +113,7 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Photo,ChildId,PhoneNumber,EmailAddress")] PickupPerson pickupPerson, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
@@ -122,6 +134,7 @@ namespace ChildCare.Controllers
         }
 
         // GET: PickupPersons/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -139,6 +152,7 @@ namespace ChildCare.Controllers
         // POST: PickupPersons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             PickupPerson pickupPerson = db.PickupPersons.Find(id);

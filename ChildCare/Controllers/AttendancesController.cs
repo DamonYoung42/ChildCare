@@ -25,7 +25,7 @@ namespace ChildCare.Controllers
         {
             DateTime today = DateTime.Today;
             DateTime today2 = DateTime.Today.Date;
-            var attendanceRecord = db.Attendances.Include(a => a.Child).Where(x => x.ChildId == Id && x.Date == today).ToArray();
+            var attendanceRecord = db.Attendances.Include(a => a.Child).Where(x => x.ChildId == Id && x.Date == today).ToList();
             return Json(attendanceRecord, JsonRequestBehavior.AllowGet);
         }
 

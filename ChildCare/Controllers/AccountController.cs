@@ -149,13 +149,26 @@ namespace ChildCare.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
             {
                 ViewBag.Name = new SelectList(db.Roles.Where(u => !u.Name.Contains("Admin"))
                                 .ToList(), "Name", "Name");
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, PhoneNumber = model.PhoneNumber };
+                ////PHOTO UPLOAD
+                if (photo != null && photo.ContentLength > 0)
+                {
+                    model.Photo = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(photo.FileName);
+                    string path = System.IO.Path.Combine(
+                                           Server.MapPath("~/Images/PickupPerson"), model.Photo);
+                    photo.SaveAs(path);
+                }
+                else
+                {
+                    model.Photo = "no_photo.jpg";
+                }
+                ////
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, PhoneNumber = model.PhoneNumber, Photo = model.Photo};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

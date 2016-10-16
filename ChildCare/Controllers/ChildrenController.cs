@@ -18,8 +18,12 @@ namespace ChildCare.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Children
+        [Authorize]
         public ActionResult Index()
         {
+            var isauthenticated = User.Identity.IsAuthenticated;
+            var name = User.Identity.Name;
+            
             if (User.IsInRole("Parent"))
             {
                 var userId = User.Identity.GetUserId();
@@ -36,6 +40,7 @@ namespace ChildCare.Controllers
         }
 
         // GET: Children/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -58,6 +63,7 @@ namespace ChildCare.Controllers
         }
 
         // GET: Children/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.UserId = User.Identity.GetUserId();
@@ -71,6 +77,7 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "Id,FirstName,LastName,GradeLevel,Photo,UserId,Medications,Notes, TeacherId")] Child child, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
@@ -100,6 +107,7 @@ namespace ChildCare.Controllers
         }
 
         // GET: Children/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -121,6 +129,7 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,GradeLevel,Photo,UserId,Medications,Notes,TeacherId")] Child child, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
@@ -144,6 +153,7 @@ namespace ChildCare.Controllers
         }
 
         // GET: Children/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -162,6 +172,7 @@ namespace ChildCare.Controllers
         // POST: Children/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             Child child = db.Children.Find(id);
