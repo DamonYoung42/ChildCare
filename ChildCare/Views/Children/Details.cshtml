@@ -367,6 +367,7 @@
 
         $.ajax({
             url: '../../Attendances/Edit',
+            async: false,
             type: "POST",
             dataType: "json",
             data: ({
@@ -381,24 +382,40 @@
                 allday: false,
                 editable: false
             }),
-            async: false,
+
             success: function (data, textStatus) {
                 if (!data) {
                     alert("Child could not be signed out.");
                     return;
                 }
-
-                calendar.fullCalendar('updateEvent', event);
             },
         });
 
+        $.ajax({
+            async: false,
+            url: '../../Attendances/PickupToday',
+            type: "GET",
+            dataType: "json",
+            data: {
+                Id: @Model.Id,
+            },
+            success: function (data, textStatus) {
+                if (!data) {
+                    alert("This child is not enrolled today.");
+                    return;
+                }
+                else{
+                    todayAttendance = data;
+                }
+            }
+        });
         SendEmail(todayAttendance);
     };
 
     function SendEmail(params)
     {
         // parameters: service_id, template_id, template_parameters
-        emailjs.send("default_service","student_signout",{to_name: params[0].FirstName, send_to: params[0].Email, student_name: params[0].b.Child.FirstName, message_html: params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('hh:mm A') + "."});
+        emailjs.send("default_service","student_signout",{to_name: params[0].FirstName, send_to: params[0].Email, student_name: params[0].b.Child.FirstName, message_html: params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + "."});
 
     }
 
