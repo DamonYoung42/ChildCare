@@ -24,8 +24,14 @@ namespace ChildCare.Controllers
         public JsonResult PickupToday(int Id)
         {
             DateTime today = DateTime.Today;
-            DateTime today2 = DateTime.Today.Date;
-            var attendanceRecord = db.Attendances.Include(a => a.Child).Where(x => x.ChildId == Id && x.Date == today).ToList();
+            var attendanceRecord = db.Attendances.Include(a => a.Child)
+                .Join(db.Users, b => b.Child.UserId, c => c.Id, (b, c) => new { b, c.Email, c.PhoneNumber, c.FirstName })
+                .Where(x => x.b.ChildId == Id && x.b.Date == today)
+                .ToList();
+
+            //var attendanceRecord = db.Attendances.Include(a => a.Child)
+            //    .Where(x => x.ChildId == Id && x.Date == today)
+            //    .ToList();
             return Json(attendanceRecord, JsonRequestBehavior.AllowGet);
         }
 

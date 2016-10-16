@@ -21,18 +21,40 @@ namespace ChildCare.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var isauthenticated = User.Identity.IsAuthenticated;
-            var name = User.Identity.Name;
-            
+            var userId = User.Identity.GetUserId();
             if (User.IsInRole("Parent"))
             {
-                var userId = User.Identity.GetUserId();
                 var children = db.Children.Include(a => a.Teacher).Where(c => c.UserId == userId);
                 return View(children.ToList());
             }
             else
             {
                 var children = db.Children.Include(a => a.Teacher).OrderBy(y => y.LastName).OrderBy(z =>z.FirstName);
+                //var children = db.Children.Include(a => a.Teacher)
+                //    .Join(db.Users, b => b.UserId, c => c.Id, (b, c) => new { b, c.Email, c.PhoneNumber })
+                //    .OrderBy(d => d.b.LastName)
+                //    .OrderBy(z => z.b.FirstName);
+
+                //var students = new List<Child>();
+                //foreach (var child  in children)
+                //{
+                //    students.Add(new Child()
+                //    {
+                //        FirstName = child.b.FirstName,
+                //        LastName = child.b.LastName,
+                //        GradeLevel = child.b.GradeLevel,
+                //        Medications = child.b.Medications,
+                //        Notes = child.b.Notes,
+                //        Id = child.b.Id,
+                //        UserId = child.b.UserId,
+                //        Teacher = child.b.Teacher,
+                //        Photo = child.b.Photo,
+                //        Email = child.Email,
+                //        Phone = child.PhoneNumber
+
+                //    });
+                //}
+
                 return View(children.ToList());
             }
 

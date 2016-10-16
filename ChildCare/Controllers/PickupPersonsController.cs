@@ -24,12 +24,12 @@ namespace ChildCare.Controllers
             if (User.IsInRole("Parent"))
             {
                 var userId = User.Identity.GetUserId();
-                var drivers = db.PickupPersons.Include(a => a.Child).Where(c => c.Child.UserId == userId).OrderBy(c => c.LastName).OrderBy(z => z.FirstName);
+                var drivers = db.PickupPersons.Include(a => a.Child).Where(c => c.Child.UserId == userId).OrderBy(c => c.LastName);
                 return View(drivers.ToList());
             }
             else
             {
-                var drivers = db.PickupPersons.Include(a => a.Child).OrderBy(y => y.LastName).OrderBy(z => z.FirstName);
+                var drivers = db.PickupPersons.Include(a => a.Child).OrderBy(y => y.LastName);
                 return View(drivers.ToList());
             }
 
