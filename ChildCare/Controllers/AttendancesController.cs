@@ -107,6 +107,8 @@ namespace ChildCare.Controllers
             {
                 db.Entry(attendance).State = EntityState.Modified;
                 db.SaveChanges();
+                TwilioSMS SMSMessage = new TwilioSMS();
+                SMSMessage.SendSMS();
                 return RedirectToAction("Details", "Children");
             }
             ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", attendance.ChildId);

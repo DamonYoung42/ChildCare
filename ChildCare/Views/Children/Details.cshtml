@@ -1,4 +1,6 @@
 ﻿@model ChildCare.Models.Child
+@using Twilio;
+
 <script src="~/Scripts/jquery.min.js" type="text/javascript"></script>
 <script src="~/Scripts/moment.min.js" type="text/javascript"></script>
 <script src="~/Scripts/fullcalendar.js" type="text/javascript"></script>
@@ -82,6 +84,10 @@
             <dd></dd>
             <dt></dt>
             <dd><button type="button" class="btn btn-primary" id="signOut" onclick="SignOut()">Sign out</button></dd>
+            <dt></dt>
+                        <dd></dd>
+                        <dt></dt>
+                        <dd><button type="button" class="btn btn-primary" id="signOut" onclick="TwilioSMS.SendSMS()">Send Text</button></dd>
         }
 
     </dl>
@@ -409,15 +415,37 @@
                 }
             }
         });
-        SendEmail(todayAttendance);
+
+        //SendEmail(todayAttendance);
     };
 
     function SendEmail(params)
     {
         // parameters: service_id, template_id, template_parameters
+        //emailjs.send("default_service","student_signout",{to_name: params[0].FirstName, send_to: "4147585380@email.uscc.net", student_name: params[0].b.Child.FirstName, message_html: params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + "."});
+
         emailjs.send("default_service","student_signout",{to_name: params[0].FirstName, send_to: params[0].Email, student_name: params[0].b.Child.FirstName, message_html: params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + "."});
 
     }
+
+    //function SendSMS(params)
+    //{
+    //    $.ajax({
+    //        url: 'https:AC60d3e2ed31e25f0f12396fdf40247dfa:03008d4e6bad20d2cc4c488922d220c6@api.twilio.com/2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages',
+    //        //url: 'https://api.twilio.com//2010-04-01/Accounts/AC2bbe1b78d57d4a73899b6f0a63d758cf:dc9bf3662853dc5f43895d40f4cd477f/Messages',
+    //        async: true,
+    //        type: "POST",
+    //        dataType: "json",
+    //        data: ({
+    //            __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+    //            To: "+14147585380",
+    //            From: "+15005550006",
+    //            Body: "Hello from ChildCareApp"
+    //        }),
+
+    //    });
+
+    //}
 
 </script>
 
