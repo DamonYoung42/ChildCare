@@ -21,6 +21,11 @@ namespace ChildCare.Controllers
         }
 
         // GET: Billings/Details/5
+        public JsonResult BillingDetails()
+        {
+            return Json(db.Billings.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -33,7 +38,9 @@ namespace ChildCare.Controllers
                 return HttpNotFound();
             }
             return View(billing);
+
         }
+
 
         // GET: Billings/Create
         public ActionResult Create()

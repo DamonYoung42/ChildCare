@@ -372,13 +372,33 @@
             }
         });
 
-        todayAttendance[0].b.PickupTime = moment(new Date()).format('MM-DD-YYYY h:mm A');
-        var timeDuration = moment.utc(moment(todayAttendance[0].b.PickupTime,"H:mm:ss A").diff(moment("6:00 AM","H:mm:ss A"))).format("H:mm:ss")
-        var durationHours = moment(timeDuration).hours
-        //var durationMinutes = moment(timeDuration).format("mm");
-        var durationMinutes = moment.duration(timeDuration).asMinutes()
-        var HourlyRate = 4.25;
-        todayAttendance[0].b.AmountBilled = (durationMinutes* (HourlyRate/60)).toFixed(2);
+        var systemBilling;
+
+        $.ajax({
+            async: false,
+            url: '../../Billings/BillingDetails',
+            type: "GET",
+            dataType: "json",
+            success: function (data, textStatus) {
+                if (!data) {
+                    alert("This child is not enrolled today.");
+                    return;
+                }
+                else{
+                    systemBilling = data;
+                }
+            }
+        });
+        
+        var hourlyRate = systemBilling[0].HourlyRate;
+        var startTime = systemBilling[0].StartTime;
+        todayAttendance[0].b.PickupTime = moment(new Date());
+        //var timeDuration = moment.utc(moment(todayAttendance[0].b.PickupTime,"H:mm:ss A").diff(moment(startTime,"H:mm:ss A"))).format("H:mm");
+        var timeDuration = moment.utc(moment(todayAttendance[0].b.PickupTime,"H:mm:ss A").diff(moment("6:00 AM","H:mm:ss A"))).format("H:mm");
+        var durationMinutes = moment.duration(timeDuration).asMinutes();
+
+        //var HourlyRate = 4.25;
+        todayAttendance[0].b.AmountBilled = (durationMinutes* (hourlyRate/60)).toFixed(2);
 
         $.ajax({
             url: '../../Attendances/Edit',
@@ -389,7 +409,7 @@
                 __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
                 Date: moment(todayAttendance[0].b.Date).format('MM-DD-YYYY'),
                 ChildId: @Model.Id,
-                PickupTime: moment(new Date()).format('MM-DD-YYYY h:mm A'),
+                PickupTime: todayAttendance[0].b.PickupTime.format('MM-DD-YYYY h:mm A'),
                 Id: todayAttendance[0].b.Id,
                 title: todayAttendance[0].b.title,
                 start: moment(todayAttendance[0].b.start).format('MM-DD-YYYY h:mm A'),
