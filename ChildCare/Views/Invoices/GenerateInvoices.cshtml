@@ -1,0 +1,43 @@
+﻿@model ChildCare.Models.Invoice
+
+    @{
+        ViewBag.Title = "Generate Invoices";
+    }
+<div class="container">
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal"></div>
+
+        <div class="container heading-box">
+            <div class="row" style="margin-top: 10vh">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <input type="date" class="form-control input-lg" placeholder="Select a month" id="month" />
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <input type="date" class="form-control input-lg" placeholder="Select a year" id="year" />
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <input type="date" class="form-control input-lg" placeholder="Select a due date" id="dueDate"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+    @section Scripts {
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="~/scripts/pagination.js"></script>
+        <script type="text/javascript" src="~/scripts/search.js"></script>
+
+    }
+
+
+

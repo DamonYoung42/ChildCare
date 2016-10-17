@@ -23,7 +23,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StartTime)
+            @Model.StartTime.ToShortTimeString()
+            @*@Html.DisplayFor(model => model.StartTime)*@
         </dd>
 
         <dt>
@@ -31,7 +32,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EndTime)
+            @Model.EndTime.ToShortTimeString()
+            @*@Html.DisplayFor(model => model.EndTime)*@
         </dd>
 
     </dl>

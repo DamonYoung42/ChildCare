@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ChildCare.Models;
+using Microsoft.AspNet.Identity;
+using System.Globalization;
 
 namespace ChildCare.Controllers
 {
@@ -17,8 +19,18 @@ namespace ChildCare.Controllers
         // GET: Invoices
         public ActionResult Index()
         {
-            var invoices = db.Invoices.Include(i => i.ApplicationUser);
-            return View(invoices.ToList());
+            if (User.IsInRole("Parent"))
+            {
+                var userId = User.Identity.GetUserId();
+                var invoices = db.Invoices.Include(i => i.ApplicationUser).Where(x => x.UserId == userId);
+                return View(invoices.ToList());
+            }
+            else
+            {
+                var invoices = db.Invoices.Include(i => i.ApplicationUser).OrderBy(x => x.ApplicationUser.LastName);
+                return View(invoices.ToList());
+            }
+
         }
 
         // GET: Invoices/Details/5
@@ -36,10 +48,29 @@ namespace ChildCare.Controllers
             return View(invoice);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Invoices/Create
         public ActionResult Create()
         {
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
+
+            ViewBag.Months = new SelectList(Enumerable.Range(1, 12).Select(x => new SelectListItem()
+            {
+                Text = CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[x - 1] + " (" + x + ")",
+                Value = x.ToString()
+            }), "Value", "Text");
+
+            ViewBag.Years = new SelectList(Enumerable.Range(DateTime.Now.Year, 10).Select(x => new SelectListItem()
+            {
+                Text = x.ToString(),
+                Value = x.ToString()
+            }), "Value", "Text");
+
+            //ViewBag.Years = new SelectList(years.Select(y => new SelectListItem()
+            //{
+            //    Text = y.ToString(),
+            //    Value = y.ToString()
+            //}));
             return View();
         }
 
@@ -50,6 +81,7 @@ namespace ChildCare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Month,Year,AmountDue,DateDue,AmountPaid,DatePaid,UserId, Notes, Adjustments")] Invoice invoice)
         {
+
             if (ModelState.IsValid)
             {
                 db.Invoices.Add(invoice);
