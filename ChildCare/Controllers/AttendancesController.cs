@@ -62,7 +62,7 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Date,PickupTime,ChildId, start, end, editable, allDay, title")] Attendance attendance)
+        public ActionResult Create([Bind(Include = "Id,Date,PickupTime,ChildId, start, end, editable, allDay, title, AmountBilled")] Attendance attendance)
 
          {
             if (ModelState.IsValid)
@@ -101,7 +101,7 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Date,PickupTime,ChildId, start, end, editable, allDay, title")] Attendance attendance)
+        public ActionResult Edit([Bind(Include = "Id,Date,PickupTime,ChildId, start, end, editable, allDay, title, AmountBilled")] Attendance attendance)
         {
             if (ModelState.IsValid)
             {

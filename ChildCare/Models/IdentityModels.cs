@@ -46,5 +46,6 @@ namespace ChildCare.Models
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<PickupPerson> PickupPersons { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Billing> Billings { get; set; }
     }
 }

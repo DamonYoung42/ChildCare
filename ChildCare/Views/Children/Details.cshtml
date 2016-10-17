@@ -329,6 +329,7 @@
                     end: $('#createModalend').val(),
                     allday:$('#createModalallDay').val(),
                     editable: $('#createModaleditable').val(),
+                    AmountBilled: 0,
                 }),
 
                 success: function (data, textStatus) {
@@ -371,6 +372,14 @@
             }
         });
 
+        todayAttendance[0].b.PickupTime = moment(new Date()).format('MM-DD-YYYY h:mm A');
+        var timeDuration = moment.utc(moment(todayAttendance[0].b.PickupTime,"H:mm:ss A").diff(moment("6:00 AM","H:mm:ss A"))).format("H:mm:ss")
+        var durationHours = moment(timeDuration).hours
+        //var durationMinutes = moment(timeDuration).format("mm");
+        var durationMinutes = moment.duration(timeDuration).asMinutes()
+        var HourlyRate = 4.25;
+        todayAttendance[0].b.AmountBilled = (durationMinutes* (HourlyRate/60)).toFixed(2);
+
         $.ajax({
             url: '../../Attendances/Edit',
             async: false,
@@ -380,13 +389,14 @@
                 __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
                 Date: moment(todayAttendance[0].b.Date).format('MM-DD-YYYY'),
                 ChildId: @Model.Id,
-                PickupTime: moment(new Date()).format('MM-DD-YYYY hh:mm A'),
+                PickupTime: moment(new Date()).format('MM-DD-YYYY h:mm A'),
                 Id: todayAttendance[0].b.Id,
                 title: todayAttendance[0].b.title,
-                start: moment(todayAttendance[0].b.start).format('MM-DD-YYYY hh:mm A'),
-                end: moment(todayAttendance[0].b.end).format('MM-DD-YYYY hh:mm A'),
+                start: moment(todayAttendance[0].b.start).format('MM-DD-YYYY h:mm A'),
+                end: moment(todayAttendance[0].b.end).format('MM-DD-YYYY h:mm A'),
                 allday: false,
-                editable: false
+                editable: false,
+                AmountBilled: todayAttendance[0].b.AmountBilled
             }),
 
             success: function (data, textStatus) {
@@ -428,24 +438,10 @@
 
     }
 
-    //function SendSMS(params)
-    //{
-    //    $.ajax({
-    //        url: 'https:AC60d3e2ed31e25f0f12396fdf40247dfa:03008d4e6bad20d2cc4c488922d220c6@api.twilio.com/2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages',
-    //        //url: 'https://api.twilio.com//2010-04-01/Accounts/AC2bbe1b78d57d4a73899b6f0a63d758cf:dc9bf3662853dc5f43895d40f4cd477f/Messages',
-    //        async: true,
-    //        type: "POST",
-    //        dataType: "json",
-    //        data: ({
-    //            __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-    //            To: "+14147585380",
-    //            From: "+15005550006",
-    //            Body: "Hello from ChildCareApp"
-    //        }),
+    function CalculateAmountBilled(params)
+    {
 
-    //    });
-
-    //}
+    }
 
 </script>
 

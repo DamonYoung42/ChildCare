@@ -214,8 +214,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\AttendancesController.cs" />
+    <Compile Include="Controllers\BillingsController.cs" />
     <Compile Include="Controllers\ChildrenController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PickupPersonsController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
@@ -246,10 +248,23 @@
     <Compile Include="Migrations\201610151424492_PickupTime not required in Attendance table.Designer.cs">
       <DependentUpon>201610151424492_PickupTime not required in Attendance table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610171347126_billing model created.cs" />
+    <Compile Include="Migrations\201610171347126_billing model created.Designer.cs">
+      <DependentUpon>201610171347126_billing model created.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610171406310_adjustment, notes added to invoice model.cs" />
+    <Compile Include="Migrations\201610171406310_adjustment, notes added to invoice model.Designer.cs">
+      <DependentUpon>201610171406310_adjustment, notes added to invoice model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610171434486_amount billed added to attendance model.cs" />
+    <Compile Include="Migrations\201610171434486_amount billed added to attendance model.Designer.cs">
+      <DependentUpon>201610171434486_amount billed added to attendance model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Attendance.cs" />
+    <Compile Include="Models\Billing.cs" />
     <Compile Include="Models\Child.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
@@ -361,6 +376,16 @@
     <Content Include="Views\Children\Edit.cshtml" />
     <Content Include="Views\Children\Index.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Invoices\Create.cshtml" />
+    <Content Include="Views\Invoices\Delete.cshtml" />
+    <Content Include="Views\Invoices\Details.cshtml" />
+    <Content Include="Views\Invoices\Edit.cshtml" />
+    <Content Include="Views\Invoices\Index.cshtml" />
+    <Content Include="Views\Billings\Create.cshtml" />
+    <Content Include="Views\Billings\Delete.cshtml" />
+    <Content Include="Views\Billings\Details.cshtml" />
+    <Content Include="Views\Billings\Edit.cshtml" />
+    <Content Include="Views\Billings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -395,6 +420,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610151424492_PickupTime not required in Attendance table.resx">
       <DependentUpon>201610151424492_PickupTime not required in Attendance table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610171347126_billing model created.resx">
+      <DependentUpon>201610171347126_billing model created.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610171406310_adjustment, notes added to invoice model.resx">
+      <DependentUpon>201610171406310_adjustment, notes added to invoice model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610171434486_amount billed added to attendance model.resx">
+      <DependentUpon>201610171434486_amount billed added to attendance model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

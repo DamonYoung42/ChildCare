@@ -1,0 +1,88 @@
+﻿@model ChildCare.Models.Invoice
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Invoice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Month)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Month)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountDue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountDue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateDue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateDue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountPaid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountPaid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DatePaid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatePaid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Adjustments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adjustments)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

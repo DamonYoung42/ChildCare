@@ -35,5 +35,11 @@ namespace ChildCare.Models
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+
+        [Display(Name = "Adjustments")]
+        public double Adjustments { get; set; }
+
+        [Display(Name = "Notes")]
+        public string Notes { get; set; }
     }
 }

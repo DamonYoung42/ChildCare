@@ -32,5 +32,8 @@ namespace ChildCare.Models
 
         public Boolean editable { get; set; }
 
+        [Display(Name = "Amount Billed")]
+        public double AmountBilled { get; set; }
+
     }
 }

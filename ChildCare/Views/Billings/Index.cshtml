@@ -1,6 +1,4 @@
-﻿@model IEnumerable<ChildCare.Models.Attendance>
-
-
+﻿@model IEnumerable<ChildCare.Models.Billing>
 
 @{
     ViewBag.Title = "Index";
@@ -14,16 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Child.FirstName)
+            @Html.DisplayNameFor(model => model.HourlyRate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => model.StartTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PickupTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AmountBilled)
+            @Html.DisplayNameFor(model => model.EndTime)
         </th>
         <th></th>
     </tr>
@@ -31,16 +26,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Child.FirstName)
+            @Html.DisplayFor(modelItem => item.HourlyRate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @Html.DisplayFor(modelItem => item.StartTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PickupTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AmountBilled)
+            @Html.DisplayFor(modelItem => item.EndTime)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
@@ -51,4 +43,3 @@
 }
 
 </table>
-
