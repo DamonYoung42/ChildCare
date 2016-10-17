@@ -17,7 +17,7 @@ namespace ChildCare.Controllers
         // GET: Attendances
         public ActionResult Index(int Id)
         {
-            var attendances = db.Attendances.Include(a => a.Child).Where(x => x.ChildId == Id);
+            var attendances = db.Attendances.Include(a => a.Child).Where(x => x.ChildId == Id).OrderBy(x => x.Date);
             return View(attendances.ToList());
         }
 

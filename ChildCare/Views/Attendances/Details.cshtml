@@ -23,7 +23,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Date)
+            @Model.Date.ToShortDateString()
+            @*@Html.DisplayFor(model => model.Date.ToShortDateString())*@
         </dd>
 
         <dt>
@@ -31,7 +32,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PickupTime)
+            @Model.PickupTime.ToShortTimeString()
+            @*@Html.DisplayFor(model => model.PickupTime)*@
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.AmountBilled)

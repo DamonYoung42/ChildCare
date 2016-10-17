@@ -34,10 +34,12 @@
             @Html.DisplayFor(modelItem => item.Child.FirstName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @item.Date.ToShortDateString()
+            @*@Html.DisplayFor(modelItem => item.Date.ToShortDateString())*@
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PickupTime)
+            @item.PickupTime.ToShortTimeString()
+            @*@Html.DisplayFor(modelItem => item.PickupTime)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AmountBilled)
