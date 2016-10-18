@@ -32,6 +32,7 @@ namespace ChildCare.Models
         [Display(Name = "Date Paid")]
         public DateTime DatePaid { get; set; }
 
+        [Required]
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

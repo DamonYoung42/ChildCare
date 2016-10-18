@@ -1,30 +1,49 @@
-﻿@model ChildCare.Models.Invoice
+﻿@model IEnumerable<ChildCare.Models.Invoice>
 
-    @{
-        ViewBag.Title = "Generate Invoices";
-    }
+@{
+    ViewBag.Title = "Index";
+}
+
 <div class="container">
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal"></div>
 
         <div class="container heading-box">
+
             <div class="row" style="margin-top: 10vh">
+                <h4>Generate Monthly Invoices</h4>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <input type="date" class="form-control input-lg" placeholder="Select a month" id="month" />
+                        <p>Select a month:</p>
+                        <input type="month" class="form-control input-md" placeholder="Select a month" id="month" />
                     </div>
                 </div>
 
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <input type="date" class="form-control input-lg" placeholder="Select a year" id="year" />
+                        <p>Select a due date:</p>
+                        <input type="date" class="form-control input-md" placeholder="Select a due date" id="dueDate"/>
                     </div>
                 </div>
 
                 <div class="col-sm-4">
-                    <div class="form-group">
-                        <input type="date" class="form-control input-lg" placeholder="Select a due date" id="dueDate"/>
+                    <p></p><p></p>
+                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="GenerateMonthlyInvoices()" />
+                </div>
+            </div>
+        </div>
+
+        <div id="inputModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                        <h4 id="inputModalTitle" class="modal-title">Reminder</h4>
+                    </div>
+                    <div id="inputModalBody" class="modal-body">Please enter a month and due date.</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="inputModalClose" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -34,10 +53,64 @@
 
     @section Scripts {
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="~/scripts/pagination.js"></script>
-        <script type="text/javascript" src="~/scripts/search.js"></script>
-
+        <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/moment.min.js" type="text/javascript"></script>
     }
+
+<script>
+    function GenerateMonthlyInvoices()
+    {
+        var invoiceData;
+        if ($('#month').val() != "" || $('#dueDate').val() != "") {
+
+            $.ajax({
+                async: false,
+                url: '../../Attendances/Invoice',
+                type: "GET",
+                dataType: "json",
+                data: {
+                    month: moment($('#month').val()).format("M"),
+                    year: moment($('#year').val()).format('YYYY')
+                },
+                success: function (data, textStatus) {
+                    if (!data) {
+                        alert("There was an issue generating invoices. Please try again.");
+                        return;
+                    }
+                    else{
+                        invoiceData = data;
+                    }
+                }
+            });
+        }
+        else
+        {
+            $('#inputModal').modal();
+        }
+
+        for (i = 0; i < invoiceData.length; i++) {
+            $.ajax({
+                async: true,
+                url: '../../Invoices/Create',
+                type: 'POST',
+                datatype: 'json',
+                data: {
+                    __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                    Month: moment($('#month').val()).format("MMMM"),
+                    Year: moment($('#year').val()).format('YYYY'),
+                    AmountDue: invoiceData[i].AmountDue,
+                    DateDue: $('#dueDate').val(),
+                    Adjustments: 0,
+                    Notes: "",
+                    AmountPaid: 0,
+                    UserId: "984d33d9-5cd0-4a0a-a5f2-34582bc51215",
+                    DatePaid: "1/1/1970"
+                }
+
+            });
+        }
+    }
+</script>
 
 
 

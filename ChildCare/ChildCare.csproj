@@ -260,6 +260,18 @@
     <Compile Include="Migrations\201610171434486_amount billed added to attendance model.Designer.cs">
       <DependentUpon>201610171434486_amount billed added to attendance model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610180453050_invoices model updated.cs" />
+    <Compile Include="Migrations\201610180453050_invoices model updated.Designer.cs">
+      <DependentUpon>201610180453050_invoices model updated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610180456104_datepaid dropped on invoices.cs" />
+    <Compile Include="Migrations\201610180456104_datepaid dropped on invoices.Designer.cs">
+      <DependentUpon>201610180456104_datepaid dropped on invoices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610180500502_datepaid.cs" />
+    <Compile Include="Migrations\201610180500502_datepaid.Designer.cs">
+      <DependentUpon>201610180500502_datepaid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -431,6 +443,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610171434486_amount billed added to attendance model.resx">
       <DependentUpon>201610171434486_amount billed added to attendance model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610180453050_invoices model updated.resx">
+      <DependentUpon>201610180453050_invoices model updated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610180456104_datepaid dropped on invoices.resx">
+      <DependentUpon>201610180456104_datepaid dropped on invoices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610180500502_datepaid.resx">
+      <DependentUpon>201610180500502_datepaid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

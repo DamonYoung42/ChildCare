@@ -21,6 +21,37 @@ namespace ChildCare.Controllers
             return View(attendances.ToList());
         }
 
+        public JsonResult Invoice(int month, int year)
+        {
+
+            var attendances = db.Attendances
+                .Where(x => x.Date.Month == month)
+                .Where(x => x.Date.Year == year)
+                .Select(x => new { AmountBilled = x.AmountBilled, ChildId = x.ChildId, ParentId = x.Child.UserId, FirstName = x.Child.ApplicationUser.FirstName, LastName = x.Child.ApplicationUser.LastName, Email = x.Child.ApplicationUser.Email, Phone = x.Child.ApplicationUser.PhoneNumber })
+                .GroupBy(x => x.ParentId)
+              
+                .Select(x => new
+                 {
+                     ParentId = x.Key,
+                     AmountDue = x.Sum(y => y.AmountBilled)
+                 }
+
+                );
+
+            //var attendances = db.Attendances.Join(db.Children, a => a.ChildId, b => b.Id, (a, b) => new { a.Date, a.AmountBilled, a.ChildId, b.UserId })
+            //    .Join(db.Users, a => a.UserId, y => y.Id, (a, y) => new { a.Date, a.AmountBilled, a.ChildId, a.UserId, y.LastName, y.FirstName, y.Email, y.PhoneNumber })
+            //    .Where(x => x.Date.Month == month)
+            //    .Where(x => x.Date.Year == year)
+            //    .OrderBy(x => x.ChildId)
+            //    .OrderBy(x => x.Date)
+            //    .GroupBy(x => x.ChildId)
+            //    .Select(group => new { ChildId = group.Key, AmountDue = group.Sum(x => x.AmountBilled)})
+            //    .ToList();           
+
+
+            return Json(attendances, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult PickupToday(int Id)
         {
             DateTime today = DateTime.Today;

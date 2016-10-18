@@ -16,6 +16,12 @@ namespace ChildCare.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public ActionResult GenerateInvoices()
+        {
+            //ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
+            return View();
+        }
+
         // GET: Invoices
         public ActionResult Index()
         {
@@ -86,11 +92,12 @@ namespace ChildCare.Controllers
             {
                 db.Invoices.Add(invoice);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("GenerateInvoices", "Invoices");
             }
 
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", invoice.UserId);
-            return View(invoice);
+            //return View(invoice);
+            return RedirectToAction("GenerateInvoices", "Invoices");
         }
 
         // GET: Invoices/Edit/5
