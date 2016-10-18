@@ -36,6 +36,10 @@
                     <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="GenerateMonthlyInvoices()" />
                 </div>
             </div>
+            <div class="row" style="margin-top:10vh">
+                <hr />
+            </div>
+
 
             <div class="row" style="margin-top: 10vh">
                 <h4>Send Monthly Invoice Emails</h4>
@@ -55,6 +59,31 @@
                     <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="SendInvoiceEmail()" />
                 </div>
             </div>
+            <div class="row" style="margin-top:10vh">
+                <hr/>
+            </div>
+
+
+            <div class="row" style="margin-top: 10vh">
+                <h4>Email Program Update</h4>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <p>Subject:</p>
+                        <input type="text" class="form-control input-md" placeholder="" id="subject" />
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <p>Body:</p>
+                        <input type="text" class="form-control input-md" placeholder="" id="body" />
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <p></p><p></p>
+                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="SendProgramEmail()" />
+                </div>
+            </div>
+
         </div>
 
         <div id="inputModal" class="modal fade">
@@ -84,7 +113,7 @@
     function GenerateMonthlyInvoices()
     {
         var invoiceData;
-        if ($('#month').val() != "" || $('#dueDate').val() != "")
+        if ($('#month').val() != "" && $('#dueDate').val() != "")
         {
             $.ajax({
                 async: false,
@@ -188,6 +217,45 @@
     {
             emailjs.send("default_service", "invoice", { to_name: name, send_to: to, message_html: message, subject: subject});
        
+    }
+
+    function SendProgramEmail()
+    {
+        var users;
+        if ($('#subject').val() != "" && ($('#body').val() !=""))
+        {
+            $.ajax({
+                async: false,
+                url: '../../ApplicationUsers/GetUsers',
+                type: "GET",
+                dataType: "json",
+                success: function (data, textStatus) {
+                    if (!data) {
+                        alert("There was an issue retrieving application users. Please try again.");
+                        return;
+                    }
+                    else {
+                        users = data;
+                    }
+                }
+            });
+        }
+        else {
+            $('#inputModalBody').html("Please enter a subject and a message.");
+            $('#inputModal').modal();
+        }
+
+        for (i = 0; i < users.length; i++) {
+            var message = $('#body').val();
+            var to = users[i].Email
+            var from = "AfterSchoolCareApp";
+            var subject = $('#subject').val();
+            var name = users[i].FirstName;
+
+            SendEmail(name, to, subject, message);
+
+        }
+
     }
 </script>
 
