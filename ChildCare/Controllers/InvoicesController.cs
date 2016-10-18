@@ -125,6 +125,7 @@ namespace ChildCare.Controllers
         {
             if (ModelState.IsValid)
             {
+                invoice.AmountDue += invoice.Adjustments;
                 db.Entry(invoice).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

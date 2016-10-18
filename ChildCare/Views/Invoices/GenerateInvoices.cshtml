@@ -32,6 +32,25 @@
                     <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="GenerateMonthlyInvoices()" />
                 </div>
             </div>
+
+            <div class="row" style="margin-top: 10vh">
+                <h4>Send Monthly Invoice Emails</h4>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <p>Select a month:</p>
+                        <input type="month" class="form-control input-md" placeholder="Select a month" id="month" />
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+
+                </div>
+
+                <div class="col-sm-4">
+                    <p></p><p></p>
+                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="SendInvoiceEmail()" />
+                </div>
+            </div>
         </div>
 
         <div id="inputModal" class="modal fade">
@@ -103,7 +122,8 @@
                     Adjustments: 0,
                     Notes: "",
                     AmountPaid: 0,
-                    UserId: "984d33d9-5cd0-4a0a-a5f2-34582bc51215",
+                    UserId: invoiceData[i].ParentId,
+                    //UserId: "984d33d9-5cd0-4a0a-a5f2-34582bc51215",
                     DatePaid: "1/1/1970"
                 }
 
