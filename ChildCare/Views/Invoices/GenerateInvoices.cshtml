@@ -1,9 +1,13 @@
 ﻿@model IEnumerable<ChildCare.Models.Invoice>
-
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("user_tIcH8dgH3kLvB4KvXo9iQ");
+   })();
+</script>
 @{
     ViewBag.Title = "Index";
 }
-
 <div class="container">
     @Html.AntiForgeryToken()
 
@@ -38,7 +42,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <p>Select a month:</p>
-                        <input type="month" class="form-control input-md" placeholder="Select a month" id="month" />
+                        <input type="month" class="form-control input-md" placeholder="Select a month" id="monthEmail" />
                     </div>
                 </div>
 
@@ -80,8 +84,8 @@
     function GenerateMonthlyInvoices()
     {
         var invoiceData;
-        if ($('#month').val() != "" || $('#dueDate').val() != "") {
-
+        if ($('#month').val() != "" || $('#dueDate').val() != "")
+        {
             $.ajax({
                 async: false,
                 url: '../../Attendances/Invoice',
@@ -104,6 +108,7 @@
         }
         else
         {
+            $('#inputModalBody').html("Please enter a month and a due date.");
             $('#inputModal').modal();
         }
 
@@ -123,14 +128,70 @@
                     Notes: "",
                     AmountPaid: 0,
                     UserId: invoiceData[i].ParentId,
-                    //UserId: "984d33d9-5cd0-4a0a-a5f2-34582bc51215",
                     DatePaid: "1/1/1970"
                 }
 
             });
         }
     }
+
+    function SendInvoiceEmail()
+    {
+        var invoices;
+        if ($('#monthEmail').val() != "")
+        {
+            $.ajax({
+                async: false,
+                url: '../../Invoices/GetInvoices',
+                type: "GET",
+                dataType: "json",
+                data: {
+                    month: moment($('#monthEmail').val()).format("MMMM"),
+                    year: moment($('#year').val()).format('YYYY')
+                },
+                success: function (data, textStatus) {
+                    if (!data) {
+                        alert("There was an issue generating emails. Please try again.");
+                        return;
+                    }
+                    else {
+                        invoices = data;
+                    }
+                }
+            });
+        }
+        else
+        {
+            $('#inputModalBody').html("Please select a month.");
+            $('#inputModal').modal();
+        }
+
+        for (i = 0; i < invoices.length; i++)
+        {
+            var message = "Your Month Year invoice is available.\n\r\rPlease pay $Amount by DueDate.\n\r\rIf you have any questions about your invoice, please contact us."
+            .replace("Month", invoices[i].Month)
+            .replace("Year", invoices[i].Year)
+            .replace("Amount", invoices[i].AmountDue)
+            .replace("DueDate", moment(invoices[i].DateDue).format("MMMM D"));
+
+            var to = invoices[i].ApplicationUser.Email
+            var from = "AfterSchoolCareApp";
+            var subject = "AfterSchoolCareApp Invoice";
+            var name = invoices[i].ApplicationUser.FirstName;
+
+            SendEmail(name, to, subject, message);
+
+        }
+    }
+
+    function SendEmail(name,to,subject,message)
+    {
+            emailjs.send("default_service", "invoice", { to_name: name, send_to: to, message_html: message, subject: subject});
+       
+    }
 </script>
+
+
 
 
 

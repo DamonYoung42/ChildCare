@@ -20,13 +20,14 @@ namespace ChildCare.Controllers
         {
             return View(db.Billings.ToList());
         }
-
-        // GET: Billings/Details/5
+        
         public JsonResult BillingDetails()
         {
-            return Json(db.Billings.ToList(), JsonRequestBehavior.AllowGet);
+            var billingInfo = db.Billings.ToList();
+            return Json(billingInfo, JsonRequestBehavior.AllowGet);
         }
 
+        // GET: Billings/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)

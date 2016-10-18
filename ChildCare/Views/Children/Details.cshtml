@@ -78,16 +78,16 @@
             @*Html.DisplayFor(model => model.Photo)*@
         </dd>
 
-        @if (User.IsInRole("Employee"))
+        @if (!User.IsInRole("Parent"))
         {
             <dt></dt>
             <dd></dd>
             <dt></dt>
             <dd><button type="button" class="btn btn-primary" id="signOut" onclick="SignOut()">Sign out</button></dd>
             <dt></dt>
-                        <dd></dd>
-                        <dt></dt>
-                        <dd><button type="button" class="btn btn-primary" id="signOut" onclick="TwilioSMS.SendSMS()">Send Text</button></dd>
+            <dd></dd>
+            <dt></dt>
+            <dd><button type="button" class="btn btn-primary" id="signOut" onclick="TwilioSMS.SendSMS()">Send Text</button></dd>
         }
 
     </dl>
@@ -344,11 +344,6 @@
             $('#createModalClose').click();
         };
 
-    //function PickupToday()
-    //    {
-
-    //    };
-
     function SignOut()
         {
 
@@ -376,28 +371,27 @@
 
         $.ajax({
             async: false,
-            url: '../../Billings/BillingDetails',
+            url: '../../Billings/Index',
             type: "GET",
             dataType: "json",
-            success: function (data, textStatus) {
-                if (!data) {
-                    alert("This child is not enrolled today.");
+            success: function (dataBilling, textStatus) {
+                if (!dataBilling) {
+                    alert("No billing data could be retrieved.");
                     return;
                 }
                 else{
-                    systemBilling = data;
+                    systemBilling = dataBilling;
                 }
             }
         });
         
-        var hourlyRate = systemBilling[0].HourlyRate;
-        var startTime = systemBilling[0].StartTime;
+        var hourlyRate = 4.25;
+        //var hourlyRate = systemBilling[0].HourlyRate;
+        //var startTime = systemBilling[0].StartTime;
         todayAttendance[0].b.PickupTime = moment(new Date());
         //var timeDuration = moment.utc(moment(todayAttendance[0].b.PickupTime,"H:mm:ss A").diff(moment(startTime,"H:mm:ss A"))).format("H:mm");
         var timeDuration = moment.utc(moment(todayAttendance[0].b.PickupTime,"H:mm:ss A").diff(moment("6:00 AM","H:mm:ss A"))).format("H:mm");
         var durationMinutes = moment.duration(timeDuration).asMinutes();
-
-        //var HourlyRate = 4.25;
         todayAttendance[0].b.AmountBilled = (durationMinutes* (hourlyRate/60)).toFixed(2);
 
         $.ajax({
@@ -446,20 +440,12 @@
             }
         });
 
-        //SendEmail(todayAttendance);
+        SendEmail(todayAttendance);
     };
 
     function SendEmail(params)
     {
-        // parameters: service_id, template_id, template_parameters
-        //emailjs.send("default_service","student_signout",{to_name: params[0].FirstName, send_to: "4147585380@email.uscc.net", student_name: params[0].b.Child.FirstName, message_html: params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + "."});
-
         emailjs.send("default_service","student_signout",{to_name: params[0].FirstName, send_to: params[0].Email, student_name: params[0].b.Child.FirstName, message_html: params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + ". You have been billed $" + params[0].b.AmountBilled + "."});
-
-    }
-
-    function CalculateAmountBilled(params)
-    {
 
     }
 

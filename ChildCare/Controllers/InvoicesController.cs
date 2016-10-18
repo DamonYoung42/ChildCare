@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -37,6 +38,17 @@ namespace ChildCare.Controllers
                 return View(invoices.ToList());
             }
 
+        }
+
+        public JsonResult GetInvoices(string month, int year)
+        {
+            var invoices = db.Invoices
+                .Include(a => a.ApplicationUser)
+                .Where(x => x.Month == month)
+                .Where(x => x.Year == year)
+                .ToList();
+
+            return Json(invoices, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Invoices/Details/5
@@ -82,7 +94,8 @@ namespace ChildCare.Controllers
 
         // POST: Invoices/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.p
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Month,Year,AmountDue,DateDue,AmountPaid,DatePaid,UserId, Notes, Adjustments")] Invoice invoice)
@@ -100,6 +113,7 @@ namespace ChildCare.Controllers
             return RedirectToAction("GenerateInvoices", "Invoices");
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Invoices/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -115,7 +129,7 @@ namespace ChildCare.Controllers
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", invoice.UserId);
             return View(invoice);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Invoices/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -134,6 +148,7 @@ namespace ChildCare.Controllers
             return View(invoice);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Invoices/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -149,6 +164,7 @@ namespace ChildCare.Controllers
             return View(invoice);
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: Invoices/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
