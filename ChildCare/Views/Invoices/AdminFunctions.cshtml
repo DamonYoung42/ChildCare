@@ -1,12 +1,17 @@
 ﻿@model IEnumerable<ChildCare.Models.Invoice>
 <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script type="text/javascript">
-   (function(){
-      emailjs.init("user_tIcH8dgH3kLvB4KvXo9iQ");
-   })();
+    (function(){
+        emailjs.init("user_tIcH8dgH3kLvB4KvXo9iQ");
+    })();
 </script>
 @{
     ViewBag.Title = "Index";
+    ViewBag.Years = new SelectList(Enumerable.Range(DateTime.Now.Year, 10).Select(x => new SelectListItem()
+    {
+        Text = x.ToString(),
+        Value = x.ToString()
+    }), "Value", "Text");
 }
 <div class="container">
     @Html.AntiForgeryToken()
@@ -14,6 +19,16 @@
     <div class="form-horizontal"></div>
 
         <div class="container heading-box">
+
+            <div class="row" style="margin-top: 5vh">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <p></p><p></p>
+                    <input type="button" class="btn btn-primary btn-lg" value="Click To Edit Billing Information" onclick="location.href='@Url.Action("Index", "Billings")'" />
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+
 
             <div class="row" style="margin-top: 5vh">
                 <h4>Generate Monthly Invoices</h4>
@@ -103,12 +118,57 @@
 
                 <div class="col-sm-4">
                     <p></p><p></p>
-                    @*<input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="@Html.ActionLink("GetUnpaidInvoices", "Invoices", new { month = $('#monthUnpaid').val(), year = $('#year').val() })" />*@
                     <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="DisplayUnpaidInvoices()" />
                 </div>
             </div>
             <div class="row" style="margin-top: 5vh" id="unpaidResults">
             </div>
+
+            <div class="row" style="margin-top:5vh">
+                <hr />
+            </div>
+
+            <div class="row" style="margin-top: 5vh">
+                <h4>Generate Yearly Tax Statements</h4>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <p>Select a year:</p>
+                        @Html.DropDownList("Years", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                </div>
+
+                <div class="col-sm-4">
+                    <p></p><p></p>
+                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="GenerateTaxStatements()" />
+                </div>
+            </div>
+            <div class="row" style="margin-top:5vh">
+                <hr />
+            </div>
+
+
+            <div class="row" style="margin-top: 5vh">
+                <h4>Send Tax Statement Emails</h4>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <p>Select a year:</p>
+                        @Html.DropDownList("Years", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+
+                </div>
+
+                <div class="col-sm-4">
+                    <p></p><p></p>
+                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="SendTaxStatementEmail()" />
+                </div>
+            </div>
+
 
         </div>
 
@@ -306,6 +366,7 @@
                         return;
                     }
                     else {
+                        var totalAmountDue = 0;
                         var invoices = '';
                         invoices += '<div class="col-sm-3"><center>Name</center></div>';
                         invoices += '<div class="col-sm-3"><center>Amount Due</center></div>';
@@ -327,8 +388,11 @@
                             displayItem += '</h5></center></div>';
                             displayItem += '</div>';
                             invoices += displayItem;
-                        });
+                            totalAmountDue += item.AmountDue;
 
+                        });
+                        invoices += '<div class="col-sm-3"></div>';
+                        invoices += '<div class="col-sm-3"><center>Total: $' + totalAmountDue + '</center></div>'
                         if (data.length === 0)
                         {
                             $('#unpaidResults').html('There are no unpaid invoices for the selected month.');
@@ -347,6 +411,35 @@
         }
     }
 
+    function GenerateTaxStatements()
+    {
+        var invoiceData;
+        if ($('#Years').val() != "") {
+            $.ajax({
+                async: false,
+                url: '../../Invoices/TaxStatement',
+                type: "GET",
+                dataType: "json",
+                data: {
+                    year: $('#Years').val()
+                },
+                success: function (data, textStatus) {
+                    if (!data) {
+                        $('#inputModalBody').html("No data matched your search.");
+                        $('#inputModal').modal();
+                        return;
+                    }
+                    else {
+                        invoiceData = data;
+                    }
+                }
+            });
+        }
+        else {
+            $('#inputModalBody').html("Please select a year.");
+            $('#inputModal').modal();
+        }
+    }
 </script>
 
 

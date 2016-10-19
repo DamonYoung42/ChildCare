@@ -4,10 +4,9 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Your Current Billing Information</h2>
 
 <div>
-    <h4>Billing</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -34,6 +33,54 @@
         <dd>
             @Model.EndTime.ToShortTimeString()
             @*@Html.DisplayFor(model => model.EndTime)*@
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FederalEIN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FederalEIN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StreetNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StreetNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AptNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AptNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Street)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Street)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZipCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZipCode)
         </dd>
 
     </dl>

@@ -10,7 +10,7 @@ using ChildCare.Models;
 
 namespace ChildCare.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles ="Admin")]
     public class BillingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -20,7 +20,7 @@ namespace ChildCare.Controllers
         {
             return View(db.Billings.ToList());
         }
-
+        
         public JsonResult BillingDetails()
         {
             var billingInfo = db.Billings.ToList();
@@ -40,7 +40,9 @@ namespace ChildCare.Controllers
                 return HttpNotFound();
             }
             return View(billing);
+
         }
+
 
         // GET: Billings/Create
         public ActionResult Create()
@@ -53,7 +55,7 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,HourlyRate,StartTime,EndTime,FederalEIN,StreetNumber,AptNumber,Street,State,ZipCode")] Billing billing)
+        public ActionResult Create([Bind(Include = "Id,HourlyRate,StartTime,EndTime")] Billing billing)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +87,7 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,HourlyRate,StartTime,EndTime,FederalEIN,StreetNumber,AptNumber,Street,State,ZipCode")] Billing billing)
+        public ActionResult Edit([Bind(Include = "Id,HourlyRate,StartTime,EndTime")] Billing billing)
         {
             if (ModelState.IsValid)
             {

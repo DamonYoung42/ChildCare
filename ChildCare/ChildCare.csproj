@@ -285,6 +285,14 @@
     <Compile Include="Migrations\201610191636041_PickupPerson changed to Driver.Designer.cs">
       <DependentUpon>201610191636041_PickupPerson changed to Driver.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610192221060_ein, address info added to billings table.cs" />
+    <Compile Include="Migrations\201610192221060_ein, address info added to billings table.Designer.cs">
+      <DependentUpon>201610192221060_ein, address info added to billings table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610192318215_billings table updated.cs" />
+    <Compile Include="Migrations\201610192318215_billings table updated.Designer.cs">
+      <DependentUpon>201610192318215_billings table updated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -418,17 +426,17 @@
     <Content Include="Views\Invoices\Details.cshtml" />
     <Content Include="Views\Invoices\Edit.cshtml" />
     <Content Include="Views\Invoices\Index.cshtml" />
-    <Content Include="Views\Billings\Create.cshtml" />
-    <Content Include="Views\Billings\Delete.cshtml" />
-    <Content Include="Views\Billings\Details.cshtml" />
-    <Content Include="Views\Billings\Edit.cshtml" />
-    <Content Include="Views\Billings\Index.cshtml" />
     <Content Include="Views\Invoices\AdminFunctions.cshtml" />
     <Content Include="Views\ApplicationUsers\Create.cshtml" />
     <Content Include="Views\ApplicationUsers\Delete.cshtml" />
     <Content Include="Views\ApplicationUsers\Details.cshtml" />
     <Content Include="Views\ApplicationUsers\Edit.cshtml" />
     <Content Include="Views\ApplicationUsers\Index.cshtml" />
+    <Content Include="Views\Billings\Create.cshtml" />
+    <Content Include="Views\Billings\Delete.cshtml" />
+    <Content Include="Views\Billings\Details.cshtml" />
+    <Content Include="Views\Billings\Edit.cshtml" />
+    <Content Include="Views\Billings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -494,6 +502,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610191636041_PickupPerson changed to Driver.resx">
       <DependentUpon>201610191636041_PickupPerson changed to Driver.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610192221060_ein, address info added to billings table.resx">
+      <DependentUpon>201610192221060_ein, address info added to billings table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610192318215_billings table updated.resx">
+      <DependentUpon>201610192318215_billings table updated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

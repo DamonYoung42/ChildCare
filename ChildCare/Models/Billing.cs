@@ -22,5 +22,30 @@ namespace ChildCare.Models
         [Display(Name = "End Time")]
         public DateTime EndTime { get; set; }
 
+        [Required]
+        [Display(Name = "Federal EIN")]
+        public string FederalEIN { get; set; }
+
+        [Required]
+        [Display(Name = "Street Number")]
+        public string StreetNumber {get;set;}
+
+        [Display(Name = "Suite Number")]
+        public string SuiteNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Street")]
+        public string Street { get; set; }
+
+        [Required]
+        [Display(Name = "State")]
+        public string State { get; set; }
+
+        [Required]
+        [Display(Name = "Zip Code")]
+        public int ZipCode { get; set; }
+
+
+
     }
 }

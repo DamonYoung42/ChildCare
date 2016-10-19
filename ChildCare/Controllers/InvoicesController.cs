@@ -141,6 +141,24 @@ namespace ChildCare.Controllers
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", invoice.UserId);
             return View(invoice);
         }
+
+        public JsonResult TaxStatement(int year)
+        {
+            var statements = db.Invoices
+                .Include(x => x.ApplicationUser)
+                .Where(x => x.DatePaid.Year == year)
+                .Select(x => new { UserId = x.ApplicationUser.Id, AmountPaid = x.AmountPaid, Email = x.ApplicationUser.Email, FirstName = x.ApplicationUser.FirstName, LastName = x.ApplicationUser.LastName, Phone = x.ApplicationUser.PhoneNumber })
+                .GroupBy(x => x.UserId)
+                .Select(x => new
+                {
+                    ParentId = x.Key,
+                    AmountPaid = x.Sum(y => y.AmountPaid)
+                });
+
+            return Json(statements, JsonRequestBehavior.AllowGet);
+        }
+
+
         [Authorize(Roles = "Admin")]
         // POST: Invoices/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
