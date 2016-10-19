@@ -120,7 +120,7 @@ namespace ChildCare.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,GradeLevel,Photo,UserId,Medications,Notes, TeacherId")] Child child, HttpPostedFileBase photo)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Photo,UserId,Medications,Notes, TeacherId")] Child child, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
             {
@@ -136,7 +136,7 @@ namespace ChildCare.Controllers
                 {
                     child.Photo = "no_photo.jpg";
                 }
-
+                //child.GradeLevel = child.Teacher.GradeLevel;
                 child.UserId = User.Identity.GetUserId();
                 db.Children.Add(child);
                 db.SaveChanges();
@@ -172,7 +172,7 @@ namespace ChildCare.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,GradeLevel,Photo,UserId,Medications,Notes,TeacherId")] Child child, HttpPostedFileBase photo)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Photo,UserId,Medications,Notes,TeacherId")] Child child, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
             {

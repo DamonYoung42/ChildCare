@@ -22,5 +22,9 @@ namespace ChildCare.Models
         [Display(Name = "Room Number")]
         public int RoomNumber { get; set; }
 
+        [Required]
+        [Display(Name = "Grade Level")]
+        public string GradeLevel { get; set; }
+
     }
 }

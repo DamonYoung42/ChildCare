@@ -39,13 +39,13 @@
             @Html.DisplayFor(model => model.LastName)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.GradeLevel)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.GradeLevel)
-        </dd>
+        </dd>*@
         <dt>
             @Html.DisplayNameFor(model => model.Teacher)
         </dt>
@@ -179,8 +179,10 @@
                 right: 'month,agendaWeek,agendaDay'
             },
 
-            views: {
-                month: {
+            views: 
+            {
+                month: 
+                {
                     editable: false, 
                     height:300,
                 },
@@ -198,14 +200,15 @@
                     }
                 },            
             },
+            contentHeight: "auto",
             timezone: 'local',
-            weekends: true,
+            weekends: false,
             cache: true,
             allDay: false,
             displayEventTime: true,
-            defaultTimedEventDuration: '00:30:00',
+            defaultTimedEventDuration: '00:15:00',
             forceEventDuration: true,
-            slotDuration: '00:30:00',
+            slotDuration: '00:15:00',
             eventOverlap: false,
             eventSources: [
                 {

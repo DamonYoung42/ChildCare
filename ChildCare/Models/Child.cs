@@ -21,7 +21,7 @@ namespace ChildCare.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Required]
+        
         [Display(Name = "Grade Level")]
         public string GradeLevel { get; set; }
 

@@ -273,6 +273,14 @@
     <Compile Include="Migrations\201610180500502_datepaid.Designer.cs">
       <DependentUpon>201610180500502_datepaid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610191601485_grade level added to teacher table.cs" />
+    <Compile Include="Migrations\201610191601485_grade level added to teacher table.Designer.cs">
+      <DependentUpon>201610191601485_grade level added to teacher table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610191618328_grade level not required on child.cs" />
+    <Compile Include="Migrations\201610191618328_grade level not required on child.Designer.cs">
+      <DependentUpon>201610191618328_grade level not required on child.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -469,6 +477,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610180500502_datepaid.resx">
       <DependentUpon>201610180500502_datepaid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610191601485_grade level added to teacher table.resx">
+      <DependentUpon>201610191601485_grade level added to teacher table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610191618328_grade level not required on child.resx">
+      <DependentUpon>201610191618328_grade level not required on child.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
