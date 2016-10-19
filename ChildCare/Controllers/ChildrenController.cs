@@ -78,10 +78,30 @@ namespace ChildCare.Controllers
             return View(child);
         }
 
-        public JsonResult GetCalendarEvents(int Id)
+        public JsonResult GetFutureCalendarEvents(int Id)
         {
-            var events = db.Attendances.Where(x => x.ChildId == Id).ToArray();
-            return Json(events, JsonRequestBehavior.AllowGet);
+            //INITIAL WORKING VERSION
+            //var events = db.Attendances.Where(x => x.ChildId == Id).ToArray();
+            //return Json(events, JsonRequestBehavior.AllowGet);
+
+            var events = db.Attendances
+                .Where(x => x.ChildId == Id)
+                .Where(x => x.start >= DateTime.Today);
+
+            return Json(events.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetPastCalendarEvents(int Id)
+        {
+            //INITIAL WORKING VERSION
+            //var events = db.Attendances.Where(x => x.ChildId == Id).ToArray();
+            //return Json(events, JsonRequestBehavior.AllowGet);
+
+            var events = db.Attendances
+                .Where(x => x.ChildId == Id)
+                .Where(x => x.start <= DateTime.Today);
+
+            return Json(events.ToList(), JsonRequestBehavior.AllowGet);
         }
 
         // GET: Children/Create

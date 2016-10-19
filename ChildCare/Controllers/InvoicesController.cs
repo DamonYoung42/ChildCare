@@ -17,7 +17,7 @@ namespace ChildCare.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public ActionResult GenerateInvoices()
+        public ActionResult AdminFunctions()
         {
             //ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
             return View();
@@ -105,12 +105,12 @@ namespace ChildCare.Controllers
             {
                 db.Invoices.Add(invoice);
                 db.SaveChanges();
-                return RedirectToAction("GenerateInvoices", "Invoices");
+                return RedirectToAction("AdminFunctions", "Invoices");
             }
 
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", invoice.UserId);
             //return View(invoice);
-            return RedirectToAction("GenerateInvoices", "Invoices");
+            return RedirectToAction("AdminFunctions", "Invoices");
         }
 
         [Authorize(Roles = "Admin")]
