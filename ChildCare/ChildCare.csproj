@@ -220,7 +220,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PickupPersonsController.cs" />
+    <Compile Include="Controllers\DriversController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -281,6 +281,10 @@
     <Compile Include="Migrations\201610191618328_grade level not required on child.Designer.cs">
       <DependentUpon>201610191618328_grade level not required on child.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610191636041_PickupPerson changed to Driver.cs" />
+    <Compile Include="Migrations\201610191636041_PickupPerson changed to Driver.Designer.cs">
+      <DependentUpon>201610191636041_PickupPerson changed to Driver.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -290,7 +294,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\PickupPerson.cs" />
+    <Compile Include="Models\Driver.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendEmail.cs" />
@@ -393,11 +397,11 @@
     <Content Include="Views\Attendances\Details.cshtml" />
     <Content Include="Views\Attendances\Edit.cshtml" />
     <Content Include="Views\Attendances\Index.cshtml" />
-    <Content Include="Views\PickupPersons\Create.cshtml" />
-    <Content Include="Views\PickupPersons\Delete.cshtml" />
-    <Content Include="Views\PickupPersons\Details.cshtml" />
-    <Content Include="Views\PickupPersons\Edit.cshtml" />
-    <Content Include="Views\PickupPersons\Index.cshtml" />
+    <Content Include="Views\Drivers\Create.cshtml" />
+    <Content Include="Views\Drivers\Delete.cshtml" />
+    <Content Include="Views\Drivers\Details.cshtml" />
+    <Content Include="Views\Drivers\Edit.cshtml" />
+    <Content Include="Views\Drivers\Index.cshtml" />
     <Content Include="Views\Addresses\Create.cshtml" />
     <Content Include="Views\Addresses\Delete.cshtml" />
     <Content Include="Views\Addresses\Details.cshtml" />
@@ -429,8 +433,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\Child\" />
+    <Folder Include="Images\Driver\" />
     <Folder Include="Images\Parent\" />
-    <Folder Include="Images\PickupPerson\" />
+    <Folder Include="Migrations\201610191703300_driver phone\" />
+    <Folder Include="Migrations\201610191703415_driver phone\" />
+    <Folder Include="Migrations\201610191705262_driver model validation for email\" />
+    <Folder Include="Migrations\201610191709388_driver model validation for email\" />
     <Folder Include="Views\TwilioSMS\" />
   </ItemGroup>
   <ItemGroup>
@@ -483,6 +491,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610191618328_grade level not required on child.resx">
       <DependentUpon>201610191618328_grade level not required on child.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610191636041_PickupPerson changed to Driver.resx">
+      <DependentUpon>201610191636041_PickupPerson changed to Driver.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

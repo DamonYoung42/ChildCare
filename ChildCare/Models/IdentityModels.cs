@@ -44,7 +44,7 @@ namespace ChildCare.Models
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
-        public DbSet<PickupPerson> PickupPersons { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Billing> Billings { get; set; }
 

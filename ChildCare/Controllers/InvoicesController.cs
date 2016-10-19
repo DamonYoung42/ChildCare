@@ -16,7 +16,7 @@ namespace ChildCare.Controllers
     public class InvoicesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        [Authorize]
         public ActionResult AdminFunctions()
         {
             //ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
@@ -46,6 +46,18 @@ namespace ChildCare.Controllers
                 .Include(a => a.ApplicationUser)
                 .Where(x => x.Month == month)
                 .Where(x => x.Year == year)
+                .ToList();
+
+            return Json(invoices, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetUnpaidInvoices(string month, int year)
+        {
+            var invoices = db.Invoices
+                .Include(a => a.ApplicationUser)
+                .Where(x => x.Month == month)
+                .Where(x => x.Year == year)
+                .Where(x => x.AmountPaid == 0)
                 .ToList();
 
             return Json(invoices, JsonRequestBehavior.AllowGet);

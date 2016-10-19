@@ -11,31 +11,31 @@ using Microsoft.AspNet.Identity;
 
 namespace ChildCare.Controllers
 {
-    public class PickupPersonsController : Controller
+    public class DriversController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: PickupPersons
+        // GET: Drivers
         [Authorize]
         public ActionResult Index()
         {
 
-            //var pickupPersons = db.PickupPersons.Include(p => p.Child);
+            //var Drivers = db.Drivers.Include(p => p.Child);
             if (User.IsInRole("Parent"))
             {
                 var userId = User.Identity.GetUserId();
-                var drivers = db.PickupPersons.Include(a => a.Child).Where(c => c.Child.UserId == userId).OrderBy(c => c.LastName);
+                var drivers = db.Drivers.Include(a => a.Child).Where(c => c.Child.UserId == userId).OrderBy(c => c.LastName);
                 return View(drivers.ToList());
             }
             else
             {
-                var drivers = db.PickupPersons.Include(a => a.Child).OrderBy(y => y.LastName);
+                var drivers = db.Drivers.Include(a => a.Child).OrderBy(y => y.LastName);
                 return View(drivers.ToList());
             }
 
         }
 
-        // GET: PickupPersons/Details/5
+        // GET: Drivers/Details/5
         [Authorize]
         public ActionResult Details(int? id)
         {
@@ -43,15 +43,15 @@ namespace ChildCare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PickupPerson pickupPerson = db.PickupPersons.Find(id);
-            if (pickupPerson == null)
+            Driver driver = db.Drivers.Find(id);
+            if (driver == null)
             {
                 return HttpNotFound();
             }
-            return View(pickupPerson);
+            return View(driver);
         }
 
-        // GET: PickupPersons/Create
+        // GET: Drivers/Create
         [Authorize]
         public ActionResult Create()
         {
@@ -59,39 +59,39 @@ namespace ChildCare.Controllers
             return View();
         }
 
-        // POST: PickupPersons/Create
+        // POST: Drivers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Photo,ChildId,PhoneNumber,EmailAddress")] PickupPerson pickupPerson, HttpPostedFileBase photo)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Photo,ChildId,PhoneNumber,EmailAddress")] Driver driver, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
             {
 
                 if (photo != null && photo.ContentLength > 0)
                 {
-                    pickupPerson.Photo = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(photo.FileName);
+                    driver.Photo = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(photo.FileName);
                     string path = System.IO.Path.Combine(
-                                           Server.MapPath("~/Images/PickupPerson"), pickupPerson.Photo);
+                                           Server.MapPath("~/Images/Driver"), driver.Photo);
                     photo.SaveAs(path);
                 }
                 else
                 {
-                    pickupPerson.Photo = "no_photo.jpg";
+                    driver.Photo = "no_photo.jpg";
                 }
 
-                db.PickupPersons.Add(pickupPerson);
+                db.Drivers.Add(driver);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", pickupPerson.ChildId);
-            return View(pickupPerson);
+            ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", driver.ChildId);
+            return View(driver);
         }
 
-        // GET: PickupPersons/Edit/5
+        // GET: Drivers/Edit/5
         [Authorize]
         public ActionResult Edit(int? id)
         {
@@ -99,41 +99,41 @@ namespace ChildCare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PickupPerson pickupPerson = db.PickupPersons.Find(id);
-            if (pickupPerson == null)
+            Driver driver = db.Drivers.Find(id);
+            if (driver == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", pickupPerson.ChildId);
-            return View(pickupPerson);
+            ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", driver.ChildId);
+            return View(driver);
         }
 
-        // POST: PickupPersons/Edit/5
+        // POST: Drivers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Photo,ChildId,PhoneNumber,EmailAddress")] PickupPerson pickupPerson, HttpPostedFileBase photo)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Photo,ChildId,PhoneNumber,EmailAddress")] Driver driver, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
             {
                 if (photo != null && photo.ContentLength > 0)
                 {
-                    pickupPerson.Photo = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(photo.FileName);
+                    driver.Photo = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(photo.FileName);
                     string path = System.IO.Path.Combine(
-                                           Server.MapPath("~/Images/PickupPerson"), pickupPerson.Photo);
+                                           Server.MapPath("~/Images/Driver"), driver.Photo);
                     photo.SaveAs(path);
                 }
-                db.Entry(pickupPerson).State = EntityState.Modified;
+                db.Entry(driver).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", pickupPerson.ChildId);
-            return View(pickupPerson);
+            ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", driver.ChildId);
+            return View(driver);
         }
 
-        // GET: PickupPersons/Delete/5
+        // GET: Drivers/Delete/5
         [Authorize]
         public ActionResult Delete(int? id)
         {
@@ -141,22 +141,22 @@ namespace ChildCare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PickupPerson pickupPerson = db.PickupPersons.Find(id);
-            if (pickupPerson == null)
+            Driver driver = db.Drivers.Find(id);
+            if (driver == null)
             {
                 return HttpNotFound();
             }
-            return View(pickupPerson);
+            return View(driver);
         }
 
-        // POST: PickupPersons/Delete/5
+        // POST: Drivers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
-            PickupPerson pickupPerson = db.PickupPersons.Find(id);
-            db.PickupPersons.Remove(pickupPerson);
+            Driver driver = db.Drivers.Find(id);
+            db.Drivers.Remove(driver);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

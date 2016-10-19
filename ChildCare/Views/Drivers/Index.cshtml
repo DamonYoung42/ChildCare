@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ChildCare.Models.PickupPerson>
+﻿@model IEnumerable<ChildCare.Models.Driver>
 
 @{
     ViewBag.Title = "Index";
@@ -43,7 +43,7 @@ else
 {
     <tr>
         <td>
-            <img src="~/Images/PickupPerson/@Html.DisplayFor(modelItem =>item.Photo)" style="height:100px;width:100px;" />
+            <img src="~/Images/Driver/@Html.DisplayFor(modelItem =>item.Photo)" style="height:100px;width:100px;" />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)

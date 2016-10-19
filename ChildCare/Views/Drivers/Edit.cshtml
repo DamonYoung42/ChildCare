@@ -1,4 +1,4 @@
-﻿@model ChildCare.Models.PickupPerson
+﻿@model ChildCare.Models.Driver
 
 @{
     ViewBag.Title = "Edit";
@@ -7,7 +7,7 @@
 <h2>Edit Driver Information</h2>
 
 
-@using (Html.BeginForm("Edit", "PickupPersons", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "Drivers", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 
     {
     @Html.AntiForgeryToken()
@@ -68,7 +68,7 @@
         <div class="form-group">
             @Html.Label("Current Photo", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <img src="~/Images/PickupPerson/@Html.DisplayFor(model =>model.Photo)" style="height:100px;width:100px;" />
+                <img src="~/Images/driver/@Html.DisplayFor(model =>model.Photo)" style="height:100px;width:100px;" />
             </div>
         </div>
 

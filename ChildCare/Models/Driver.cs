@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ChildCare.Models
 {
-    public class PickupPerson
+    public class Driver
     {
         [Key]
         public int Id { get; set; }

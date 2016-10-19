@@ -66,6 +66,8 @@ namespace ChildCare.Controllers
             return Json(attendanceRecord, JsonRequestBehavior.AllowGet);
         }
 
+
+
         // GET: Attendances/Details/5
         public ActionResult Details(int? id)
         {

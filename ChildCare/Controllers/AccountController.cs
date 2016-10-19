@@ -160,7 +160,7 @@ namespace ChildCare.Controllers
                 {
                     model.Photo = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(photo.FileName);
                     string path = System.IO.Path.Combine(
-                                           Server.MapPath("~/Images/PickupPerson"), model.Photo);
+                                           Server.MapPath("~/Images/driver"), model.Photo);
                     photo.SaveAs(path);
                 }
                 else

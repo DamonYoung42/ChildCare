@@ -3,10 +3,10 @@
 }
 
 @*<div class="jumbotron">
-    <h1></h1>
-    <p class="lead"><img align="middle" class="img-responsive" src="../../Images/Site/free-childcare.jpg" width="50%"/></p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>*@
+        <h1></h1>
+        <p class="lead"><img align="middle" class="img-responsive" src="../../Images/Site/free-childcare.jpg" width="50%"/></p>
+        <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>*@
 
 <div class="row">
     <div class="col-md-3">
@@ -26,19 +26,23 @@
         <p>@*<a class="btn btn-default" href="/Children/Details">Children &raquo;</a>*@</p>
     </div>
     <div class="col-md-3">
-        <a href="../../PickupPersons/">
+        <a href="../../Drivers/">
             <img src="../../Images/Site/school-bus-small.png" class="img-rounded" width="80%" height="80%" />
             @*<h2>Get more libraries</h2>*@
             <p>Manage your drivers.</p>
         </a>
-            @*<p><a class="btn btn-default" href="../../PickupPersons/">Drivers &raquo;</a></p>*@
+        @*<p><a class="btn btn-default" href="../../Drivers/">Drivers &raquo;</a></p>*@
     </div>
 
-    <div class="col-md-3">
-        <a href="../../Invoices/AdminFunctions">
-            <img src="../../Images/Site/chalkboard.jpeg" class="img-rounded" width="90%" height="90%" />
-            <p>Administrator functions</p>
-        </a>
-    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="col-md-3">
+            <a href="../../Invoices/AdminFunctions">
+                <img src="../../Images/Site/chalkboard.jpeg" class="img-rounded" width="90%" height="90%" />
+                <p>Administrator functions</p>
+            </a>
+        </div>
+    }
+
 
 </div>
