@@ -46,3 +46,7 @@ textarea {
 .modal{
     margin-left: -280px;
 }
+
+#calendar {
+    padding-top: 50px;
+}

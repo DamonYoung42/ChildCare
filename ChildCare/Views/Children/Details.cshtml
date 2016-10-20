@@ -7,9 +7,9 @@
 <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script type="text/javascript">
-   (function(){
-      emailjs.init("user_tIcH8dgH3kLvB4KvXo9iQ");
-   })();
+    (function(){
+        emailjs.init("user_tIcH8dgH3kLvB4KvXo9iQ");
+    })();
 </script>
 
 <link rel='stylesheet' href='~/Content/fullcalendar.min.css' />
@@ -40,12 +40,12 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.GradeLevel)
-        </dt>
+                @Html.DisplayNameFor(model => model.GradeLevel)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.GradeLevel)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.GradeLevel)
+            </dd>*@
         <dt>
             @Html.DisplayNameFor(model => model.Teacher)
         </dt>
@@ -77,22 +77,24 @@
             <img src="~/Images/Child/@Html.DisplayFor(model => model.Photo)" style="height:100px;width:100px;" />
             @*Html.DisplayFor(model => model.Photo)*@
         </dd>
-
-        @if (!User.IsInRole("Parent"))
-        {
-            <dt></dt>
-            <dd></dd>
-            <dt></dt>
-            <dd><button type="button" class="btn btn-primary" id="signOut" onclick="SignOut()">Sign out</button></dd>
-            <dt></dt>
-            <dd></dd>
-            <dt></dt>
-            <dd><button type="button" class="btn btn-primary" id="signOut" onclick="TwilioSMS.SendSMS()">Send Text</button></dd>
-        }
-
     </dl>
+    @if (!User.IsInRole("Parent"))
+    {
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-8">
+                <button type="button" width="100%" class="btn btn-primary btn-lg" id="signOut" onclick="SignOut()">Sign out</button>
+            </div>
+            <div class="col-sm-3">
+                <button type="button" class="btn btn-primary btn-primary-lg" id="signOut" onclick="TwilioSMS.SendSMS()">Send Text</button>
+            </div>
+        </div>
+    }
+
 
 </div>
+
+<div class="row"><div class="col-sm-12"></div></div>
 
 <div class="container">
     <div class="row">
@@ -110,8 +112,8 @@
                 <h4 id="modalTitle" class="modal-title">Pickup</h4>
             </div>
             <div id="deleteModalBody" class="modal-body"></div>
-                <input type="hidden" id="deleteModalEventId" />
-                <input type="hidden" id="deleteModalCalEventId" />
+            <input type="hidden" id="deleteModalEventId" />
+            <input type="hidden" id="deleteModalCalEventId" />
 
             <div class="modal-footer">
                 <button class="btn btn-danger" onclick="DeleteEvent($('#deleteModalEventId').val(), $('#deleteModalCalEventId').val())">Delete</></button>
@@ -129,15 +131,15 @@
                 <h4 id="createModalTitle" class="modal-title">Pickup</h4>
             </div>
             <div id="createModalBody" class="modal-body"></div>
-                <input type="hidden" id="createModalDate" />
-                <input type="hidden"  id="createModalChildId" />
-                <input type="hidden"  id="createModalPickupTime" />
-                <input type="hidden"  id="createModaltitle" />
-                <input type="hidden"  id="createModalstart" />
-                <input type="hidden"  id="createModalend" />
-                <input type="hidden"  id="createModalallDay" />
-                <input type="hidden" id="createModaleditable" />
-            
+            <input type="hidden" id="createModalDate" />
+            <input type="hidden" id="createModalChildId" />
+            <input type="hidden" id="createModalPickupTime" />
+            <input type="hidden" id="createModaltitle" />
+            <input type="hidden" id="createModalstart" />
+            <input type="hidden" id="createModalend" />
+            <input type="hidden" id="createModalallDay" />
+            <input type="hidden" id="createModaleditable" />
+
             <div class="modal-footer">
                 <button class="btn btn-primary" onclick="CreateEvent()">Save</></button>
                 <button type="button" class="btn" id="createModalClose" data-dismiss="modal">Close</button>
@@ -179,11 +181,11 @@
                 right: 'month,agendaWeek,agendaDay'
             },
 
-            views: 
+            views:
             {
-                month: 
+                month:
                 {
-                    editable: false, 
+                    editable: false,
                     height:300,
                 },
                 agenda: {
@@ -198,7 +200,7 @@
                         end: "18:00",
                         dow: [1,2,3,4,5]
                     }
-                },            
+                },
             },
             contentHeight: "auto",
             timezone: 'local',
@@ -212,15 +214,15 @@
             eventOverlap: false,
             eventSources: [
                 {
-                url: '@Url.Action("GetFutureCalendarEvents", "Children")',
-                type: 'GET',
-                data: {Id: @Model.Id},
-                error: function () {
-                    $('#alertModal').modal();
+                    url: '@Url.Action("GetFutureCalendarEvents", "Children")',
+                    type: 'GET',
+                    data: {Id: @Model.Id},
+                    error: function () {
+                        $('#alertModal').modal();
 
-                },
-                color: "blue",
-                editable: true
+                    },
+                    color: "blue",
+                    editable: true
                 },
                 {
                     url: '@Url.Action("GetPastCalendarEvents", "Children")',
@@ -293,94 +295,94 @@
             }
 
         });
+    });
+
+    function EditEvent(data) {
+
+        $.ajax({
+            url: '../../Attendances/Edit',
+            type: "POST",
+            dataType: "json",
+            data: ({
+                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                Date: data.start.format('MM-DD-YYYY'),
+                ChildId: @Model.Id,
+                PickupTime: data.end.format('MM-DD-YYYY'),
+                Id: data.Id,
+                title: data.title,
+                start: data.start.format('MM-DD-YYYY hh:mm A'),
+                end: data.end.format('MM-DD-YYYY hh:mm A'),
+                allday: data.allDay,
+                editable: data.editable
+            }),
+            success: function (data, textStatus) {
+                if (!data) {
+                    $('#alertModal').html("Changes could not be saved.")
+                    $('#alertModal').modal();
+                    return;
+                }
+                calendar.fullCalendar('updateEvent', event);
+            },
+        });
+    };
+
+    function DeleteEvent(Id, CalEventId) {
+        $.ajax({
+            url: '../../Attendances/Delete/' + Id,
+            type: "POST",
+            dataType: "json",
+            data: ({
+                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val()
+            }),
+
+            success: function (data, textStatus) {
+                if (!data) {
+                    $('#alertModal').html("Event could not be deleted.")
+                    $('#alertModal').modal();
+                    return;
+                }
+
+            },
+        });
+        $('#calendar').fullCalendar('removeEvents', CalEventId);
+        $('#deleteModalClose').click();
+    };
+
+    function CreateEvent() {
+
+        $.ajax({
+            url: '../../Attendances/Create',
+            type: "POST",
+            dataType: "json",
+            data: ({
+                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                Date: $('#createModalDate').val(),
+                ChildId: $('#createModalChildId').val(),
+                PickupTime: $('#createModalPickupTime').val(),
+                Id: $('#createModalId').val(),
+                title: $('#createModaltitle').val(),
+                start: $('#createModalstart').val(),
+                end: $('#createModalend').val(),
+                allday:$('#createModalallDay').val(),
+                editable: $('#createModaleditable').val(),
+                AmountBilled: 0,
+            }),
+
+            success: function (data, textStatus) {
+                if (!data) {
+                    $('#alertModal').html("Event could not be created.")
+                    $('#alertModal').modal();
+                    return;
+                }
+            }
         });
 
-        function EditEvent(data) {
-
-            $.ajax({
-                url: '../../Attendances/Edit',
-                type: "POST",
-                dataType: "json",
-                data: ({
-                    __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-                    Date: data.start.format('MM-DD-YYYY'),
-                    ChildId: @Model.Id,
-                    PickupTime: data.end.format('MM-DD-YYYY'),
-                    Id: data.Id,
-                    title: data.title,
-                    start: data.start.format('MM-DD-YYYY hh:mm A'),
-                    end: data.end.format('MM-DD-YYYY hh:mm A'),
-                    allday: data.allDay,
-                    editable: data.editable
-                }),
-                success: function (data, textStatus) {
-                    if (!data) {
-                        $('#alertModal').html("Changes could not be saved.")
-                        $('#alertModal').modal();
-                        return;
-                    }
-                    calendar.fullCalendar('updateEvent', event);
-                },
-            });
-        };
-
-        function DeleteEvent(Id, CalEventId) {
-            $.ajax({
-                url: '../../Attendances/Delete/' + Id,
-                type: "POST",
-                dataType: "json",
-                data: ({
-                    __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val()
-                }),
-
-                success: function (data, textStatus) {
-                    if (!data) {
-                        $('#alertModal').html("Event could not be deleted.")
-                        $('#alertModal').modal();
-                        return;
-                    }
-
-                },
-            });
-            $('#calendar').fullCalendar('removeEvents', CalEventId);
-            $('#deleteModalClose').click();
-        };
-
-        function CreateEvent() {
-
-            $.ajax({
-                url: '../../Attendances/Create',
-                type: "POST",
-                dataType: "json",
-                data: ({
-                    __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-                    Date: $('#createModalDate').val(),
-                    ChildId: $('#createModalChildId').val(),
-                    PickupTime: $('#createModalPickupTime').val(),
-                    Id: $('#createModalId').val(),
-                    title: $('#createModaltitle').val(),
-                    start: $('#createModalstart').val(),
-                    end: $('#createModalend').val(),
-                    allday:$('#createModalallDay').val(),
-                    editable: $('#createModaleditable').val(),
-                    AmountBilled: 0,
-                }),
-
-                success: function (data, textStatus) {
-                    if (!data) {
-                        $('#alertModal').html("Event could not be created.")
-                        $('#alertModal').modal();
-                        return;
-                    }
-                }
-            });
-
-            $('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: $('#createModalstart').val(), end: $('#createModalend').val() }, true);
-            $('#createModalClose').click();
-        };
+        $('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: $('#createModalstart').val(), end: $('#createModalend').val() }, true);
+        $('#createModalClose').click();
+    };
 
     function SignOut()
-        {
+    {
 
         var todayAttendance;
         $.ajax({
@@ -407,7 +409,7 @@
 
         $.ajax({
             async: false,
-            url: '../../Billings/Index',
+            url: '../../Billings/BillingDetails',
             type: "GET",
             dataType: "json",
             success: function (dataBilling, textStatus) {
@@ -421,13 +423,16 @@
                 }
             }
         });
-        
-        var hourlyRate = 4.25;
-        //var hourlyRate = systemBilling[0].HourlyRate;
-        //var startTime = systemBilling[0].StartTime;
-        todayAttendance[0].b.PickupTime = moment(new Date());
-        //var timeDuration = moment.utc(moment(todayAttendance[0].b.PickupTime,"H:mm:ss A").diff(moment(startTime,"H:mm:ss A"))).format("H:mm");
-        var timeDuration = moment.utc(moment(todayAttendance[0].b.PickupTime,"H:mm:ss A").diff(moment("6:00 AM","H:mm:ss A"))).format("H:mm");
+
+        //var hourlyRate = 4.25;
+        var hourlyRate = systemBilling[0].HourlyRate;
+        var startTime = moment(systemBilling[0].StartTime).format("H:mm:ss A");
+        var endTime = moment(new Date()).format("H:mm:ss A");
+        //        todayAttendance[0].b.PickupTime = moment(new Date()).format("H:mm:ss A");
+
+        //var timeDuration = moment.duration(endTime.diff(startTime));
+        var timeDuration = moment.utc(moment(endTime,"H:mm:ss A").diff(moment(startTime,"H:mm:ss A"))).format("H:mm");
+        //var timeDuration = moment.utc(moment(todayAttendance[0].b.PickupTime,"H:mm:ss A").diff(moment("6:00 AM","H:mm:ss A"))).format("H:mm");
         var durationMinutes = moment.duration(timeDuration).asMinutes();
         todayAttendance[0].b.AmountBilled = (durationMinutes* (hourlyRate/60)).toFixed(2);
 
@@ -440,7 +445,7 @@
                 __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
                 Date: moment(todayAttendance[0].b.Date).format('MM-DD-YYYY'),
                 ChildId: @Model.Id,
-                PickupTime: todayAttendance[0].b.PickupTime.format('MM-DD-YYYY h:mm A'),
+                PickupTime: endTime,
                 Id: todayAttendance[0].b.Id,
                 title: todayAttendance[0].b.title,
                 start: moment(todayAttendance[0].b.start).format('MM-DD-YYYY h:mm A'),
@@ -457,6 +462,10 @@
                     return;
                 }
             },
+            failure: function (data, textStatus){
+                $('#alertModal').html("This child could not be signed out.")
+                $('#alertModal').modal();
+            }
         });
 
         $.ajax({
