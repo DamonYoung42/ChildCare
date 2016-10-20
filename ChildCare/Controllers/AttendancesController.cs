@@ -12,14 +12,25 @@ namespace ChildCare.Controllers
 {
     public class AttendancesController : Controller
     {
+
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Attendances
-        public ActionResult Index(int Id)
+        [Authorize(Roles = "Admin, Employee")]
+        public ActionResult Index()
         {
-            var attendances = db.Attendances.Include(a => a.Child).Where(x => x.ChildId == Id).OrderBy(x => x.Date);
+            var today = DateTime.Now.Date;
+            var attendances = db.Attendances.Include(a => a.Child)
+                .OrderBy(x => x.Child.LastName)
+                .Where(x => x.Date == today);
+
             return View(attendances.ToList());
         }
+        // GET: Attendances
+        //public ActionResult Index(int Id)
+        //{
+        //    var attendances = db.Attendances.Include(a => a.Child).Where(x => x.ChildId == Id).OrderBy(x => x.Date);
+        //    return View(attendances.ToList());
+        //}
 
         public JsonResult Invoice(int month, int year)
         {

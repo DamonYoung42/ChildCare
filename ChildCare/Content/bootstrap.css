@@ -5611,7 +5611,7 @@ body.modal-open,
 }
 
 .modal {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
@@ -5738,14 +5738,16 @@ body.modal-open,
   margin-left: 0;
 }
 
-@media screen and (min-width: 768px) {
+
+/*@media screen and (min-width: 768px) {
   .modal-dialog {
     right: auto;
     left: 50%;
     width: 600px;
     padding-top: 30px;
     padding-bottom: 30px;
-  }
+  }*/
+
   .modal-content {
     -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);

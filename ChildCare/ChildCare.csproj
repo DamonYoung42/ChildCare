@@ -293,6 +293,10 @@
     <Compile Include="Migrations\201610192318215_billings table updated.Designer.cs">
       <DependentUpon>201610192318215_billings table updated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610201928378_AmountDue now BilledAmount on invoice.cs" />
+    <Compile Include="Migrations\201610201928378_AmountDue now BilledAmount on invoice.Designer.cs">
+      <DependentUpon>201610201928378_AmountDue now BilledAmount on invoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -508,6 +512,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610192318215_billings table updated.resx">
       <DependentUpon>201610192318215_billings table updated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610201928378_AmountDue now BilledAmount on invoice.resx">
+      <DependentUpon>201610201928378_AmountDue now BilledAmount on invoice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

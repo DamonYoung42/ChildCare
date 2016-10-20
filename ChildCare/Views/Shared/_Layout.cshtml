@@ -28,6 +28,11 @@
             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                     <li>@Html.ActionLink("Students", "Index", "Children")</li>
                     <li>@Html.ActionLink("Drivers", "Index", "Drivers")</li>
+                    <li>@Html.ActionLink("Invoices", "Index", "Invoices")</li>
+                    @if (!User.IsInRole("Parent"))
+                    {
+                        <li>@Html.ActionLink("Today's Roster", "Index", "Attendances")</li>
+                    }
                     @if (User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Administrator", "AdminFunctions", "Invoices")</li>

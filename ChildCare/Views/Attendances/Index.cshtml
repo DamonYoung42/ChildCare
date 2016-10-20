@@ -3,18 +3,21 @@
 
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Today's Roster";
 }
 
-<h2>Index</h2>
+<h2>Today's Roster</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Create New", "Create")*@
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Child.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Child.LastName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Date)
@@ -34,6 +37,9 @@
             @Html.DisplayFor(modelItem => item.Child.FirstName)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Child.LastName)
+        </td>
+        <td>
             @item.Date.ToShortDateString()
             @*@Html.DisplayFor(modelItem => item.Date.ToShortDateString())*@
         </td>
@@ -44,11 +50,10 @@
         <td>
             @Html.DisplayFor(modelItem => item.AmountBilled)
         </td>
-        <td>
+        @*<td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
+        </td>*@
     </tr>
 }
 

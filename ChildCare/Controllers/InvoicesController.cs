@@ -22,7 +22,7 @@ namespace ChildCare.Controllers
             //ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
             return View();
         }
-
+        [Authorize]
         // GET: Invoices
         public ActionResult Index()
         {
@@ -70,7 +70,8 @@ namespace ChildCare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = db.Invoices.Find(id);
+            //Invoice invoice = db.Invoices.Find(id);
+            Invoice invoice = db.Invoices.Include(y => y.ApplicationUser).First(y => y.Id == id);
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -110,11 +111,12 @@ namespace ChildCare.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Month,Year,AmountDue,DateDue,AmountPaid,DatePaid,UserId, Notes, Adjustments")] Invoice invoice)
+        public ActionResult Create([Bind(Include = "Id,Month,Year,BilledAmount,DateDue,AmountPaid,DatePaid,UserId, Notes, Adjustments")] Invoice invoice)
         {
 
             if (ModelState.IsValid)
             {
+               
                 db.Invoices.Add(invoice);
                 db.SaveChanges();
                 return RedirectToAction("AdminFunctions", "Invoices");
@@ -133,7 +135,8 @@ namespace ChildCare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = db.Invoices.Find(id);
+            //Invoice invoice = db.Invoices.Find(id);
+            Invoice invoice = db.Invoices.Include(y => y.ApplicationUser).First(y => y.Id == id);
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -165,11 +168,11 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Month,Year,AmountDue,DateDue,AmountPaid,DatePaid,UserId, Notes, Adjustments")] Invoice invoice)
+        public ActionResult Edit([Bind(Include = "Id,Month,Year,BilledAmount,DateDue,AmountPaid,DatePaid,UserId, Notes, Adjustments")] Invoice invoice)
         {
             if (ModelState.IsValid)
             {
-                invoice.AmountDue += invoice.Adjustments;
+                invoice.BilledAmount += invoice.Adjustments;
                 db.Entry(invoice).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -186,7 +189,8 @@ namespace ChildCare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = db.Invoices.Find(id);
+            //Invoice invoice = db.Invoices.Find(id);
+            Invoice invoice = db.Invoices.Include(y => y.ApplicationUser).First(y => y.Id == id);
             if (invoice == null)
             {
                 return HttpNotFound();

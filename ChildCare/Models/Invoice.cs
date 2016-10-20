@@ -20,8 +20,8 @@ namespace ChildCare.Models
         [Display(Name = "Year")]
         public int Year { get; set; }
 
-        [Display(Name = "Balance Due")]
-        public double AmountDue { get; set; }
+        [Display(Name = "Billed Amount")]
+        public double BilledAmount { get; set; }
 
         [Display(Name = "Due Date")]
         public DateTime DateDue { get; set; }

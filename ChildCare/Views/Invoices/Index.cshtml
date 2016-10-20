@@ -28,7 +28,7 @@ else
             @Html.DisplayNameFor(model => model.Year)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AmountDue)
+            @Html.DisplayNameFor(model => model.BilledAmount)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateDue)
@@ -62,7 +62,7 @@ else
             @Html.DisplayFor(modelItem => item.Year)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AmountDue)
+            @Html.DisplayFor(modelItem => item.BilledAmount)
         </td>
         <td>
             @item.DateDue.ToShortDateString()
@@ -72,8 +72,16 @@ else
             @Html.DisplayFor(modelItem => item.AmountPaid)
         </td>
         <td>
-            @item.DatePaid.ToShortDateString()
-           @* @Html.DisplayFor(modelItem => item.DatePaid)*@
+            @if (item.DatePaid.ToShortDateString() == "1/1/1970")
+            {
+                @Html.Display("n/a")
+            }
+            else
+            {
+                @item.DatePaid.ToShortDateString()
+            }
+
+            @* @Html.DisplayFor(modelItem => item.DatePaid)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Adjustments)
@@ -84,8 +92,10 @@ else
         <td>
             @if (User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                <text>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </text>
             }
         </td>
     </tr>
