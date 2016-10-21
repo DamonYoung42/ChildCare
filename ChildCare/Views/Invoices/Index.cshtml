@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<ChildCare.Models.Invoice>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="~/Scripts/moment.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 @{
     ViewBag.Title = "Index";
 }
@@ -7,6 +9,7 @@
 @if (User.IsInRole("Parent"))
 {
     <h2>Your Invoices</h2>
+    <input type="button" class="btn btn-primary btn-lg" value="Current Monthly Balance Due" onclick="DisplayCurrentBalance()"/>
 }
 else
 {
@@ -102,3 +105,48 @@ else
 }
 
 </table>
+
+
+<div id="inputModal" class="modal fade modal-overflow in" data-width="600" style="width: 600px; margin: 0px auto; left:0px; top:0px" aria-hidden="false">
+    @*<div id="inputModal" class="modal fade ">*@
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="inputModalTitle" class="modal-title">System Message</h4>
+            </div>
+            <div id="inputModalBody" class="modal-body">Your current balance due for this month: </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="inputModalClose" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function DisplayCurrentBalance() {
+
+        $.ajax({
+            async: false,
+            url: '../../Attendances/Invoice',
+            type: "GET",
+            dataType: "json",
+            data: {
+                month: moment().format("M"),
+                year: moment().format('YYYY')
+            },
+            success: function (data, textStatus) {
+                if (!data) {
+                    $('#inputModalBody').html("No data matched your search.");
+                    $('#inputModal').modal();
+                    return;
+                }
+                else {
+                    $('#inputModalBody').html("You have been billed $" + data[0].AmountDue + ' for the current month.');
+                    AmountDue = data.AmountDue
+                    $('#inputModal').modal();
+                    }
+                }
+        });
+    }
+</script>

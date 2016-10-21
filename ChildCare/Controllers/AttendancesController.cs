@@ -47,7 +47,7 @@ namespace ChildCare.Controllers
                      AmountDue = x.Sum(y => y.AmountBilled)
                  }
 
-                );
+                ).ToList();
 
             //var attendances = db.Attendances.Join(db.Children, a => a.ChildId, b => b.Id, (a, b) => new { a.Date, a.AmountBilled, a.ChildId, b.UserId })
             //    .Join(db.Users, a => a.UserId, y => y.Id, (a, y) => new { a.Date, a.AmountBilled, a.ChildId, a.UserId, y.LastName, y.FirstName, y.Email, y.PhoneNumber })
