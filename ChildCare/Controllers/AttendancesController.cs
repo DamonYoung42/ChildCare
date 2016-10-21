@@ -19,7 +19,9 @@ namespace ChildCare.Controllers
         public ActionResult Index()
         {
             var today = DateTime.Now.Date;
-            var attendances = db.Attendances.Include(a => a.Child)
+            var attendances = db.Attendances
+                .Include(a => a.Child)
+                .Include(c => c.Child.Teacher)
                 .OrderBy(x => x.Child.LastName)
                 .Where(x => x.Date == today);
 
