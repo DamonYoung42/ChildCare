@@ -147,15 +147,20 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Date,PickupTime,ChildId, start, end, editable, allDay, title, AmountBilled")] Attendance attendance)
+        public ActionResult Edit([Bind(Include = "Id,Date,PickupTime,ChildId, Child, start, end, editable, allDay, title, AmountBilled")] Attendance attendance, string firstName, Boolean sendTextSMS)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(attendance).State = EntityState.Modified;
                 db.SaveChanges();
-                TwilioSMS SMSMessage = new TwilioSMS();
-                SMSMessage.SendSMS();
-                return RedirectToAction("Details", "Children");
+                if (sendTextSMS)
+                {
+                    TwilioSMS SMSMessage = new TwilioSMS();
+                    var message = firstName + " was signed out of child care at " + attendance.PickupTime.ToShortTimeString() + ".You have been billed $" + attendance.AmountBilled + ".";
+                    SMSMessage.SendSMS(message);
+                }
+
+                //return RedirectToAction("Details", "Children");
             }
             ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", attendance.ChildId);
             //return View(attendance);

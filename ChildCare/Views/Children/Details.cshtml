@@ -1,5 +1,5 @@
 ﻿@model ChildCare.Models.Child
-@using Twilio;
+
 
 <script src="~/Scripts/jquery.min.js" type="text/javascript"></script>
 <script src="~/Scripts/moment.min.js" type="text/javascript"></script>
@@ -314,6 +314,7 @@
                 end: data.end.format('MM-DD-YYYY hh:mm A'),
                 allday: data.allDay,
                 editable: data.editable
+                
             }),
             success: function (data, textStatus) {
                 if (!data) {
@@ -383,7 +384,6 @@
 
     function SignOut()
     {
-
         var todayAttendance;
         $.ajax({
             async: false,
@@ -444,6 +444,7 @@
             data: ({
                 __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
                 Date: moment(todayAttendance[0].b.Date).format('MM-DD-YYYY'),
+                firstName: todayAttendance[0].FirstName,
                 ChildId: @Model.Id,
                 PickupTime: endTime,
                 Id: todayAttendance[0].b.Id,
@@ -452,7 +453,9 @@
                 end: moment(todayAttendance[0].b.end).format('MM-DD-YYYY h:mm A'),
                 allday: false,
                 editable: false,
-                AmountBilled: todayAttendance[0].b.AmountBilled
+                AmountBilled: todayAttendance[0].b.AmountBilled,
+                sendTextSMS: true,
+
             }),
 
             success: function (data, textStatus) {
@@ -489,7 +492,7 @@
         });
 
         //SendEmail(todayAttendance);
-        SendText(todayAttendance);
+        //SendText(todayAttendance);
     };
 
     function SendEmail(params)
@@ -499,21 +502,29 @@
     }
 
     function SendText(params){
+
         $.ajax({
-            async: true,
-            url: "https:AC60d3e2ed31e25f0f12396fdf40247dfa:03008d4e6bad20d2cc4c488922d220c6@api.twilio.com/2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json",
+            async: false,
+            //url: "https://api.twilio.com", //2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json",
+            ///url: "https:AC2bbe1b78d57d4a73899b6f0a63d758cf:dc9bf3662853dc5f43895d40f4cd477f@api.twilio.com",
+            url: "https:AC60d3e2ed31e25f0f12396fdf40247dfa:03008d4e6bad20d2cc4c488922d220c6@api.twilio.com", //2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json",
             type: "GET",
             dataType: "json",
             data:
             {
-                "sid": "MMc781610ec0b3400c9e0cab8e757da937",
+                "sid": "MG7369df89a440c2e6d7866966c015cabd",
                 "account_sid": "AC60d3e2ed31e25f0f12396fdf40247dfa",
-                "to": params[0].PhoneNumber,
+                "to": '+' + params[0].PhoneNumber,
+                //"from": '+15005550006',
                 "from": "+14144556685",
-                "body": params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + ". You have been billed $" + params[0].b.AmountBilled + "."
-                //"uri": "/2010-04-01/Accounts/AC2bbe1b78d57d4a73899b6f0a63d758cf/Messages/MG7369df89a440c2e6d7866966c015cabd.json"
+                "body": params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + ". You have been billed $" + params[0].b.AmountBilled + ".",
+                "uri": "/2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json",
+                "direction": "outbound-api",
+                "api_version": "2010-04-01"
             }
         });
     }
-</script>
 
+    //https:AC60d3e2ed31e25f0f12396fdf40247dfa:03008d4e6bad20d2cc4c488922d220c6@api.twilio.com/2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json
+
+</script>
