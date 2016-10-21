@@ -17,476 +17,737 @@
 }
 <div class="container">
     @Html.AntiForgeryToken()
-        <div class="form-horizontal"></div>
-      @*  <div id="supportModal" class="modal hide fade modal-overflow in" tabindex="-1" data-width="760" style="display: block; width: 760px; margin: 0px auto; left:0px; top:0px;" aria-hidden="false">*@
-        <div id="inputModal" class="modal fade modal-overflow in" data-width="600" style="width: 600px; margin: 0px auto; left:0px; top:0px" aria-hidden="false">
-            @*<div id="inputModal" class="modal fade ">*@
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
-                        <h4 id="inputModalTitle" class="modal-title">System Message</h4>
-                    </div>
-                    <div id="inputModalBody" class="modal-body">Please enter a month and due date.</div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="inputModalClose" data-dismiss="modal">Close</button>
-                    </div>
+    <div class="form-horizontal"></div>
+    @*  <div id="supportModal" class="modal hide fade modal-overflow in" tabindex="-1" data-width="760" style="display: block; width: 760px; margin: 0px auto; left:0px; top:0px;" aria-hidden="false">*@
+    <div id="inputModal" class="modal fade modal-overflow in" data-width="600" style="width: 600px; margin: 0px auto; left:0px; top:0px" aria-hidden="false">
+        @*<div id="inputModal" class="modal fade ">*@
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                    <h4 id="inputModalTitle" class="modal-title">System Message</h4>
+                </div>
+                <div id="inputModalBody" class="modal-body">Please enter a month and due date.</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="inputModalClose" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="container heading-box">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="generateMonthlyInvoices">
-                        <h5 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Generate Monthly Invoices
-                            </a>
-                        </h5>
-                    </div>
+    <div class="container heading-box">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="generateMonthlyInvoices">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            Generate Monthly Invoices
+                        </a>
+                    </h5>
+                </div>
 
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="generateMonthlyInvoices">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <p>Select a month:</p>
-                                        <input type="month" class="form-control input-md" placeholder="Select a month" id="month" />
-                                    </div>
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="generateMonthlyInvoices">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <p>Create your monthly invoices by selecting a month and a due date and clicking Generate.</p>
                                 </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <p>Select a due date:</p>
-                                        <input type="date" class="form-control input-md" placeholder="Select a due date" id="dueDate" />
-                                    </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <p>Select a month:</p>
+                                    <input type="month" class="form-control input-md" placeholder="Select a month" id="month" />
                                 </div>
+                            </div>
 
-                                <div class="col-sm-4">
-                                    <p></p><p></p>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <p>Select a due date:</p>
+                                    <input type="date" class="form-control input-md" placeholder="Select a due date" id="dueDate" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <center>
                                     <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="GenerateMonthlyInvoices()" />
-                                </div>
+                                </center>
+
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="emailMonthlyInvoices">
-                        <h5 class="panel-title">
-                            <a role=button data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Send Monthly Invoice Emails
-                            </a>
-                        </h5>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="emailMonthlyInvoices">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <p>Select a month:</p>
-                                        <input type="month" class="form-control input-md" placeholder="Select a month" id="monthEmail" />
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <p></p><p></p>
-                                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="SendInvoiceEmail()" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="emailProgramUpdate">
-                        <h5 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Send Email To Parents
-                            </a>
-                        </h5>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="emailProgramUpdate">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <p>Subject:</p>
-                                        <input type="text" class="form-control input-md" placeholder="" id="subject" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <p>Body:</p>
-                                        <textarea rows="5" class="form-control input-md" placeholder="" id="body"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <p></p><p></p>
-                                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="SendProgramEmail()" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="sendEmailToParents">
-                        <h5 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                View Unpaid Invoices
-                            </a>
-                        </h5>
-                    </div>
-                    <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="sendEmailToParents">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <p>Select a month:</p>
-                                        <input type="month" class="form-control input-md" placeholder="Select a month" id="monthUnpaid" />
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <p></p><p></p>
-                                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="DisplayUnpaidInvoices()" />
-                                </div>
-                            </div>
-                            <div class="row" id="unpaidResults">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="generateTaxStatements">
-                        <h5 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                Generate Tax Statements
-                            </a>
-                        </h5>
-                    </div>
-
-                    <div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="generateTaxStatements">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <p>Select a year:</p>
-                                        @Html.DropDownList("Years", null, htmlAttributes: new { @class = "form-control" })
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <p></p><p></p>
-                                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="GenerateTaxStatements()" />
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="emailTaxStatements">
-                        <h5 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                Email Tax Statements
-                            </a>
-                        </h5>
-                    </div>
-
-                    <div id="collapseSix" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="emailTaxStatements">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <p>Select a year:</p>
-                                        @Html.DropDownList("Years", null, htmlAttributes: new { @class = "form-control" })
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <p></p><p></p>
-                                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="SendTaxStatementEmail()" />
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
 
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="emailMonthlyInvoices">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            Send Monthly Invoice Emails
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="emailMonthlyInvoices">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <p>Email all of your monthly invoices by selecting a month and clicking Generate.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <p>Select a month:</p>
+                                    <input type="month" class="form-control input-md" placeholder="Select a month" id="monthEmail" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <center>
+                                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="SendInvoiceEmail()" />
+                                </center>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" id="emailProgramUpdate">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            Send Email To Parents
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="emailProgramUpdate">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                Broadcast general program updates and information to your registered users.
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <p>Subject:</p>
+                                    <input type="text" class="form-control input-md" placeholder="" id="subject" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <p>Body:</p>
+                                    <textarea rows="5" class="form-control input-md" placeholder="" id="body"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <center>
+                                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="SendProgramEmail()" />
+                                </center>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="viewUnpaidInvoices">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                            View Unpaid Invoices
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="viewUnpaidInvoices">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <p>View a list of unpaid invoices each month.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <p>Select a month:</p>
+                                    <input type="month" class="form-control input-md" placeholder="Select a month" id="monthUnpaid" />
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-sm-2"></div>
+                            </div>
+                            <div class="col-sm-3">
+                                <center>
+                                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="DisplayUnpaidInvoices()" />
+                                </center>
+                            </div>
+                        </div>
+                        <div class="row" id="unpaidResults">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="generateTaxStatements">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                            Generate Tax Statements
+                        </a>
+                    </h5>
+                </div>
+
+                <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="generateTaxStatements">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <p>Select a year:</p>
+                                    @Html.DropDownList("Years", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                            </div>
+
+                            <div class="col-sm-4">
+                                <center>
+                                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="GenerateTaxStatements()" />
+                                </center>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>*@
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="generateTaxStatements">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                            Generate Tax Statements
+                        </a>
+                    </h5>
+                </div>
+
+                <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="generateTaxStatements">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <p>Generate yearly tax statements by selecting the year and clicking Generate.</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <p>Select a year:</p>
+                                    @Html.DropDownList("Years", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+
+                            </div>
+
+                            <div class="col-sm-3">
+                                <center>
+                                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="GenerateTaxStatements()" />
+                                </center>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="emailTaxStatements">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+                            Email Tax Statements
+                        </a>
+                    </h5>
+                </div>
+
+                <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="emailTaxStatements">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <p>Email yearly tax statements by selecting the year and clicking Generate.</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <p>Select a year:</p>
+                                    @Html.DropDownList("Years", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+
+                            </div>
+
+                            <div class="col-sm-3">
+                                <center>
+                                    <input type="button" class="btn btn-primary btn-lg" value="Generate" onclick="EmailTaxStatements()" />
+                                </center>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="editBillingInformation">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
+                            Edit Billing Information
+                        </a>
+                    </h5>
+                </div>
+
+                <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="editBillingInformation">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <center>
+                                    <p>Your program's billing information includes your daily start and end time, hourly billing rate, address and federal tax identification number.</p>
+                                </center>
+                            </div>
+                            <div class="col-sm-5"></div>
+                            <div class="col-sm-3">
+                                <center>
+                                    <input type="button" class="btn btn-primary btn-lg" value="Billing Details" onclick="location.href='@Url.Action("Edit/1", "Billings")'" />
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="Search For Registered User">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseNine">
+                            Search For Registered User
+                        </a>
+                    </h5>
+                </div>
+
+                <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="searchForRegisteredUser">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <center>
+                                    <p>View a registered user's account information.</p>
+                                </center>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <p>First Name:</p>
+                                    <input type="text" class="form-control input-md" placeholder="Enter User's First Name" id="searchFirstName" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <p>Last Name:</p>
+                                    <input type="text" class="form-control input-md" placeholder="Enter User's Last Name" id="searchLastName" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <center>
+                                    <input type="button" class="btn btn-primary btn-lg" value="Search" onclick="SearchForRegisteredUser()" />
+                                </center>
+                            </div>
+                        </div>
+                        <div class="row" id="userSearchResults">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
 
-        @section Scripts {
-            <script src="~/Scripts/moment.min.js" type="text/javascript"></script>
-        }
+    </div>
+</div>
 
-        <script>
-            function GenerateMonthlyInvoices() {
-                var invoiceData;
-                if ($('#month').val() != "" && $('#dueDate').val() != "") {
-                    $.ajax({
-                        async: false,
-                        url: '../../Attendances/Invoice',
-                        type: "GET",
-                        dataType: "json",
-                        data: {
-                            month: moment($('#month').val()).format("M"),
-                            year: moment($('#year').val()).format('YYYY')
-                        },
-                        success: function (data, textStatus) {
-                            if (!data) {
-                                $('#inputModalBody').html("No data matched your search.");
-                                $('#inputModal').modal();
-                                return;
-                            }
-                            else {
-                                invoiceData = data;
-                                for (i = 0; i < invoiceData.length; i++) {
-                                    $.ajax({
-                                        async: true,
-                                        url: '../../Invoices/Create',
-                                        type: 'POST',
-                                        datatype: 'json',
-                                        data: {
-                                            __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-                                            Month: moment($('#month').val()).format("MMMM"),
-                                            Year: moment($('#year').val()).format('YYYY'),
-                                            BilledAmount: invoiceData[i].AmountDue,
-                                            DateDue: $('#dueDate').val(),
-                                            Adjustments: 0,
-                                            Notes: "",
-                                            AmountPaid: 0,
-                                            UserId: invoiceData[i].ParentId,
-                                            DatePaid: "1/1/1970"
-                                        },
-                                        success: function (data, textStatus, jQxhr) {
-                                            $('#inputModalBody').html("The monthly invoices were generated.");
-                                            $('#inputModal').modal();
-                                        }
+    @section Scripts {
+        <script src="~/Scripts/moment.min.js" type="text/javascript"></script>
+    }
 
-                                    });
-                                }
-                            }
+    <script>
+        function GenerateMonthlyInvoices() {
+            var invoiceData;
+            if ($('#month').val() != "" && $('#dueDate').val() != "") {
+                $.ajax({
+                    async: false,
+                    url: '../../Attendances/Invoice',
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                        month: moment($('#month').val()).format("M"),
+                        year: moment($('#year').val()).format('YYYY')
+                    },
+                    success: function (data, textStatus) {
+                        if (!data) {
+                            $('#inputModalBody').html("No data matched your search.");
+                            $('#inputModal').modal();
+                            return;
                         }
-                    });
-                }
-                else {
-                    $('#inputModalBody').html("Please enter a month and a due date.");
-                    $('#inputModal').modal();
-                }
-
-
-            }
-
-            function SendInvoiceEmail() {
-                var invoices;
-                if ($('#monthEmail').val() != "") {
-                    $.ajax({
-                        async: false,
-                        url: '../../Invoices/GetInvoices',
-                        type: "GET",
-                        dataType: "json",
-                        data: {
-                            month: moment($('#monthEmail').val()).format("MMMM"),
-                            year: moment($('#year').val()).format('YYYY')
-                        },
-                        success: function (data, textStatus) {
-                            if (!data) {
-                                $('#inputModalBody').html("No data matched your search.");
-                                $('#inputModal').modal();
-                                return;
-                            }
-                            else {
-                                invoices = data;
-                                for (i = 0; i < invoices.length; i++) {
-                                    var message = "Your Month Year invoice is available.\n\r\rPlease pay $Amount by DueDate.\n\r\rIf you have any questions about your invoice, please contact us."
-                                    .replace("Month", invoices[i].Month)
-                                    .replace("Year", invoices[i].Year)
-                                    .replace("Amount", invoices[i].BilledAmount)
-                                    .replace("DueDate", moment(invoices[i].DateDue).format("MMMM D"));
-
-                                    var to = invoices[i].ApplicationUser.Email
-                                    var from = "AfterSchoolCareApp";
-                                    var subject = "AfterSchoolCareApp Invoice";
-                                    var name = invoices[i].ApplicationUser.FirstName;
-
-                                    SendEmail(name, to, subject, message);
-
-                                }
-                                $('#inputModalBody').html("Monthly invoice emails were sent.");
-                                $('#inputModal').modal();                               
-                            }
-                        }
-                    });
-                }
-                else {
-                    $('#inputModalBody').html("Please select a month.");
-                    $('#inputModal').modal();
-                }
-
-
-            }
-
-            function SendEmail(name, to, subject, message) {
-                emailjs.send("default_service", "invoice", { to_name: name, send_to: to, message_html: message, subject: subject });
-
-            }
-
-            function SendProgramEmail() {
-                var users;
-                if ($('#subject').val() != "" && ($('#body').val() != "")) {
-                    $.ajax({
-                        async: false,
-                        url: '../../ApplicationUsers/GetUsers',
-                        type: "GET",
-                        dataType: "json",
-                        success: function (data, textStatus) {
-                            if (!data) {
-                                $('#inputModalBody').html("No data matched your search.");
-                                $('#inputModal').modal();
-                                return;
-                            }
-                            else {
-                                users = data;
-                                for (i = 0; i < users.length; i++) {
-                                    var message = $('#body').val();
-                                    var to = users[i].Email
-                                    var from = "AfterSchoolCareApp";
-                                    var subject = $('#subject').val();
-                                    var name = users[i].FirstName;
-
-                                    SendEmail(name, to, subject, message);
-                                }
-                                $('#inputModalBody').html("Your email was sent to all registered users.");
-                                $('#inputModal').modal();
-                            }
-                        }
-                    });
-                }
-                else {
-                    $('#inputModalBody').html("Please enter a subject and a message.");
-                    $('#inputModal').modal();
-                }
-
-
-            }
-
-            function DisplayUnpaidInvoices() {
-                var invoiceData;
-                if ($('#monthUnpaid').val() != "") {
-                    $.ajax({
-                        async: false,
-                        url: '../../Invoices/GetUnpaidInvoices',
-                        type: "GET",
-                        dataType: "json",
-                        data: {
-                            month: moment($('#monthUnpaid').val()).format("MMMM"),
-                            year: moment($('#year').val()).format('YYYY')
-                        },
-                        success: function (data, textStatus) {
-                            if (!data) {
-                                $('#inputModalBody').html("No data matched your search.");
-                                $('#inputModal').modal();
-                                return;
-                            }
-                            else {
-                                var totalAmountDue = 0;
-                                var invoices = '';
-                                invoices += '<div class="col-sm-3"><center>Name</center></div>';
-                                invoices += '<div class="col-sm-3"><center>Amount Due</center></div>';
-                                invoices += '<div class="col-sm-3"><center>Amount Paid</center></div>';
-                                invoices += '<div class="col-sm-3"><center>Due Date</center></div>';
-                                $.each(data, function (index, item) {
-                                    var displayItem = '<div class="row">';
-                                    displayItem += '<div class="col-sm-3"><center>';
-                                    displayItem += '<h5>' + item.ApplicationUser.FirstName + " " + item.ApplicationUser.LastName + '</h5>';
-                                    displayItem += '</center></div>';
-                                    displayItem += '<div class="col-sm-3"><center>';
-                                    displayItem += '<h5>$' + item.BilledAmount + '</h5>';
-                                    displayItem += '</center></div>';
-                                    displayItem += '<div class="col-sm-3"><center>';
-                                    displayItem += '<h5>$' + item.AmountPaid;
-                                    displayItem += '</h5></center></div>';
-                                    displayItem += '<div class="col-sm-3"><center>';
-                                    displayItem += '<h5>' + moment(item.DateDue).format("MM/DD/YYYY");
-                                    displayItem += '</h5></center></div>';
-                                    displayItem += '</div>';
-                                    invoices += displayItem;
-                                    totalAmountDue += item.BilledAmount;
+                        else {
+                            invoiceData = data;
+                            for (i = 0; i < invoiceData.length; i++) {
+                                $.ajax({
+                                    async: true,
+                                    url: '../../Invoices/Create',
+                                    type: 'POST',
+                                    datatype: 'json',
+                                    data: {
+                                        __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                                        Month: moment($('#month').val()).format("MMMM"),
+                                        Year: moment($('#year').val()).format('YYYY'),
+                                        BilledAmount: invoiceData[i].AmountDue,
+                                        DateDue: $('#dueDate').val(),
+                                        Adjustments: 0,
+                                        Notes: "",
+                                        AmountPaid: 0,
+                                        UserId: invoiceData[i].ParentId,
+                                        DatePaid: "1/1/1970"
+                                    },
+                                    success: function (data, textStatus, jQxhr) {
+                                        $('#inputModalBody').html("The monthly invoices were generated.");
+                                        $('#inputModal').modal();
+                                    }
 
                                 });
-                                invoices += '<div class="col-sm-3"></div>';
-                                invoices += '<div class="col-sm-3"><center>Total: $' + totalAmountDue + '</center></div>'
-                                if (data.length === 0) {
-                                    $('#unpaidResults').html('There are no unpaid invoices for the selected month.');
-                                }
-                                else {
-                                    $('#unpaidResults').html(invoices);
-                                }
-
                             }
                         }
-                    });
-                }
-                else {
-                    $('#inputModalBody').html("Please enter a month.");
-                    $('#inputModal').modal();
-                }
+                    }
+                });
+            }
+            else {
+                $('#inputModalBody').html("Please enter a month and a due date.");
+                $('#inputModal').modal();
             }
 
-            function GenerateTaxStatements() {
-                var invoiceData;
-                if ($('#Years').val() != "") {
-                    $.ajax({
-                        async: false,
-                        url: '../../Invoices/TaxStatement',
-                        type: "GET",
-                        dataType: "json",
-                        data: {
-                            year: $('#Years').val()
-                        },
-                        success: function (data, textStatus) {
-                            if (!data) {
-                                $('#inputModalBody').html("No data matched your search.");
-                                $('#inputModal').modal();
-                                return;
+
+        }
+
+        function SendInvoiceEmail() {
+            var invoices;
+            if ($('#monthEmail').val() != "") {
+                $.ajax({
+                    async: false,
+                    url: '../../Invoices/GetInvoices',
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                        month: moment($('#monthEmail').val()).format("MMMM"),
+                        year: moment($('#year').val()).format('YYYY')
+                    },
+                    success: function (data, textStatus) {
+                        if (!data) {
+                            $('#inputModalBody').html("No data matched your search.");
+                            $('#inputModal').modal();
+                            return;
+                        }
+                        else {
+                            invoices = data;
+                            for (i = 0; i < invoices.length; i++) {
+                                var message = "Your Month Year invoice is available.\n\r\rPlease pay $Amount by DueDate.\n\r\rIf you have any questions about your invoice, please contact us."
+                                .replace("Month", invoices[i].Month)
+                                .replace("Year", invoices[i].Year)
+                                .replace("Amount", invoices[i].BilledAmount)
+                                .replace("DueDate", moment(invoices[i].DateDue).format("MMMM D"));
+
+                                var to = invoices[i].ApplicationUser.Email
+                                var from = "AfterSchoolCareApp";
+                                var subject = "AfterSchoolCareApp Invoice";
+                                var name = invoices[i].ApplicationUser.FirstName;
+
+                                SendEmail(name, to, subject, message);
+
+                            }
+                            $('#inputModalBody').html("Monthly invoice emails were sent.");
+                            $('#inputModal').modal();
+                        }
+                    }
+                });
+            }
+            else {
+                $('#inputModalBody').html("Please select a month.");
+                $('#inputModal').modal();
+            }
+
+
+        }
+
+        function SendEmail(name, to, subject, message) {
+            emailjs.send("default_service", "invoice", { to_name: name, send_to: to, message_html: message, subject: subject });
+
+        }
+
+        function SendProgramEmail() {
+            var users;
+            if ($('#subject').val() != "" && ($('#body').val() != "")) {
+                $.ajax({
+                    async: false,
+                    url: '../../ApplicationUsers/GetUsers',
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data, textStatus) {
+                        if (!data) {
+                            $('#inputModalBody').html("No data matched your search.");
+                            $('#inputModal').modal();
+                            return;
+                        }
+                        else {
+                            users = data;
+                            for (i = 0; i < users.length; i++) {
+                                var message = $('#body').val();
+                                var to = users[i].Email
+                                var from = "AfterSchoolCareApp";
+                                var subject = $('#subject').val();
+                                var name = users[i].FirstName;
+
+                                SendEmail(name, to, subject, message);
+                            }
+                            $('#inputModalBody').html("Your email was sent to all registered users.");
+                            $('#inputModal').modal();
+                        }
+                    }
+                });
+            }
+            else {
+                $('#inputModalBody').html("Please enter a subject and a message.");
+                $('#inputModal').modal();
+            }
+
+
+        }
+
+        function DisplayUnpaidInvoices() {
+            var invoiceData;
+            if ($('#monthUnpaid').val() != "") {
+                $.ajax({
+                    async: false,
+                    url: '../../Invoices/GetUnpaidInvoices',
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                        month: moment($('#monthUnpaid').val()).format("MMMM"),
+                        year: moment($('#year').val()).format('YYYY')
+                    },
+                    success: function (data, textStatus) {
+                        if (!data) {
+                            $('#inputModalBody').html("No data matched your search.");
+                            $('#inputModal').modal();
+                            return;
+                        }
+                        else {
+                            var totalAmountDue = 0;
+                            var invoices = '';
+                            invoices += '<div class="col-sm-3"><center>Name</center></div>';
+                            invoices += '<div class="col-sm-3"><center>Amount Due</center></div>';
+                            invoices += '<div class="col-sm-3"><center>Amount Paid</center></div>';
+                            invoices += '<div class="col-sm-3"><center>Due Date</center></div>';
+                            $.each(data, function (index, item) {
+                                var displayItem = '<div class="row">';
+                                displayItem += '<div class="col-sm-3"><center>';
+                                displayItem += '<h5>' + item.ApplicationUser.FirstName + " " + item.ApplicationUser.LastName + '</h5>';
+                                displayItem += '</center></div>';
+                                displayItem += '<div class="col-sm-3"><center>';
+                                displayItem += '<h5>$' + item.BilledAmount + '</h5>';
+                                displayItem += '</center></div>';
+                                displayItem += '<div class="col-sm-3"><center>';
+                                displayItem += '<h5>$' + item.AmountPaid;
+                                displayItem += '</h5></center></div>';
+                                displayItem += '<div class="col-sm-3"><center>';
+                                displayItem += '<h5>' + moment(item.DateDue).format("MM/DD/YYYY");
+                                displayItem += '</h5></center></div>';
+                                displayItem += '</div>';
+                                invoices += displayItem;
+                                totalAmountDue += item.BilledAmount;
+
+                            });
+                            invoices += '<div class="col-sm-3"></div>';
+                            invoices += '<div class="col-sm-3"><center>Total: $' + totalAmountDue + '</center></div>'
+                            if (data.length === 0) {
+                                $('#unpaidResults').html('There are no unpaid invoices for the selected month.');
                             }
                             else {
-                                invoiceData = data;
+                                $('#unpaidResults').html(invoices);
+                            }
+
+                        }
+                    }
+                });
+            }
+            else {
+                $('#inputModalBody').html("Please enter a month.");
+                $('#inputModal').modal();
+            }
+        }
+
+        function GenerateTaxStatements() {
+
+            var statementData;
+            if ($('#Years').val() != "") {
+                $.ajax({
+                    async: false,
+                    url: '../../Invoices/TaxStatement',
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                        year: $('#Years').val()
+                    },
+                    success: function (data, textStatus) {
+                        if (!data) {
+                            $('#inputModalBody').html("No data matched your search.");
+                            $('#inputModal').modal();
+                            return;
+                        }
+                        else {
+                            statementData = data;
+                            for (i = 0; i < statementData.length; i++) {
+                                $.ajax({
+                                    async: true,
+                                    url: '../../TaxStatements/Create',
+                                    type: 'POST',
+                                    datatype: 'json',
+                                    data: {
+                                        __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                                        Year: $('#Years').val(),
+                                        AmountPaid: statementData[i].AmountPaid,
+                                        DateDue: $('#dueDate').val(),
+                                        UserId: statementData[i].ParentId,
+                                    },
+                                    success: function (data, textStatus, jQxhr) {
+                                        $('#inputModalBody').html("The yearly tax statements were generated.");
+                                        $('#inputModal').modal();
+                                    }
+
+                                });
                             }
                         }
-                    });
-                }
-                else {
-                    $('#inputModalBody').html("Please select a year.");
-                    $('#inputModal').modal();
-                }
+                    }
+
+                });
             }
-        </script>
+            else {
+                $('#inputModalBody').html("Please select a year.");
+                $('#inputModal').modal();
+            }
+        }
+
+
+        function EmailTaxStatements() {
+            var statementData;
+            if ($('#Years').val() != "") {
+                $.ajax({
+                    async: false,
+                    url: '../../TaxStatements/GetTaxStatements',
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                        year: $('#Years').val()
+                    },
+                    success: function (data, textStatus) {
+                        if (!data) {
+                            $('#inputModalBody').html("No data matched your search.");
+                            $('#inputModal').modal();
+                            return;
+                        }
+                        else {
+                            statementData = data;
+                            for (i = 0; i < statementData.length; i++) {
+                                var message = "Your Year tax statement has been generated.\n\r\rYou paid $Amount in child care expenses during the year.\n\r\r\n\r\rOur Federal EIN is 10-123456789.\n\r\rIf you have any questions about your tax statement, please contact us."
+                                .replace("Year", $('#Years').val())
+                                .replace("Amount", statementData[i].AmountPaid)
+
+                                var to = statementData[i].ApplicationUser.Email
+                                var from = "AfterSchoolCareApp";
+                                var subject = "AfterSchoolCareApp Tax Statement";
+                                var name = statementData[i].ApplicationUser.FirstName;
+
+                                SendEmail(name, to, subject, message);
+
+                            }
+                            $('#inputModalBody').html("Yearly tax statement emails were sent.");
+                            $('#inputModal').modal();
+                        }
+                    }
+                    
+                });
+            }
+            else {
+                $('#inputModalBody').html("Please select a year.");
+                $('#inputModal').modal();
+            }
+        }
+
+        function SearchForRegisteredUser() {
+            if ($('#searchFirstName').val() != "" && $('#searchLastName').val() != "") {
+                $.ajax({
+                    async: false,
+                    url: '../../ApplicationUsers/GetRegisteredUser',
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                        firstName: $('#searchFirstName').val(),
+                        lastName: $('#searchLastName').val()
+                    },
+                    success: function (data, textStatus) {
+                        if (!data) {
+                            $('#inputModalBody').html("No users matched your search.");
+                            $('#inputModal').modal();
+                            return;
+                        }
+                        else {
+                            var totalAmountDue = 0;
+                            var userData = '';
+                            userData += '<div class="col-sm-3"></div>'
+                            userData += '<div class="col-sm-3"><center>Name</center></div>';
+                            userData += '<div class="col-sm-3"><center>Email</center></div>';
+                            userData += '<div class="col-sm-3"><center>Phone</center></div>';
+
+                            $.each(data, function (index, item) {
+                                var displayItem = '<div class="row">';
+                                displayItem = '<div class="col-sm-3"><center><img src="../../Images/Driver/' + item.Photo + '" style="height:50px;width:50px;" /></center></div>'
+                                displayItem += '<div class="col-sm-3"><center>';
+                                displayItem += '<h5>' + item.FirstName + " " + item.LastName + '</h5>';
+                                displayItem += '</center></div>';
+                                displayItem += '<div class="col-sm-3"><center>';
+                                displayItem += '<h5>' + item.Email + '</h5>';
+                                displayItem += '</center></div>';
+                                displayItem += '<div class="col-sm-3"><center>';
+                                displayItem += '<h5>' + item.PhoneNumber;
+                                displayItem += '</h5></center></div>';
+                                displayItem += '</div>';
+                                userData += displayItem;
+
+                            });
+
+                            if (data.length === 0) {
+                                $('#userSearchResults').html('<div class="row"><center>There are no users with that name.</center></div>');
+                            }
+                            else {
+                                $('#userSearchResults').html(userData);
+                            }
+
+                        }
+                    }
+                });
+            }
+            else {
+                $('#inputModalBody').html("Please enter a first name and a last name.");
+                $('#inputModal').modal();
+            }
+        }
+    </script>
 
 
 

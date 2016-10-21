@@ -221,6 +221,7 @@
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\DriversController.cs" />
+    <Compile Include="Controllers\TaxStatementsController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -297,6 +298,10 @@
     <Compile Include="Migrations\201610201928378_AmountDue now BilledAmount on invoice.Designer.cs">
       <DependentUpon>201610201928378_AmountDue now BilledAmount on invoice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610211555039_taxstatement model created.cs" />
+    <Compile Include="Migrations\201610211555039_taxstatement model created.Designer.cs">
+      <DependentUpon>201610211555039_taxstatement model created.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -307,6 +312,7 @@
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Driver.cs" />
+    <Compile Include="Models\TaxStatement.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendEmail.cs" />
@@ -441,6 +447,11 @@
     <Content Include="Views\Billings\Details.cshtml" />
     <Content Include="Views\Billings\Edit.cshtml" />
     <Content Include="Views\Billings\Index.cshtml" />
+    <Content Include="Views\TaxStatements\Create.cshtml" />
+    <Content Include="Views\TaxStatements\Delete.cshtml" />
+    <Content Include="Views\TaxStatements\Details.cshtml" />
+    <Content Include="Views\TaxStatements\Edit.cshtml" />
+    <Content Include="Views\TaxStatements\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -515,6 +526,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610201928378_AmountDue now BilledAmount on invoice.resx">
       <DependentUpon>201610201928378_AmountDue now BilledAmount on invoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610211555039_taxstatement model created.resx">
+      <DependentUpon>201610211555039_taxstatement model created.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

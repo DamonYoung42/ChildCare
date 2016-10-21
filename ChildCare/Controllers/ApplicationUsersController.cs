@@ -27,6 +27,13 @@ namespace ChildCare.Controllers
             return Json(users.ToList(), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetRegisteredUser(string firstName, string lastName)
+        {
+            var user = db.Users
+                .Where(x => x.FirstName == firstName && x.LastName == lastName);
+            return Json(user.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: ApplicationUsers/Details/5
         public ActionResult Details(string id)
         {

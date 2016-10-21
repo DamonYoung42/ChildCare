@@ -47,6 +47,7 @@ namespace ChildCare.Models
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Billing> Billings { get; set; }
+        public DbSet<TaxStatement> TaxStatements { get; set; }
 
         //public System.Data.Entity.DbSet<ChildCare.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
