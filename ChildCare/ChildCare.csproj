@@ -328,13 +328,18 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Site\chalkboard-black.jpg" />
     <Content Include="Images\Site\chalkboard.jpeg" />
+    <Content Include="Images\Site\chalkboard.png" />
     <Content Include="Images\Site\free-childcare.jpg" />
     <Content Include="Images\Site\kids-large.jpg" />
     <Content Include="Images\Site\kids.jpg" />
+    <Content Include="Images\Site\kids.png" />
     <Content Include="Images\Site\register.png" />
+    <Content Include="Images\Site\register1.png" />
     <Content Include="Images\Site\school-bus-small.png" />
     <Content Include="Images\Site\school-bus.jpg" />
+    <Content Include="Images\Site\school-bus.png" />
     <Content Include="Images\Site\Thornhill-Daycare-After-School.png" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
@@ -347,6 +352,7 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="fonts\BlackBoard.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\fullcalendar.min.css" />

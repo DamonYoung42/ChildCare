@@ -28,9 +28,9 @@
         <th>
             @Html.DisplayNameFor(model => model.LastName)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.GradeLevel)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayName("Teacher")
         </th>
@@ -55,9 +55,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.GradeLevel)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Teacher.LastName)
             </td>

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ChildCare.Models.Invoice>
+<link rel="stylesheet" href="~/Content/Site.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="~/Scripts/moment.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
@@ -136,10 +137,9 @@ else
                 year: moment().format('YYYY')
             },
             success: function (data, textStatus) {
-                if (!data) {
-                    $('#inputModalBody').html("No data matched your search.");
+                if (data.length == 0) {
+                    $('#inputModalBody').html("You have not been billed yet this month.");
                     $('#inputModal').modal();
-                    return;
                 }
                 else {
                     $('#inputModalBody').html("You have been billed $" + data[0].AmountDue + ' for the current month.');

@@ -153,12 +153,12 @@ namespace ChildCare.Controllers
             {
                 db.Entry(attendance).State = EntityState.Modified;
                 db.SaveChanges();
-                if (sendTextSMS)
-                {
-                    TwilioSMS SMSMessage = new TwilioSMS();
-                    var message = firstName + " was signed out of child care at " + attendance.PickupTime.ToShortTimeString() + ".You have been billed $" + attendance.AmountBilled + ".";
-                    SMSMessage.SendSMS(message);
-                }
+                //if (sendTextSMS)
+                //{
+                //    TwilioSMS SMSMessage = new TwilioSMS();
+                //    var message = firstName + " was signed out of child care at " + attendance.PickupTime.ToShortTimeString() + ".You have been billed $" + attendance.AmountBilled + ".";
+                //    SMSMessage.SendSMS(message);
+                //}
 
                 //return RedirectToAction("Details", "Children");
             }
