@@ -55,6 +55,12 @@ else
             @Html.DisplayNameFor(model => model.BilledAmount)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Adjustments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalAmount)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.DateDue)
         </th>
         <th>
@@ -63,13 +69,10 @@ else
         <th>
             @Html.DisplayNameFor(model => model.DatePaid)
         </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.Adjustments)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Notes)
         </th>
+
         <th></th>
     </tr>
 
@@ -87,6 +90,12 @@ else
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.BilledAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adjustments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalAmount)
         </td>
         <td>
             @item.DateDue.ToShortDateString()
@@ -107,9 +116,7 @@ else
 
             @* @Html.DisplayFor(modelItem => item.DatePaid)*@
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adjustments)
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.Notes)
         </td>

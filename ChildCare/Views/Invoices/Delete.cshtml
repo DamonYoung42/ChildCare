@@ -10,11 +10,12 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+            @Html.DisplayName("Name")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Email)
+            @Html.DisplayFor(model => model.ApplicationUser.FirstName)
+            @Html.DisplayFor(model => model.ApplicationUser.LastName)
         </dd>
 
         <dt>
@@ -40,14 +41,27 @@
         <dd>
             @Html.DisplayFor(model => model.BilledAmount)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Adjustments)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.Adjustments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalAmount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalAmount)
+        </dd>
         <dt>
 
             @Html.DisplayNameFor(model => model.DateDue)
         </dt>
 
         <dd>
-            @Model.DatePaid.ToShortDateString()
+            @Model.DateDue.ToShortDateString()
             @*@Html.DisplayFor(model => model.DateDue)*@
         </dd>
 
@@ -67,13 +81,7 @@
             @Model.DatePaid.ToShortDateString()
             @*@Html.DisplayFor(model => model.DatePaid)*@
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Adjustments)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Adjustments)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Notes)
         </dt>

@@ -86,7 +86,7 @@ namespace ChildCare.Controllers
 
             var events = db.Attendances
                 .Where(x => x.ChildId == Id)
-                .Where(x => x.start >= DateTime.Today);
+                .Where(x => x.Date >= DateTime.Now);
 
             return Json(events.ToList(), JsonRequestBehavior.AllowGet);
         }
@@ -99,7 +99,7 @@ namespace ChildCare.Controllers
 
             var events = db.Attendances
                 .Where(x => x.ChildId == Id)
-                .Where(x => x.start <= DateTime.Today);
+                .Where(x => x.PickupTime < DateTime.Now);
 
             return Json(events.ToList(), JsonRequestBehavior.AllowGet);
         }

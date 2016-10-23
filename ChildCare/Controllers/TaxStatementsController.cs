@@ -31,7 +31,8 @@ namespace ChildCare.Controllers
             {
                 var taxStatements = db.TaxStatements
                     .Include(t => t.ApplicationUser)
-                    .OrderBy(t => t.Year);
+                    .OrderBy(t => t.Year)
+                    .OrderBy(t => t.ApplicationUser.LastName);
                 return View(taxStatements.ToList());
             }
 

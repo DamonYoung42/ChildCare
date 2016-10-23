@@ -152,18 +152,18 @@ namespace ChildCare.Controllers
             {
                 db.Entry(attendance).State = EntityState.Modified;
                 db.SaveChanges();
-                //if (sendTextSMS)
-                //{
-                //    TwilioSMS SMSMessage = new TwilioSMS();
-                //    var message = firstName + " was signed out of child care at " + attendance.PickupTime.ToShortTimeString() + ".You have been billed $" + attendance.AmountBilled + ".";
-                //    SMSMessage.SendSMS(message);
-                //}
+                if (sendTextSMS)
+                {
+                    TwilioSMS SMSMessage = new TwilioSMS();
+                    var message = firstName + " was signed out of child care at " + attendance.PickupTime.ToShortTimeString() + ".You have been billed $" + attendance.AmountBilled + ".";
+                    SMSMessage.SendSMS(message);
+                }
 
                 //return RedirectToAction("Details", "Children");
             }
             ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", attendance.ChildId);
             //return View(attendance);
-            return RedirectToAction("Details", "Children");
+            return RedirectToAction("Index", "Attendances");
         }
 
         // GET: Attendances/Delete/5

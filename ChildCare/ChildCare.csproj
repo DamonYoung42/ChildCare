@@ -302,6 +302,10 @@
     <Compile Include="Migrations\201610211555039_taxstatement model created.Designer.cs">
       <DependentUpon>201610211555039_taxstatement model created.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610231415522_TotalAmount added to Invoice model.cs" />
+    <Compile Include="Migrations\201610231415522_TotalAmount added to Invoice model.Designer.cs">
+      <DependentUpon>201610231415522_TotalAmount added to Invoice model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -332,6 +336,7 @@
     <Content Include="Images\Site\chalkboard-black.jpg" />
     <Content Include="Images\Site\chalkboard.jpeg" />
     <Content Include="Images\Site\chalkboard.png" />
+    <Content Include="Images\Site\chalkboardchalk.jpg" />
     <Content Include="Images\Site\free-childcare.jpg" />
     <Content Include="Images\Site\kids-large.jpg" />
     <Content Include="Images\Site\kids.jpg" />
@@ -541,6 +546,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610211555039_taxstatement model created.resx">
       <DependentUpon>201610211555039_taxstatement model created.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610231415522_TotalAmount added to Invoice model.resx">
+      <DependentUpon>201610231415522_TotalAmount added to Invoice model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -123,7 +123,6 @@
     </div>
 
     <div id="createModal" class="modal fade modal-overflow in" data-width="600" style="width: 600px; margin: 0px auto; left:0px; top:0px" aria-hidden="false">
-        @*<div id="createModal" class="modal fade">*@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -149,7 +148,6 @@
     </div>
 
     <div id="alertModal" class="modal fade modal-overflow in" data-width="600" style="width: 600px; margin: 0px auto; left:0px; top:0px" aria-hidden="false">
-        @*<div id="alertModal" class="modal fade">*@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -176,6 +174,33 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        var pickupSources = {
+            future: 
+            {
+                url: '@Url.Action("GetFutureCalendarEvents", "Children")',
+                type: 'GET',
+                data: {Id: @Model.Id},
+                error: function () {
+                    $('#alertModal').modal();
+
+                },
+                color: "blue",
+                editable: true
+            },
+            past: {
+                id: "past",
+                url: '@Url.Action("GetPastCalendarEvents", "Children")',
+                type: 'GET',
+                data: {Id: @Model.Id},
+                error: function () {
+                    $('#alertModal').modal();
+                },
+                color: "red",
+                editable: false
+            }
+
+        }
 
         $('#calendar').fullCalendar({
             header: {
@@ -207,7 +232,7 @@
             },
             contentHeight: "auto",
             timezone: 'local',
-            weekends: false,
+            weekends: true,
             cache: true,
             allDay: false,
             displayEventTime: true,
@@ -215,29 +240,7 @@
             forceEventDuration: true,
             slotDuration: '00:15:00',
             eventOverlap: false,
-            eventSources: [
-                {
-                    url: '@Url.Action("GetFutureCalendarEvents", "Children")',
-                    type: 'GET',
-                    data: {Id: @Model.Id},
-                    error: function () {
-                        $('#alertModal').modal();
-
-                    },
-                    color: "blue",
-                    editable: true
-                },
-                {
-                    url: '@Url.Action("GetPastCalendarEvents", "Children")',
-                    type: 'GET',
-                    data: {Id: @Model.Id},
-                    error: function () {
-                        $('#alertModal').modal();
-                    },
-                    color: "red",
-                    editable: false
-                }
-            ],
+            eventSources: [ pickupSources.past, pickupSources.future ],
             eventClick:  function(event, jsEvent, view) {
                 //$('#deleteModalTitle').html(event.title);
                 $('#deleteModalBody').html(moment(event.start).format('MM-DD-YYYY h:mm A'));
@@ -319,7 +322,9 @@
                 __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
                 Date: data.start.format('MM-DD-YYYY'),
                 ChildId: @Model.Id,
-                PickupTime: data.end.format('MM-DD-YYYY'),
+                //
+                PickupTime: data.start.format('MM-DD-YYYY hh:mm A'),
+                //10-23-2016 testing PickupTime: data.end.format('MM-DD-YYYY'),
                 Id: data.Id,
                 title: data.title,
                 start: data.start.format('MM-DD-YYYY hh:mm A'),
@@ -336,6 +341,7 @@
                     return;
                 }
                 calendar.fullCalendar('updateEvent', event);
+                
             },
         });
     };
@@ -372,7 +378,9 @@
                 __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
                 Date: $('#createModalDate').val(),
                 ChildId: $('#createModalChildId').val(),
-                PickupTime: $('#createModalPickupTime').val(),
+                //
+                PickupTime: $('#createModalstart').val(),
+                //10-23-2016 testing PickupTime: $('#createModalPickupTime').val(),
                 Id: $('#createModalId').val(),
                 title: $('#createModaltitle').val(),
                 start: $('#createModalstart').val(),
@@ -415,11 +423,11 @@
                 else{
                     todayAttendance = data;
                     CalculateBilledAmount(todayAttendance);
-                    PostBilledAmount(todayAttendance);
                     GetAttendanceRecord();
                     //SendEmail(todayAttendance);
-
-
+                    $('#alertModalBody').html(todayAttendance[0].b.Child.FirstName + " " + todayAttendance[0].b.Child.LastName + " was signed out at " + moment(todayAttendance[0].b.Child.PickupTime).format("h:mm A"))
+                    $('#alertModal').modal();
+                    $('#calendar').fullCalendar('refetchEvents');
                 }
             }
         });
@@ -463,22 +471,24 @@
             data: ({
                 __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
                 Date: moment(todayAttendance[0].b.Date).format('MM-DD-YYYY'),
-                firstName: todayAttendance[0].FirstName,
+                firstName: todayAttendance[0].b.Child.FirstName,
                 ChildId: @Model.Id,
                 PickupTime: endTime,
                 Id: todayAttendance[0].b.Id,
                 title: todayAttendance[0].b.title,
-                start: moment(todayAttendance[0].b.start).format('MM-DD-YYYY h:mm A'),
-                end: moment(todayAttendance[0].b.end).format('MM-DD-YYYY h:mm A'),
+                start: endTime,
+                end: endTime,
+                //start: moment(todayAttendance[0].b.start).format('MM-DD-YYYY h:mm A'),
+                //end: moment(todayAttendance[0].b.end).format('MM-DD-YYYY h:mm A'),
                 allday: false,
                 editable: false,
                 AmountBilled: todayAttendance[0].b.AmountBilled,
-                sendTextSMS: true,
+                sendTextSMS: false,
 
             }),
 
             success: function (data, textStatus) {
-                if (!data) {
+                if (data.length == 0) {
                     $('#alertModalBody').html("This child could not be signed out.")
                     $('#alertModal').modal();
                     return;
@@ -502,7 +512,7 @@
                 Id: @Model.Id,
             },
             success: function (data, textStatus) {
-                if (!data) {
+                if (data.length == 0) {
                     $('#alertModalBody').html("This child is not enrolled today.")
                     $('#alertModal').modal();
                     return;

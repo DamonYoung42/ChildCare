@@ -23,6 +23,9 @@ namespace ChildCare.Models
         [Display(Name = "Billed Amount")]
         public double BilledAmount { get; set; }
 
+        [Display(Name = "Total Amount")]
+        public double TotalAmount { get; set; }
+
         [Display(Name = "Due Date")]
         public DateTime DateDue { get; set; }
 

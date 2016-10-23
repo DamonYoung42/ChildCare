@@ -55,7 +55,8 @@ namespace ChildCare.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName");
+            var userId = User.Identity.GetUserId();
+            ViewBag.ChildId = new SelectList(db.Children.Where(x => x.UserId == userId), "Id", "FirstName");
             return View();
         }
 
@@ -95,6 +96,7 @@ namespace ChildCare.Controllers
         [Authorize]
         public ActionResult Edit(int? id)
         {
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -104,7 +106,8 @@ namespace ChildCare.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", driver.ChildId);
+            var userId = User.Identity.GetUserId();
+            ViewBag.ChildId = new SelectList(db.Children.Where(x => x.UserId == userId), "Id", "FirstName", driver.ChildId);
             return View(driver);
         }
 

@@ -57,7 +57,7 @@ namespace ChildCare.Controllers
                 .Include(a => a.ApplicationUser)
                 .Where(x => x.Month == month)
                 .Where(x => x.Year == year)
-                .Where(x => x.AmountPaid == 0)
+                .Where(x => x.AmountPaid != x.BilledAmount)
                 .ToList();
 
             return Json(invoices, JsonRequestBehavior.AllowGet);
@@ -111,7 +111,7 @@ namespace ChildCare.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Month,Year,BilledAmount,DateDue,AmountPaid,DatePaid,UserId, Notes, Adjustments")] Invoice invoice)
+        public ActionResult Create([Bind(Include = "Id,Month,Year,TotalAmount, BilledAmount,DateDue,AmountPaid,DatePaid,UserId, Notes, Adjustments")] Invoice invoice)
         {
 
             if (ModelState.IsValid)
@@ -168,11 +168,11 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Month,Year,BilledAmount,DateDue,AmountPaid,DatePaid,UserId, Notes, Adjustments")] Invoice invoice)
+        public ActionResult Edit([Bind(Include = "Id,Month,Year,TotalAmount, BilledAmount,DateDue,AmountPaid,DatePaid,UserId, Notes, Adjustments")] Invoice invoice)
         {
             if (ModelState.IsValid)
             {
-                invoice.BilledAmount += invoice.Adjustments;
+                invoice.TotalAmount = invoice.BilledAmount + invoice.Adjustments;
                 db.Entry(invoice).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
