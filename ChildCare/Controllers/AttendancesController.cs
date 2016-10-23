@@ -109,14 +109,13 @@ namespace ChildCare.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Date,PickupTime,ChildId, start, end, editable, allDay, title, AmountBilled")] Attendance attendance)
-
-         {
+        {
             if (ModelState.IsValid)
             {
                 db.Attendances.Add(attendance);
                 db.SaveChanges();
                 //return View(attendance);
-                return RedirectToAction("Details", "Children", new { Id = attendance.ChildId });
+                //return RedirectToAction("Details", "Children", new { Id = attendance.ChildId });
             }
 
             ViewBag.ChildId = new SelectList(db.Children, "Id", "FirstName", attendance.ChildId);

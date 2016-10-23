@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ChildCare.Models;
+using Microsoft.AspNet.Identity;
 
 namespace ChildCare.Controllers
 {
@@ -17,8 +18,23 @@ namespace ChildCare.Controllers
         // GET: TaxStatements
         public ActionResult Index()
         {
-            var taxStatements = db.TaxStatements.Include(t => t.ApplicationUser);
-            return View(taxStatements.ToList());
+            var userId = User.Identity.GetUserId();
+            if (User.IsInRole("Parent"))
+            {
+                var taxStatements = db.TaxStatements
+                    .Include(t => t.ApplicationUser)
+                    .Where(t => t.UserId == userId)
+                    .OrderBy(t => t.Year);
+                return View(taxStatements.ToList());
+            }
+            else
+            {
+                var taxStatements = db.TaxStatements
+                    .Include(t => t.ApplicationUser)
+                    .OrderBy(t => t.Year);
+                return View(taxStatements.ToList());
+            }
+
         }
 
         public JsonResult GetTaxStatements(int year)

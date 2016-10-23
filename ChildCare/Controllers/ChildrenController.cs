@@ -110,7 +110,7 @@ namespace ChildCare.Controllers
         {
             ViewBag.UserId = User.Identity.GetUserId();
             //ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
-            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "LastName");
+            ViewBag.TeacherId = new SelectList(db.Teachers.OrderBy(x => x.LastName), "Id", "LastName");
             return View();
         }
 
@@ -144,7 +144,7 @@ namespace ChildCare.Controllers
             }
 
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", child.UserId);
-            ViewBag.TeacherID = new SelectList(db.Teachers, "Id", "LastName", child.TeacherId);
+            ViewBag.TeacherID = new SelectList(db.Teachers.OrderBy(x => x.LastName), "Id", "LastName", child.TeacherId);
             return View(child);
         }
 

@@ -20,75 +20,76 @@
 @Html.AntiForgeryToken()
 @Html.HiddenFor(model => model.Id)
 <div>
-    <h2>Child Profile</h2>
+    <h1>Child Profile</h1>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+    <div class="row">
+        <div class="col-sm-4">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
 
-        @*<dt>
-                @Html.DisplayNameFor(model => model.GradeLevel)
-            </dt>
+                @*<dt>
+                        @Html.DisplayNameFor(model => model.GradeLevel)
+                    </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.GradeLevel)
-            </dd>*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Teacher)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.GradeLevel)
+                    </dd>*@
+                <dt>
+                    @Html.DisplayNameFor(model => model.Teacher)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Teacher.LastName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Medications)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Teacher.LastName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Medications)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Medications)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Medications)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Notes)
+                </dd>
 
-        <dt>
-            @*@Html.DisplayNameFor(model => model.Photo)*@
-        </dt>
+                <dt>
+                    @*@Html.DisplayNameFor(model => model.Photo)*@
+                </dt>
 
-        <dd>
-            <img src="~/Images/Child/@Html.DisplayFor(model => model.Photo)" style="height:100px;width:100px;" />
-            @*Html.DisplayFor(model => model.Photo)*@
-        </dd>
-    </dl>
-    @if (!User.IsInRole("Parent"))
-    {
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-8">
-                <button type="button" width="100%" class="btn btn-primary btn-lg" id="signOut" onclick="SignOut()">Sign out</button>
-            </div>
+                <dd>
+                    <img src="~/Images/Child/@Html.DisplayFor(model => model.Photo)" style="height:100px;width:100px;" />
+                    @*Html.DisplayFor(model => model.Photo)*@
+                </dd>
+            </dl>
+
         </div>
-    }
 
-
+        @if (!User.IsInRole("Parent"))
+        {
+            <div class="col-sm-8">
+                <center><button type="button" width="100%" class="btn btn-primary btn-lg" id="signOut" onclick="SignOut()">Sign out</button></center>
+            </div>
+        }
+    </div>
 </div>
 
 <div class="row"><div class="col-sm-12"></div></div>
@@ -107,7 +108,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
-                    <h4 id="modalTitle" class="modal-title">Pickup</h4>
+                    <h4 id="deleteModalTitle" class="modal-title">Do You Want To Delete This Pickup?</h4>
                 </div>
                 <div id="deleteModalBody" class="modal-body"></div>
                 <input type="hidden" id="deleteModalEventId" />
@@ -153,11 +154,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
-                    <h4 id="alertModalTitle" class="modal-title">Pickup</h4>
+                    <h4 id="alertModalTitle" class="modal-title">System Message</h4>
                 </div>
-                <div id="alertModalBody" class="modal-body">There was an error retrieving events. Please refresh the page.</div>
+                <div id="alertModalBody" class="modal-body">A system error has occurred. Please refresh the page.</div>
                 <div class="modal-footer">
-                    <button type="button" class="btn" id="alertModalClose" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="alertModalClose" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -165,116 +166,125 @@
 
 
 </div>
-    <p></p>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+<p></p>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+
+            views:
+            {
+                month:
+                {                    
+                    editable: false,
+                    height:300,
                 },
-
-                views:
+                agenda: {
+                    editable: true,
+                    minTime: "15:00:00",
+                    maxTime: "18:30:00",
+                    allDaySlot: false,
+                    height: 200,
+                    selectConstraint:
+                    {
+                        start: '15:00',
+                        end: "18:00",
+                        dow: [1,2,3,4,5]
+                    }
+                },
+            },
+            contentHeight: "auto",
+            timezone: 'local',
+            weekends: false,
+            cache: true,
+            allDay: false,
+            displayEventTime: true,
+            defaultTimedEventDuration: '00:15:00',
+            forceEventDuration: true,
+            slotDuration: '00:15:00',
+            eventOverlap: false,
+            eventSources: [
                 {
-                    month:
-                    {
-                        editable: false,
-                        height:300,
-                    },
-                    agenda: {
-                        editable: true,
-                        minTime: "15:00:00",
-                        maxTime: "18:30:00",
-                        allDaySlot: false,
-                        height: 200,
-                        selectConstraint:
-                        {
-                            start: '15:00',
-                            end: "18:00",
-                            dow: [1,2,3,4,5]
-                        }
-                    },
-                },
-                contentHeight: "auto",
-                timezone: 'local',
-                weekends: false,
-                cache: true,
-                allDay: false,
-                displayEventTime: true,
-                defaultTimedEventDuration: '00:15:00',
-                forceEventDuration: true,
-                slotDuration: '00:15:00',
-                eventOverlap: false,
-                eventSources: [
-                    {
-                        url: '@Url.Action("GetFutureCalendarEvents", "Children")',
-                        type: 'GET',
-                        data: {Id: @Model.Id},
-                        error: function () {
-                            $('#alertModal').modal();
+                    url: '@Url.Action("GetFutureCalendarEvents", "Children")',
+                    type: 'GET',
+                    data: {Id: @Model.Id},
+                    error: function () {
+                        $('#alertModal').modal();
 
-                        },
-                        color: "blue",
-                        editable: true
                     },
+                    color: "blue",
+                    editable: true
+                },
+                {
+                    url: '@Url.Action("GetPastCalendarEvents", "Children")',
+                    type: 'GET',
+                    data: {Id: @Model.Id},
+                    error: function () {
+                        $('#alertModal').modal();
+                    },
+                    color: "red",
+                    editable: false
+                }
+            ],
+            eventClick:  function(event, jsEvent, view) {
+                //$('#deleteModalTitle').html(event.title);
+                $('#deleteModalBody').html(moment(event.start).format('MM-DD-YYYY h:mm A'));
+                $('#deleteModalEventId').val(event.Id);
+                $('#deleteModalCalEventId').val(event._id);
+                $('#deleteModal').modal();
+            },
+
+            eventDrop: function (event) {
+                EditEvent(event);
+            },
+            dayClick: function (date, allDay, jsEvent, view) {
+                var check = moment(date._d).format('MM-DD-YYYY');
+                var today = moment(new Date()).format('MM-DD-YYYY');
+
+                if (check >= today){
+                    if ($('#calendar').fullCalendar('getView').type != 'month')
                     {
-                        url: '@Url.Action("GetPastCalendarEvents", "Children")',
-                        type: 'GET',
-                        data: {Id: @Model.Id},
-                        error: function () {
-                            $('#alertModal').modal();
-                        },
-                        color: "red",
-                        editable: false
+                        var events = $('#calendar').fullCalendar('clientEvents');
+                        for (var i = 0; i < events.length; i++) {
+                            if (moment(date).format('MM-DD-YYYY') == moment(events[i].Date).format('MM-DD-YYYY')) {
+                                $('#alertModalBody').html("There is already a pickup scheduled for this day.");
+                                $('#alertModal').modal();
+                                return;
+                            }
+                        }
+
+                        $('#createModalTitle').html("Pickup");
+                        $('#createModalBody').html(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                        $('#createModalDate').val(moment(date._d).format('MM-DD-YYYY'));
+                        $('#createModalChildId').val(@Model.Id);
+                        $('#createModalPickupTime').val(moment(date._d).format('MM-DD-YYYY'));
+                        $('#createModaltitle').val("Pickup");
+                        $('#createModalstart').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                        $('#createModalend').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
+                        $('#createModaleditable').val("true");
+                        $('#createModalallDay').val("false");
+
+                        $('#createModal').modal();
                     }
-                ],
-                eventClick:  function(event, jsEvent, view) {
-                    $('#deleteModalTitle').html(event.title);
-                    $('#deleteModalBody').html(moment(event.start).format('MM-DD-YYYY h:mm A'));
-                    $('#deleteModalEventId').val(event.Id);
-                    $('#deleteModalCalEventId').val(event._id);
-                    $('#deleteModal').modal();
-                },
-
-                eventDrop: function (event) {
-                    EditEvent(event);
-                },
-                dayClick: function (date, allDay, jsEvent, view) {
-                    var check = moment(date._d).format('MM-DD-YYYY');
-                    var today = moment(new Date()).format('MM-DD-YYYY');
-
-                    if (check >= today){
-                        if ($('#calendar').fullCalendar('getView').type != 'month')
-                        {
-                            $('#createModalTitle').html("Pickup");
-                            $('#createModalBody').html(moment(date._d).format('MM-DD-YYYY h:mm A'));
-                            $('#createModalDate').val(moment(date._d).format('MM-DD-YYYY'));
-                            $('#createModalChildId').val(@Model.Id);
-                            $('#createModalPickupTime').val(moment(date._d).format('MM-DD-YYYY'));
-                            $('#createModaltitle').val("Pickup");
-                            $('#createModalstart').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
-                            $('#createModalend').val(moment(date._d).format('MM-DD-YYYY h:mm A'));
-                            $('#createModaleditable').val("true");
-                            $('#createModalallDay').val("false");
-
-                            $('#createModal').modal();
-                        }
-                        else {
-                            $('#calendar').fullCalendar( 'changeView', 'agendaWeek' )
-                            $('#calendar').fullCalendar('gotoDate', date);
-                        }
+                    else {
+                        $('#calendar').fullCalendar( 'changeView', 'agendaWeek' )
+                        $('#calendar').fullCalendar('gotoDate', date);
                     }
-                },
-                @*dayClick: function (date, allDay, jsEvent, view) {
+                }
+            },
+            @*dayClick: function (date, allDay, jsEvent, view) {
 
                 $('#createModalTitle').html("Pickup");
                 $('#createModalBody').html(moment(date._d).format('MM-DD-YYYY h:mm A'));
@@ -290,221 +300,221 @@
                 $('#createModal').modal();
             },*@
 
-                eventConstraint: {
-                    start: "16:00",
-                    end: "18:30"
+            eventConstraint: {
+                start: "16:00",
+                end: "18:30"
 
+            }
+
+        });
+    });
+
+    function EditEvent(data) {
+
+        $.ajax({
+            url: '../../Attendances/Edit',
+            type: "POST",
+            dataType: "json",
+            data: ({
+                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                Date: data.start.format('MM-DD-YYYY'),
+                ChildId: @Model.Id,
+                PickupTime: data.end.format('MM-DD-YYYY'),
+                Id: data.Id,
+                title: data.title,
+                start: data.start.format('MM-DD-YYYY hh:mm A'),
+                end: data.end.format('MM-DD-YYYY hh:mm A'),
+                allday: data.allDay,
+                editable: data.editable,
+                sendTextSMS: false,
+
+            }),
+            success: function (data, textStatus) {
+                if (!data) {
+                    $('#alertModalBody').html("Changes could not be saved.")
+                    $('#alertModal').modal();
+                    return;
+                }
+                calendar.fullCalendar('updateEvent', event);
+            },
+        });
+    };
+
+    function DeleteEvent(Id, CalEventId) {
+        $.ajax({
+            url: '../../Attendances/Delete/' + Id,
+            type: "POST",
+            dataType: "json",
+            data: ({
+                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val()
+            }),
+
+            success: function (data, textStatus) {
+                if (!data) {
+                    $('#alertModalBody').html("Event could not be deleted.")
+                    $('#alertModal').modal();
+                    return;
                 }
 
-            });
+            },
+        });
+        $('#calendar').fullCalendar('removeEvents', CalEventId);
+        $('#deleteModalClose').click();
+    };
+
+    function CreateEvent() {
+
+        $.ajax({
+            url: '../../Attendances/Create',
+            type: "POST",
+            dataType: "json",
+            data: ({
+                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                Date: $('#createModalDate').val(),
+                ChildId: $('#createModalChildId').val(),
+                PickupTime: $('#createModalPickupTime').val(),
+                Id: $('#createModalId').val(),
+                title: $('#createModaltitle').val(),
+                start: $('#createModalstart').val(),
+                end: $('#createModalend').val(),
+                allday:$('#createModalallDay').val(),
+                editable: $('#createModaleditable').val(),
+                AmountBilled: 0,
+            }),
+
+            success: function (data, textStatus) {
+                if (!data) {
+                    $('#alertModalBody').html("Event could not be created.")
+                    $('#alertModal').modal();
+                    return;
+                }
+            }
         });
 
-        function EditEvent(data) {
+        $('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: $('#createModalstart').val(), end: $('#createModalend').val() }, true);
+        $('#createModalClose').click();
+    };
 
-            $.ajax({
-                url: '../../Attendances/Edit',
-                type: "POST",
-                dataType: "json",
-                data: ({
-                    __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-                    Date: data.start.format('MM-DD-YYYY'),
-                    ChildId: @Model.Id,
-                    PickupTime: data.end.format('MM-DD-YYYY'),
-                    Id: data.Id,
-                    title: data.title,
-                    start: data.start.format('MM-DD-YYYY hh:mm A'),
-                    end: data.end.format('MM-DD-YYYY hh:mm A'),
-                    allday: data.allDay,
-                    editable: data.editable,
-                    sendTextSMS: false,
-
-                }),
-                success: function (data, textStatus) {
-                    if (!data) {
-                        $('#alertModal').html("Changes could not be saved.")
-                        $('#alertModal').modal();
-                        return;
-                    }
-                    calendar.fullCalendar('updateEvent', event);
-                },
-            });
-        };
-
-        function DeleteEvent(Id, CalEventId) {
-            $.ajax({
-                url: '../../Attendances/Delete/' + Id,
-                type: "POST",
-                dataType: "json",
-                data: ({
-                    __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val()
-                }),
-
-                success: function (data, textStatus) {
-                    if (!data) {
-                        $('#alertModal').html("Event could not be deleted.")
-                        $('#alertModal').modal();
-                        return;
-                    }
-
-                },
-            });
-            $('#calendar').fullCalendar('removeEvents', CalEventId);
-            $('#deleteModalClose').click();
-        };
-
-        function CreateEvent() {
-
-            $.ajax({
-                url: '../../Attendances/Create',
-                type: "POST",
-                dataType: "json",
-                data: ({
-                    __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-                    Date: $('#createModalDate').val(),
-                    ChildId: $('#createModalChildId').val(),
-                    PickupTime: $('#createModalPickupTime').val(),
-                    Id: $('#createModalId').val(),
-                    title: $('#createModaltitle').val(),
-                    start: $('#createModalstart').val(),
-                    end: $('#createModalend').val(),
-                    allday:$('#createModalallDay').val(),
-                    editable: $('#createModaleditable').val(),
-                    AmountBilled: 0,
-                }),
-
-                success: function (data, textStatus) {
-                    if (!data) {
-                        $('#alertModal').html("Event could not be created.")
-                        $('#alertModal').modal();
-                        return;
-                    }
-                }
-            });
-
-            $('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: $('#createModalstart').val(), end: $('#createModalend').val() }, true);
-            $('#createModalClose').click();
-        };
-
-        function SignOut()
-        {
-            var todayAttendance;
-            $.ajax({
-                async: false,
-                url: '../../Attendances/PickupToday',
-                type: "GET",
-                dataType: "json",
-                data: {
-                    Id: @Model.Id,
-                },
-                success: function (data, textStatus) {
-                    if (!data) {
-                        $('#alertModal').html("This child is not enrolled today.")
-                        $('#alertModal').modal();
-                        return;
-                    }
-                    else{
-                        todayAttendance = data;
-                        CalculateBilledAmount(todayAttendance);
-                        PostBilledAmount(todayAttendance);
-                        GetAttendanceRecord();
-                        //SendEmail(todayAttendance);
-
-
-                    }
-                }
-            });
-        };
-
-        function CalculateBilledAmount(todayAttendance)
-        {
-            var systemBilling;
-
-            $.ajax({
-                async: false,
-                url: '../../Billings/BillingDetails',
-                type: "GET",
-                dataType: "json",
-                success: function (dataBilling, textStatus) {
-                    if (!dataBilling) {
-                        $('#alertModal').html("No billing data could be retrieved.")
-                        $('#alertModal').modal();
-                        return;
-                    }
-                    else{
-                        systemBilling = dataBilling;
-                    }
-                }
-            });
-
-            var hourlyRate = systemBilling[0].HourlyRate;
-            var startTime = moment(systemBilling[0].StartTime).format("H:mm:ss A");
-            var endTime = moment(new Date()).format("H:mm:ss A");
-            var timeDuration = moment.utc(moment(endTime,"H:mm:ss A").diff(moment(startTime,"H:mm:ss A"))).format("H:mm");
-            //var timeDuration = moment.utc(moment(todayAttendance[0].b.PickupTime,"H:mm:ss A").diff(moment("6:00 AM","H:mm:ss A"))).format("H:mm");
-            var durationMinutes = moment.duration(timeDuration).asMinutes();
-            todayAttendance[0].b.AmountBilled = (durationMinutes* (hourlyRate/60)).toFixed(2);
-
-            //POST BILLED AMOUNT
-            $.ajax({
-                url: '../../Attendances/Edit',
-                async: false,
-                type: "POST",
-                dataType: "json",
-                data: ({
-                    __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-                    Date: moment(todayAttendance[0].b.Date).format('MM-DD-YYYY'),
-                    firstName: todayAttendance[0].FirstName,
-                    ChildId: @Model.Id,
-                    PickupTime: endTime,
-                    Id: todayAttendance[0].b.Id,
-                    title: todayAttendance[0].b.title,
-                    start: moment(todayAttendance[0].b.start).format('MM-DD-YYYY h:mm A'),
-                    end: moment(todayAttendance[0].b.end).format('MM-DD-YYYY h:mm A'),
-                    allday: false,
-                    editable: false,
-                    AmountBilled: todayAttendance[0].b.AmountBilled,
-                    sendTextSMS: true,
-
-                }),
-
-                success: function (data, textStatus) {
-                    if (!data) {
-                        $('#alertModal').html("This child could not be signed out.")
-                        $('#alertModal').modal();
-                        return;
-                    }
-                },
-                failure: function (data, textStatus){
-                    $('#alertModal').html("This child could not be signed out.")
+    function SignOut()
+    {
+        var todayAttendance;
+        $.ajax({
+            async: false,
+            url: '../../Attendances/PickupToday',
+            type: "GET",
+            dataType: "json",
+            data: {
+                Id: @Model.Id,
+            },
+            success: function (data, textStatus) {
+                if (data.length == 0) {
+                    $('#alertModalBody').html("This child is not enrolled today.")
                     $('#alertModal').modal();
+                    return;
                 }
-            });
-        }
+                else{
+                    todayAttendance = data;
+                    CalculateBilledAmount(todayAttendance);
+                    PostBilledAmount(todayAttendance);
+                    GetAttendanceRecord();
+                    //SendEmail(todayAttendance);
 
-        function GetAttendanceRecord()
-        {
-            $.ajax({
-                async: false,
-                url: '../../Attendances/PickupToday',
-                type: "GET",
-                dataType: "json",
-                data: {
-                    Id: @Model.Id,
-                },
-                success: function (data, textStatus) {
-                    if (!data) {
-                        $('#alertModal').html("This child is not enrolled today.")
-                        $('#alertModal').modal();
-                        return;
-                    }
-                    else{
-                        todayAttendance = data;
-                    }
+
                 }
-            });
-        }
+            }
+        });
+    };
 
-        @*function SignOut()
+    function CalculateBilledAmount(todayAttendance)
+    {
+        var systemBilling;
+
+        $.ajax({
+            async: false,
+            url: '../../Billings/BillingDetails',
+            type: "GET",
+            dataType: "json",
+            success: function (dataBilling, textStatus) {
+                if (!dataBilling) {
+                    $('#alertModalBody').html("No billing data could be retrieved.")
+                    $('#alertModal').modal();
+                    return;
+                }
+                else{
+                    systemBilling = dataBilling;
+                }
+            }
+        });
+
+        var hourlyRate = systemBilling[0].HourlyRate;
+        var startTime = moment(systemBilling[0].StartTime).format("H:mm:ss A");
+        var endTime = moment(new Date()).format("H:mm:ss A");
+        var timeDuration = moment.utc(moment(endTime,"H:mm:ss A").diff(moment(startTime,"H:mm:ss A"))).format("H:mm");
+        //var timeDuration = moment.utc(moment(todayAttendance[0].b.PickupTime,"H:mm:ss A").diff(moment("6:00 AM","H:mm:ss A"))).format("H:mm");
+        var durationMinutes = moment.duration(timeDuration).asMinutes();
+        todayAttendance[0].b.AmountBilled = (durationMinutes* (hourlyRate/60)).toFixed(2);
+
+        //POST BILLED AMOUNT
+        $.ajax({
+            url: '../../Attendances/Edit',
+            async: false,
+            type: "POST",
+            dataType: "json",
+            data: ({
+                __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
+                Date: moment(todayAttendance[0].b.Date).format('MM-DD-YYYY'),
+                firstName: todayAttendance[0].FirstName,
+                ChildId: @Model.Id,
+                PickupTime: endTime,
+                Id: todayAttendance[0].b.Id,
+                title: todayAttendance[0].b.title,
+                start: moment(todayAttendance[0].b.start).format('MM-DD-YYYY h:mm A'),
+                end: moment(todayAttendance[0].b.end).format('MM-DD-YYYY h:mm A'),
+                allday: false,
+                editable: false,
+                AmountBilled: todayAttendance[0].b.AmountBilled,
+                sendTextSMS: true,
+
+            }),
+
+            success: function (data, textStatus) {
+                if (!data) {
+                    $('#alertModalBody').html("This child could not be signed out.")
+                    $('#alertModal').modal();
+                    return;
+                }
+            },
+            failure: function (data, textStatus){
+                $('#alertModalBody').html("This child could not be signed out.")
+                $('#alertModal').modal();
+            }
+        });
+    }
+
+    function GetAttendanceRecord()
+    {
+        $.ajax({
+            async: false,
+            url: '../../Attendances/PickupToday',
+            type: "GET",
+            dataType: "json",
+            data: {
+                Id: @Model.Id,
+            },
+            success: function (data, textStatus) {
+                if (!data) {
+                    $('#alertModalBody').html("This child is not enrolled today.")
+                    $('#alertModal').modal();
+                    return;
+                }
+                else{
+                    todayAttendance = data;
+                }
+            }
+        });
+    }
+
+    @*function SignOut()
     {
         var todayAttendance;
         $.ajax({
@@ -617,36 +627,36 @@
         //SendText(todayAttendance);
     };*@
 
-        function SendEmail(params)
-        {
-            emailjs.send("default_service","student_signout",{to_name: params[0].FirstName, send_to: params[0].Email, student_name: params[0].b.Child.FirstName, message_html: params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + ". You have been billed $" + params[0].b.AmountBilled + "."});
+    function SendEmail(params)
+    {
+        emailjs.send("default_service","student_signout",{to_name: params[0].FirstName, send_to: params[0].Email, student_name: params[0].b.Child.FirstName, message_html: params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + ". You have been billed $" + params[0].b.AmountBilled + "."});
 
-        }
+    }
 
-        function SendText(params){
+    function SendText(params){
 
-            $.ajax({
-                async: false,
-                //url: "https://api.twilio.com", //2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json",
-                ///url: "https:AC2bbe1b78d57d4a73899b6f0a63d758cf:dc9bf3662853dc5f43895d40f4cd477f@api.twilio.com",
-                url: "https:AC60d3e2ed31e25f0f12396fdf40247dfa:03008d4e6bad20d2cc4c488922d220c6@api.twilio.com", //2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json",
-                type: "GET",
-                dataType: "json",
-                data:
-                {
-                    "sid": "MG7369df89a440c2e6d7866966c015cabd",
-                    "account_sid": "AC60d3e2ed31e25f0f12396fdf40247dfa",
-                    "to": '+' + params[0].PhoneNumber,
-                    //"from": '+15005550006',
-                    "from": "+14144556685",
-                    "body": params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + ". You have been billed $" + params[0].b.AmountBilled + ".",
-                    "uri": "/2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json",
-                    "direction": "outbound-api",
-                    "api_version": "2010-04-01"
-                }
-            });
-        }
+        $.ajax({
+            async: false,
+            //url: "https://api.twilio.com", //2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json",
+            ///url: "https:AC2bbe1b78d57d4a73899b6f0a63d758cf:dc9bf3662853dc5f43895d40f4cd477f@api.twilio.com",
+            url: "https:AC60d3e2ed31e25f0f12396fdf40247dfa:03008d4e6bad20d2cc4c488922d220c6@api.twilio.com", //2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json",
+            type: "GET",
+            dataType: "json",
+            data:
+            {
+                "sid": "MG7369df89a440c2e6d7866966c015cabd",
+                "account_sid": "AC60d3e2ed31e25f0f12396fdf40247dfa",
+                "to": '+' + params[0].PhoneNumber,
+                //"from": '+15005550006',
+                "from": "+14144556685",
+                "body": params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + ". You have been billed $" + params[0].b.AmountBilled + ".",
+                "uri": "/2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json",
+                "direction": "outbound-api",
+                "api_version": "2010-04-01"
+            }
+        });
+    }
 
-        //https:AC60d3e2ed31e25f0f12396fdf40247dfa:03008d4e6bad20d2cc4c488922d220c6@api.twilio.com/2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json
+    //https:AC60d3e2ed31e25f0f12396fdf40247dfa:03008d4e6bad20d2cc4c488922d220c6@api.twilio.com/2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json
 
-    </script>
+</script>

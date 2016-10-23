@@ -6,12 +6,12 @@
 
 @if (User.IsInRole("Parent"))
 {
-    <h2>Your drivers</h2>
+    <h1>Your drivers</h1>
     <p>@Html.ActionLink("Create New", "Create")</p>
 }
 else
 {
-     <h2>Driver Information</h2>
+     <h1>Driver Information</h1>
 }
 
 <table class="table">

@@ -7,6 +7,8 @@
         emailjs.init("user_tIcH8dgH3kLvB4KvXo9iQ");
     })();
 </script>
+
+<h1>Program Administration</h1>
 @{
     ViewBag.Title = "Index";
     ViewBag.Years = new SelectList(Enumerable.Range(DateTime.Now.Year, 10).Select(x => new SelectListItem()
@@ -14,7 +16,10 @@
         Text = x.ToString(),
         Value = x.ToString()
     }), "Value", "Text");
+
 }
+
+
 <div class="container">
     @Html.AntiForgeryToken()
     <div class="form-horizontal"></div>
@@ -183,7 +188,7 @@
                                 </center>
                             </div>
                         </div>
-                        <div class="row" id="unpaidResults">
+                        <div class="row" id="unpaidResults" style="color: black">
                         </div>
                     </div>
                 </div>
@@ -576,7 +581,7 @@
                             invoices += '<div class="col-sm-3"></div>';
                             invoices += '<div class="col-sm-3"><center>Total: $' + totalAmountDue + '</center></div>'
                             if (data.length === 0) {
-                                $('#unpaidResults').html('There are no unpaid invoices for the selected month.');
+                                $('#unpaidResults').html('<div class="col-sm-12"><center>There are no unpaid invoices for the selected month.</center></div>');
                             }
                             else {
                                 $('#unpaidResults').html(invoices);

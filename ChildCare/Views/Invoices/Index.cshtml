@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<ChildCare.Models.Invoice>
-<link rel="stylesheet" href="~/Content/Site.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="~/Scripts/moment.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
@@ -9,17 +8,38 @@
 
 @if (User.IsInRole("Parent"))
 {
-    <h2>Your Invoices</h2>
-    <input type="button" class="btn btn-primary btn-lg" value="Current Monthly Balance Due" onclick="DisplayCurrentBalance()"/>
+    <h1>Your Monthly Invoices</h1>
+    <p>
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="button" class="btn btn-primary btn-lg" value="Current Monthly Balance Due" onclick="DisplayCurrentBalance()" />
+        </div>
+        <div class="col-sm-6">
+        </div>
+        <div class="col-sm-3">
+            <input type="button" class="btn btn-primary btn-lg" value="View Yearly Tax Statements" onclick="location.href='@Url.Action("Index", "TaxStatements")'" />
+        </div>
+    </div>
+    </p>
 }
 else
 {
-    <h2> Invoices </h2>
+    <h1>Monthly Invoices</h1>
 
     <p>
-        @Html.ActionLink("Create New", "Create")
+        <div class="row">
+            <div class="col-sm-3">
+                @Html.ActionLink("Create New", "Create")
+            </div>
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-3">
+                <input type="button" class="btn btn-primary btn-lg" value="View Yearly Tax Statements" onclick="location.href='@Url.Action("Index", "TaxStatements")'" />
+            </div>
+        </div>
     </p>
 }
+
 <table class="table">
     <tr>
         <th>

@@ -7,12 +7,12 @@
 <p>
     @if (User.IsInRole("Parent"))
     {
-        <h2>Your Children</h2>
+        <h1>Your Children</h1>
         @Html.ActionLink("Add Child", "Create")
     }
     else
     {
-        <h2>Enrollment</h2>
+        <h1>Enrollment</h1>
     }
 
 
@@ -76,8 +76,8 @@
                 {
                     <text>
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Calendar", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @Html.ActionLink("Calendar", "Details", new { id = item.Id })
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
                     </text>
                 }
 
