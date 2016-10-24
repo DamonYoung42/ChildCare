@@ -1,8 +1,7 @@
 ﻿@model ChildCare.Models.Billing
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" href="~/Content/bootstrap.css">
+<link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.css">
 
 @{
     ViewBag.Title = "Edit";
@@ -39,7 +38,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control datetimepicker" } })
+                @Html.EditorFor(model => model.EndTime, "End Time",new { htmlAttributes = new { @class = "form-control datetimepicker" } })
                 @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -105,14 +104,12 @@
 </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/moment.min.js" type="text/javascript"></script>
+<script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>   <!-- Bootstrap v3.3.5 -->
+<script src="~/Scripts/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<script src="~/Scripts/moment-with-locales.min.js" type="text/javascript"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
 
 <script type="text/javascript">
     $(function () {

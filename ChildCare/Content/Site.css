@@ -17,12 +17,11 @@ body {
     /*color: white;*/
 }
 
-
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-    color: white;   
+    /*color: white;*/   
 }
 
 h1, h2, h3 {
@@ -113,4 +112,3 @@ footer > p {
 #userSearchResults{
     color: black;
 }
-

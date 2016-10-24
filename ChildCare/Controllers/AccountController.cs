@@ -151,16 +151,18 @@ namespace ChildCare.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase photo)
         {
+            ViewBag.Name = new SelectList(db.Roles.Where(u => !u.Name.Contains("Admin"))
+                   .ToList(), "Name", "Name");
+
             if (ModelState.IsValid)
             {
-                ViewBag.Name = new SelectList(db.Roles.Where(u => !u.Name.Contains("Admin"))
-                                .ToList(), "Name", "Name");
+
                 ////PHOTO UPLOAD
                 if (photo != null && photo.ContentLength > 0)
                 {
                     model.Photo = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(photo.FileName);
                     string path = System.IO.Path.Combine(
-                                           Server.MapPath("~/Images/driver"), model.Photo);
+                                           Server.MapPath("~/Images/Driver"), model.Photo);
                     photo.SaveAs(path);
                 }
                 else
