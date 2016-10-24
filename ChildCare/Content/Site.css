@@ -25,10 +25,16 @@ body {
     color: white;   
 }
 
-h1 {
-    /*font-family: BlackBoard;*/
-    /*font-family: DK Crayon Crumble;*/
-    font-family: PPETRIAL;
+h1, h2, h3 {
+    /*font-family: BlackBoard;
+    font-family: DK Crayon Crumble;*/
+    font-family: PPETRIAL !important;
+}
+
+
+a {
+    text-decoration: none !important;
+    color: white !important;
 }
 
 
@@ -54,6 +60,7 @@ textarea {
     outline: none;
     /*font-weight:bold;*/
     text-decoration: none;
+    color: black !important;
 }
 
 p {
@@ -79,8 +86,11 @@ p {
     display: none;
     overflow: hidden;
     overflow-y: hidden;
-    color: black;
     margin-left: -280px;
+}
+
+.modal-content {
+    color: black;
 }
 
 #calendar {
@@ -94,3 +104,4 @@ footer > p {
 #userSearchResults{
     color: black;
 }
+

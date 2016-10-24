@@ -325,6 +325,10 @@
     <Compile Include="Views\EmailForm.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\clockpicker.css" />
@@ -335,22 +339,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\Site\chalkboard-black.jpg" />
     <Content Include="Images\Site\chalkboard.jpeg" />
-    <Content Include="Images\Site\chalkboard.png" />
     <Content Include="Images\Site\chalkboardchalk.jpg" />
-    <Content Include="Images\Site\free-childcare.jpg" />
-    <Content Include="Images\Site\kids-large.jpg" />
-    <Content Include="Images\Site\kids.jpg" />
-    <Content Include="Images\Site\kids.png" />
-    <Content Include="Images\Site\register.png" />
-    <Content Include="Images\Site\register1.png" />
     <Content Include="Images\Site\school-bus-small.png" />
     <Content Include="Images\Site\school-bus.jpg" />
     <Content Include="Images\Site\school-bus.png" />
-    <Content Include="Images\Site\Thornhill-Daycare-After-School.png" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -360,9 +354,18 @@
     </None>
     <Content Include="fonts\BlackBoard.ttf" />
     <Content Include="fonts\PPETRIAL.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\fullcalendar.min.css" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\clockpicker.js" />
     <Content Include="Scripts\fullcalendar.es5.js">
       <DependentUpon>fullcalendar.js</DependentUpon>
@@ -374,17 +377,17 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery-TimePicker-1.0.0.js" />
-    <Content Include="Scripts\jquery.datepicker.options.js" />
-    <Content Include="Scripts\jquery.datetimepicker.js" />
-    <Content Include="Scripts\jquery.datetimepicker.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -482,9 +485,6 @@
     <Folder Include="Views\TwilioSMS\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />

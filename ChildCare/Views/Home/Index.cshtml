@@ -9,37 +9,50 @@
     </div>*@
 
 <div class="row">
-    <div class="col-md-3">
-        <h2>@*Getting started*@</h2>
-        <a href="../../Account/Register">
-            <img src="../../Images/Site/register.png" class="img-circle" width="100%"/>
-            <p>Create your account today.</p>
-            <p>@*<a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a>*@</p>
+    <div class="col-md-4">
+        <a href="/../Children/">
+            <img src="../../Images/Site/children.jpg" class="img-rounded" width="100%" />
+            <center>
+                <h1>Children</h1>
+                <h2>-- Manage Attendance Calendar</h2>
+                <h2>-- Receive Daily Sign-Out Alerts</h2>
+            </center>
         </a>
     </div>
-    <div class="col-md-3">
-        @*<h2>Web Hosting</h2>*@
-        <a href=".../../Children/">
-            <img src="../../Images/Site/kids.png" class="img-circle" width="80%" />
-            <p>Manage your child's profile and calendar.</p>
+
+    <div class="col-md-4">
+        <a href="../Drivers/">
+            <img src="../../Images/Site/school-bus.png" class="img-rounded" width="94%" />
+            <center>
+                <h1>Drivers</h1>
+                <h2>-- Create Profiles For Your Approved Drivers</h2>
+            </center>
         </a>
-        <p>@*<a class="btn btn-default" href="/Children/Details">Children &raquo;</a>*@</p>
-    </div>
-    <div class="col-md-3">
-        <a href="../../Drivers/">
-            <img src="../../Images/Site/school-bus.png" class="img-circle" width="90%"/>
-            @*<h2>Get more libraries</h2>*@
-            <p>Manage your drivers.</p>
-        </a>
-        @*<p><a class="btn btn-default" href="../../Drivers/">Drivers &raquo;</a></p>*@
     </div>
 
     @if (User.IsInRole("Admin"))
     {
-        <div class="col-md-3">
+        <div class="col-md-4">
             <a href="../../Invoices/AdminFunctions">
-                <img src="../../Images/Site/chalkboard.png" class="img-circle" width="110"/>
-                <p>Administrator functions</p>
+                <img src="../../Images/Site/chalkboard-admin.jpg" class="img-rounded" width="100%" />
+                <center>
+                    <h1>Program Administration</h1>
+                    <h2>-- Generate Monthly Invoices</h2>
+                    <h2>-- Communicate With Parents</h2>
+                </center>
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-4">
+            <a href="../../Invoices/AdminFunctions">
+                <img src="../../Images/Site/chalkboard-admin.jpg" class="img-rounded" width="100%" />
+                <center>
+                    <h1>Billing/Invoicing</h1>
+                    <h2>-- Track Your Monthly Expenditures </h2>
+                    <h2>-- Receive Yearly Tax Statements</h2>
+                </center>
             </a>
         </div>
     }

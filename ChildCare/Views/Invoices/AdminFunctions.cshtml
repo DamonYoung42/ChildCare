@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<ChildCare.Models.Invoice>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+@*<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>*@
 <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script type="text/javascript">
     (function () {
@@ -24,7 +25,7 @@
 <div class="container">
     @Html.AntiForgeryToken()
     <div class="form-horizontal"></div>
-        <div id="inputModal" class="modal fade modal-overflow in" data-width="600" style="width: 600px; margin: 0px auto; left:0px; top:0px" aria-hidden="false">
+        <div id="inputModal" class="modal modal-overflow in" data-width="600" style="width: 600px; margin: 0px auto; left:0px; top:0px" aria-hidden="false">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

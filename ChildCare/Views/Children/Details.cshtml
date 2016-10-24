@@ -230,6 +230,7 @@
                     }
                 },
             },
+            eventDurationEditable: false,
             contentHeight: "auto",
             timezone: 'local',
             weekends: true,
@@ -243,10 +244,17 @@
             eventSources: [ pickupSources.past, pickupSources.future ],
             eventClick:  function(event, jsEvent, view) {
                 //$('#deleteModalTitle').html(event.title);
-                $('#deleteModalBody').html(moment(event.start).format('MM-DD-YYYY h:mm A'));
-                $('#deleteModalEventId').val(event.Id);
-                $('#deleteModalCalEventId').val(event._id);
-                $('#deleteModal').modal();
+                if (event.editable){
+                    $('#deleteModalBody').html(moment(event.start).format('MM-DD-YYYY h:mm A'));
+                    $('#deleteModalEventId').val(event.Id);
+                    $('#deleteModalCalEventId').val(event._id);
+                    $('#deleteModal').modal();
+                }
+                else{
+                    $('#alertModalBody').html("This event has already occurred and cannot be deleted.")
+                    $('#alertModal').modal();
+                }
+
             },
 
             eventDrop: function (event) {
@@ -312,7 +320,7 @@
         });
     });
 
-    function EditEvent(data) {
+    function EditEvent(event) {
 
         $.ajax({
             url: '../../Attendances/Edit',
@@ -320,28 +328,31 @@
             dataType: "json",
             data: ({
                 __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
-                Date: data.start.format('MM-DD-YYYY'),
+                Date: event.start.format('MM-DD-YYYY'),
                 ChildId: @Model.Id,
                 //
-                PickupTime: data.start.format('MM-DD-YYYY hh:mm A'),
+                PickupTime: event.start.format('MM-DD-YYYY hh:mm A'),
                 //10-23-2016 testing PickupTime: data.end.format('MM-DD-YYYY'),
-                Id: data.Id,
-                title: data.title,
-                start: data.start.format('MM-DD-YYYY hh:mm A'),
-                end: data.end.format('MM-DD-YYYY hh:mm A'),
-                allday: data.allDay,
-                editable: data.editable,
+                Id: event.Id,
+                title: event.title,
+                start: event.start.format('MM-DD-YYYY hh:mm A'),
+                end: event.end.format('MM-DD-YYYY hh:mm A'),
+                allday: event.allDay,
+                editable: event.editable,
                 sendTextSMS: false,
 
             }),
             success: function (data, textStatus) {
-                if (!data) {
+                if (data.length == 0) {
                     $('#alertModalBody').html("Changes could not be saved.")
                     $('#alertModal').modal();
                     return;
                 }
-                calendar.fullCalendar('updateEvent', event);
-                
+                else{
+                    calendar.fullCalendar('updateEvent', event);
+                    $('#calendar').fullCalendar('refetchEvents');
+                }
+
             },
         });
     };
@@ -356,7 +367,7 @@
             }),
 
             success: function (data, textStatus) {
-                if (!data) {
+                if (data.length == 0) {
                     $('#alertModalBody').html("Event could not be deleted.")
                     $('#alertModal').modal();
                     return;
@@ -366,6 +377,7 @@
         });
         $('#calendar').fullCalendar('removeEvents', CalEventId);
         $('#deleteModalClose').click();
+        $('#calendar').fullCalendar('refetchEvents');
     };
 
     function CreateEvent() {
@@ -399,8 +411,9 @@
             }
         });
 
-        $('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: $('#createModalstart').val(), end: $('#createModalend').val() }, true);
+        //$('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: $('#createModalstart').val(), end: $('#createModalend').val() }, true);
         $('#createModalClose').click();
+        $('#calendar').fullCalendar('refetchEvents');
     };
 
     function SignOut()
