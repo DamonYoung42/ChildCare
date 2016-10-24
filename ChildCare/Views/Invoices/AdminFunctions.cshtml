@@ -414,14 +414,14 @@
                                         __RequestVerificationToken: $('[name= "__RequestVerificationToken"]').val(),
                                         Month: moment($('#month').val()).format("MMMM"),
                                         Year: moment($('#year').val()).format('YYYY'),
-                                        BilledAmount: invoiceData[i].AmountDue,
+                                        BilledAmount: invoiceData[i].AmountDue.toFixed(2),
                                         DateDue: $('#dueDate').val(),
                                         Adjustments: 0,
                                         Notes: "",
                                         AmountPaid: 0,
                                         UserId: invoiceData[i].ParentId,
                                         DatePaid: "1/1/1970",
-                                        TotalAmount: invoiceData[i].AmountDue
+                                        TotalAmount: invoiceData[i].AmountDue.toFixed(2)
                                     },
                                     success: function (data, textStatus, jQxhr) {
                                         $('#inputModalBody').html("The monthly invoices were generated.");
@@ -566,7 +566,7 @@
                                 displayItem += '<h5>' + item.ApplicationUser.FirstName + " " + item.ApplicationUser.LastName + '</h5>';
                                 displayItem += '</center></div>';
                                 displayItem += '<div class="col-sm-3"><center>';
-                                displayItem += '<h5>$' + item.BilledAmount + '</h5>';
+                                displayItem += '<h5>$' + item.TotalAmount + '</h5>';
                                 displayItem += '</center></div>';
                                 displayItem += '<div class="col-sm-3"><center>';
                                 displayItem += '<h5>$' + item.AmountPaid;
@@ -576,7 +576,7 @@
                                 displayItem += '</h5></center></div>';
                                 displayItem += '</div>';
                                 invoices += displayItem;
-                                totalAmountDue += item.BilledAmount;
+                                totalAmountDue += item.TotalAmount;
 
                             });
                             invoices += '<div class="col-sm-3"></div>';

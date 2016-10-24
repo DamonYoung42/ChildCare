@@ -46,6 +46,10 @@ namespace ChildCare.Controllers
                 .Include(a => a.ApplicationUser)
                 .Where(x => x.Month == month)
                 .Where(x => x.Year == year)
+                .OrderBy(x => x.Year)
+                .ThenBy(x => x.Month)
+                .ThenBy(a => a.ApplicationUser.LastName)
+                .ThenBy(a => a.ApplicationUser.FirstName)
                 .ToList();
 
             return Json(invoices, JsonRequestBehavior.AllowGet);
@@ -57,7 +61,9 @@ namespace ChildCare.Controllers
                 .Include(a => a.ApplicationUser)
                 .Where(x => x.Month == month)
                 .Where(x => x.Year == year)
-                .Where(x => x.AmountPaid != x.BilledAmount)
+                .Where(x => x.AmountPaid != x.TotalAmount)
+                .OrderBy(x => x.ApplicationUser.LastName)
+                .ThenBy(x => x.ApplicationUser.FirstName)
                 .ToList();
 
             return Json(invoices, JsonRequestBehavior.AllowGet);

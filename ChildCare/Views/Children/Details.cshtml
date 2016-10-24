@@ -233,7 +233,7 @@
             eventDurationEditable: false,
             contentHeight: "auto",
             timezone: 'local',
-            weekends: true,
+            weekends: false,
             cache: true,
             allDay: false,
             displayEventTime: true,
@@ -377,7 +377,7 @@
         });
         $('#calendar').fullCalendar('removeEvents', CalEventId);
         $('#deleteModalClose').click();
-        $('#calendar').fullCalendar('refetchEvents');
+        //$('#calendar').fullCalendar('refetchEvents');
     };
 
     function CreateEvent() {
@@ -411,9 +411,9 @@
             }
         });
 
-        //$('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: $('#createModalstart').val(), end: $('#createModalend').val() }, true);
+        $('#calendar').fullCalendar('renderEvent', { title: "Pickup", start: $('#createModalstart').val(), end: $('#createModalend').val() }, true);
         $('#createModalClose').click();
-        $('#calendar').fullCalendar('refetchEvents');
+       // $('#calendar').fullCalendar('refetchEvents');
     };
 
     function SignOut()

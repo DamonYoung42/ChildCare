@@ -1,5 +1,7 @@
 ﻿@model ChildCare.Models.Invoice
+<link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Edit";
 }
@@ -105,7 +107,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DatePaid, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DatePaid, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.DatePaid, new { htmlAttributes = new { @class = "form-control date-picker" } })
                 @Html.ValidationMessageFor(model => model.DatePaid, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -131,6 +133,9 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.datepicker.options.js"></script>
+

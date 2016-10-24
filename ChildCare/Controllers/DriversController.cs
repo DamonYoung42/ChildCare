@@ -24,12 +24,18 @@ namespace ChildCare.Controllers
             if (User.IsInRole("Parent"))
             {
                 var userId = User.Identity.GetUserId();
-                var drivers = db.Drivers.Include(a => a.Child).Where(c => c.Child.UserId == userId).OrderBy(c => c.LastName);
+                var drivers = db.Drivers
+                    .Include(a => a.Child)
+                    .Where(c => c.Child.UserId == userId)
+                    .OrderBy(c => c.LastName)
+                    .ThenBy(c => c.FirstName);
                 return View(drivers.ToList());
             }
             else
             {
-                var drivers = db.Drivers.Include(a => a.Child).OrderBy(y => y.LastName);
+                var drivers = db.Drivers.Include(a => a.Child)
+                    .OrderBy(c => c.LastName)
+                    .ThenBy(c => c.FirstName); 
                 return View(drivers.ToList());
             }
 

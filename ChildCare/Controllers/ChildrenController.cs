@@ -29,7 +29,7 @@ namespace ChildCare.Controllers
             }
             else
             {
-                var children = db.Children.Include(a => a.Teacher).OrderBy(y => y.LastName);
+                var children = db.Children.Include(a => a.Teacher).OrderBy(y => y.LastName).ThenBy(y => y.FirstName);
                 //var children = db.Children.Include(a => a.Teacher)
                 //    .Join(db.Users, b => b.UserId, c => c.Id, (b, c) => new { b, c.Email, c.PhoneNumber })
                 //    .OrderBy(d => d.b.LastName)

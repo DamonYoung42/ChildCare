@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ChildCare.Models.Invoice>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="~/Scripts/moment.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+
 @{
     ViewBag.Title = "Index";
 }
@@ -156,7 +156,7 @@ else
 
         $.ajax({
             async: false,
-            url: '../../Attendances/Invoice',
+            url: '../../Attendances/GetCurrentBalance',
             type: "GET",
             dataType: "json",
             data: {
@@ -169,7 +169,7 @@ else
                     $('#inputModal').modal();
                 }
                 else {
-                    $('#inputModalBody').html("You have been billed $" + data[0].AmountDue + ' for the current month.');
+                    $('#inputModalBody').html("You have been billed $" + data[0].AmountDue.toFixed(2) + ' for the current month.');
                     AmountDue = data.AmountDue
                     $('#inputModal').modal();
                     }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ChildCare.Models;
+using Microsoft.AspNet.Identity;
 
 namespace ChildCare.Controllers
 {
@@ -23,6 +24,7 @@ namespace ChildCare.Controllers
                 .Include(a => a.Child)
                 .Include(c => c.Child.Teacher)
                 .OrderBy(x => x.Child.LastName)
+                .ThenBy(x => x.Child.FirstName)
                 .Where(x => x.Date == today);
 
             return View(attendances.ToList());
@@ -51,16 +53,25 @@ namespace ChildCare.Controllers
 
                 ).ToList();
 
-            //var attendances = db.Attendances.Join(db.Children, a => a.ChildId, b => b.Id, (a, b) => new { a.Date, a.AmountBilled, a.ChildId, b.UserId })
-            //    .Join(db.Users, a => a.UserId, y => y.Id, (a, y) => new { a.Date, a.AmountBilled, a.ChildId, a.UserId, y.LastName, y.FirstName, y.Email, y.PhoneNumber })
-            //    .Where(x => x.Date.Month == month)
-            //    .Where(x => x.Date.Year == year)
-            //    .OrderBy(x => x.ChildId)
-            //    .OrderBy(x => x.Date)
-            //    .GroupBy(x => x.ChildId)
-            //    .Select(group => new { ChildId = group.Key, AmountDue = group.Sum(x => x.AmountBilled)})
-            //    .ToList();           
+            return Json(attendances, JsonRequestBehavior.AllowGet);
+        }
 
+        public JsonResult GetCurrentBalance(int month, int year)
+        {
+            var userId = User.Identity.GetUserId();
+            var attendances = db.Attendances
+                .Where(x => x.Child.UserId == userId)
+                .Where(x => x.Date.Month == month)
+                .Where(x => x.Date.Year == year)
+                .Select(x => new { AmountBilled = x.AmountBilled, ChildId = x.ChildId, ParentId = x.Child.UserId, FirstName = x.Child.ApplicationUser.FirstName, LastName = x.Child.ApplicationUser.LastName, Email = x.Child.ApplicationUser.Email, Phone = x.Child.ApplicationUser.PhoneNumber })
+                .GroupBy(x => x.ParentId)
+                .Select(x => new
+                {
+                    ParentId = x.Key,
+                    AmountDue = x.Sum(y => y.AmountBilled)
+                }
+
+                ).ToList();
 
             return Json(attendances, JsonRequestBehavior.AllowGet);
         }
