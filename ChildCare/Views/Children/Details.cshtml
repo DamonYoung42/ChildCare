@@ -1,16 +1,16 @@
 ﻿@model ChildCare.Models.Child
-
-
 <script src="~/Scripts/jquery.min.js" type="text/javascript"></script>
+<script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
 <script src="~/Scripts/moment.min.js" type="text/javascript"></script>
 <script src="~/Scripts/fullcalendar.js" type="text/javascript"></script>
-<script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
+
 <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script type="text/javascript">
     (function(){
         emailjs.init("user_tIcH8dgH3kLvB4KvXo9iQ");
     })();
 </script>
+
 
 <link rel='stylesheet' href='~/Content/fullcalendar.min.css' />
 @{
@@ -102,7 +102,7 @@
     </div>
 
 
-    <div id="deleteModal" class="modal fade modal-overflow in" data-width="600" style="width: 600px; margin: 0px auto; left:0px; top:0px" aria-hidden="false">
+    <div id="deleteModal" class="modal modal-overflow" data-width="600" style="width: 600px; margin: 0px auto; left:0px; top:0px" aria-hidden="false">
         @*<div id="deleteModal" class="modal fade">*@
         <div class="modal-dialog">
             <div class="modal-content">
@@ -122,7 +122,7 @@
         </div>
     </div>
 
-    <div id="createModal" class="modal fade modal-overflow in" data-width="600" style="width: 600px; margin: 0px auto; left:0px; top:0px" aria-hidden="false">
+    <div id="createModal" class="modal modal-overflow in" data-width="600" style="width: 600px; margin: 0px auto; left:0px; top:0px" aria-hidden="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -683,3 +683,4 @@
     //https:AC60d3e2ed31e25f0f12396fdf40247dfa:03008d4e6bad20d2cc4c488922d220c6@api.twilio.com/2010-04-01/Accounts/AC60d3e2ed31e25f0f12396fdf40247dfa/Messages/MG7369df89a440c2e6d7866966c015cabd.json
 
 </script>
+
