@@ -29,12 +29,18 @@ namespace ChildCare.Controllers
             if (User.IsInRole("Parent"))
             {
                 var userId = User.Identity.GetUserId();
-                var invoices = db.Invoices.Include(i => i.ApplicationUser).Where(x => x.UserId == userId);
+                var invoices = db.Invoices
+                    .Include(i => i.ApplicationUser)
+                    .Where(x => x.UserId == userId)
+                    .OrderBy(x => x.DateDue);
                 return View(invoices.ToList());
             }
             else
             {
-                var invoices = db.Invoices.Include(i => i.ApplicationUser).OrderBy(x => x.ApplicationUser.LastName);
+                var invoices = db.Invoices
+                    .Include(i => i.ApplicationUser)
+                    .OrderBy(x => x.ApplicationUser.LastName)
+                    .ThenBy(x => x.DateDue);
                 return View(invoices.ToList());
             }
 

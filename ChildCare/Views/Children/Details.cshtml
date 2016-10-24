@@ -437,7 +437,7 @@
                     todayAttendance = data;
                     CalculateBilledAmount(todayAttendance);
                     GetAttendanceRecord();
-                    //SendEmail(todayAttendance);
+                    SendEmail(todayAttendance);
                     $('#alertModalBody').html(todayAttendance[0].b.Child.FirstName + " " + todayAttendance[0].b.Child.LastName + " was signed out at " + moment(todayAttendance[0].b.Child.PickupTime).format("h:mm A"))
                     $('#alertModal').modal();
                     $('#calendar').fullCalendar('refetchEvents');
@@ -488,7 +488,8 @@
                 ChildId: @Model.Id,
                 PickupTime: endTime,
                 Id: todayAttendance[0].b.Id,
-                title: todayAttendance[0].b.title,
+                title: 'PICKED UP ($' + todayAttendance[0].b.AmountBilled + ')',
+                //title: todayAttendance[0].b.title,
                 start: endTime,
                 end: endTime,
                 //start: moment(todayAttendance[0].b.start).format('MM-DD-YYYY h:mm A'),
@@ -496,7 +497,7 @@
                 allday: false,
                 editable: false,
                 AmountBilled: todayAttendance[0].b.AmountBilled,
-                sendTextSMS: false,
+                sendTextSMS: true,
 
             }),
 
