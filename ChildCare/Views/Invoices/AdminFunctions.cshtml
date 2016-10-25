@@ -551,6 +551,7 @@
                         if (data.length == 0) {
                             $('#inputModalBody').html("There are no unpaid invoices for the selected month.");
                             $('#inputModal').modal();
+                            $('#unpaidResults').html("");
                             return;
                         }
                         else {
@@ -581,12 +582,12 @@
                             });
                             invoices += '<div class="col-sm-3"></div>';
                             invoices += '<div class="col-sm-3"><center>Total: $' + totalAmountDue + '</center></div>'
-                            if (data.length === 0) {
-                                $('#unpaidResults').html('<div class="col-sm-12"><center>There are no unpaid invoices for the selected month.</center></div>');
-                            }
-                            else {
+                            //if (data.length === 0) {
+                            //    $('#unpaidResults').html('<div class="col-sm-12"><center>There are no unpaid invoices for the selected month.</center></div>');
+                            //}
+                            //else {
                                 $('#unpaidResults').html(invoices);
-                            }
+                            //}
 
                         }
                     }

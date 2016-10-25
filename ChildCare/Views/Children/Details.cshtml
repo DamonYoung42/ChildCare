@@ -653,7 +653,7 @@
 
     function SendEmail(params)
     {
-        emailjs.send("default_service","student_signout",{to_name: params[0].FirstName, send_to: params[0].Email, student_name: params[0].b.Child.FirstName, message_html: params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.PickupTime).format('h:mm A') + ". You have been billed $" + params[0].b.AmountBilled + "."});
+        emailjs.send("default_service","student_signout",{to_name: params[0].FirstName, send_to: params[0].Email, student_name: params[0].b.Child.FirstName, message_html: params[0].b.Child.FirstName + " was signed out of child care at " + moment(params[0].b.Child.PickupTime).format('h:mm A') + ". You have been billed $" + params[0].b.AmountBilled + "."});
 
     }
 

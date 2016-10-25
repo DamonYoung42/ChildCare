@@ -30,7 +30,6 @@ h1, h2, h3 {
     font-family: PPETRIAL !important;
 }
 
-
 a {
     text-decoration: none !important;
     color: white !important;
@@ -54,6 +53,7 @@ input,
 select,
 textarea {
     max-width: 280px;
+ 
 }
 
 

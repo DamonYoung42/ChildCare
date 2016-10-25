@@ -16,7 +16,7 @@ namespace ChildCare.Controllers
     public class InvoicesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult AdminFunctions()
         {
             //ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
