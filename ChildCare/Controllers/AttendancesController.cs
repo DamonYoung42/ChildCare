@@ -157,7 +157,7 @@ namespace ChildCare.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Date,PickupTime,ChildId, Child, start, end, editable, allDay, title, AmountBilled")] Attendance attendance, string firstName, Boolean sendTextSMS)
+        public ActionResult Edit([Bind(Include = "Id,Date,PickupTime,ChildId, Child, start, end, editable, allDay, title, AmountBilled")] Attendance attendance, string firstName, Boolean sendTextSMS, string phoneNumber)
         {
             if (ModelState.IsValid)
             {
@@ -166,8 +166,8 @@ namespace ChildCare.Controllers
                 if (sendTextSMS)
                 {
                     TwilioSMS SMSMessage = new TwilioSMS();
-                    var message = firstName + " was signed out of child care at " + attendance.PickupTime.ToShortTimeString() + ".You have been billed $" + attendance.AmountBilled + ".";
-                    SMSMessage.SendSMS(message);
+                    var message = firstName + " was signed out of child care at " + attendance.PickupTime.ToShortTimeString() + ". You have been billed $" + attendance.AmountBilled + ".";
+                    SMSMessage.SendSMS(message, phoneNumber);
                 }
 
                 //return RedirectToAction("Details", "Children");

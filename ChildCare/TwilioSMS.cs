@@ -9,7 +9,7 @@ namespace ChildCare
     public class TwilioSMS
     {
 
-        public void SendSMS(string messageText)
+        public void SendSMS(string messageText, string phoneNumber)
         {
             //TEST CREDENTIALS
             //string accountSid = "AC2bbe1b78d57d4a73899b6f0a63d758cf"; // Your Account SID from www.twilio.com/console
@@ -23,7 +23,8 @@ namespace ChildCare
             TwilioRestClient twilio = new TwilioRestClient(accountSid, authToken);
             var message = twilio.SendMessage(
                 "+14144556685", // From (Replace with your Twilio number)
-                "+14147585380", // To (Replace with your phone number)
+                "+1" + phoneNumber,
+                //"+14147585380", // To (Replace with your phone number)
                 messageText
                 );
 
