@@ -39,9 +39,11 @@ namespace ChildCare.Models
         public Teacher Teacher { get; set; }
 
         [Display(Name = "Medications")]
+        [DataType(DataType.MultilineText)]
         public string Medications { get; set; }
 
         [Display(Name = "Notes")]
+        [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
     }
 }
